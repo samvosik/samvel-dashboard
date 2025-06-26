@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Курсы валют</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark {
+      background: #1a1a1a;
+      color: #f2f2f2;
+    }
+    button.link-button {
+      background: #2a84d2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.2s;
+    }
+    button.link-button:hover {
+      background: #206cb2;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    thead {
+      background: #2a84d2;
+      color: white;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Анимация */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Цветовые тренды */
+    .rate-up td:last-child {
+      color: green;
+      font-weight: bold;
+    }
+    .rate-down td:last-child {
+      color: crimson;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📊 Курс валют</h1>
+
+  <button onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
+  <button onclick="toggleRates()" id="rates-toggle-btn" class="link-button" style="margin-left: 10px;">📉 Показать курсы валют</button>
+
+  <div id="rates-box" style="display: none; margin-top: 20px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Валюта</th>
+          <th>Курс к ₽</th>
+        </tr>
+      </thead>
+      <tbody id="rate-rows">
+        <tr><td colspan="2">Загрузка...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let lang = 'ru';
+    let previousRates = { USD: null, EUR: null, JPY: null };
+
+    const translations = {
+      ru: {
+        showRates: "📉 Показать курсы валют",
+        hideRates: "📈 Скрыть курсы валют",
+        rateError: "Не удалось загрузить курсы"
+      },
+      en: {
+        showRates: "📉 Show Exchange Rates",
+        hideRates: "📈 Hide Exchange Rates",
+        rateError: "Failed to load rates"
+      },
+      am: {
+        showRates: "📉 Ցուցադրել փոխարժեքները",
+        hideRates: "📈 Թաքցնել փոխարժեքները",
+        rateError: "Չհաջողվեց ներբեռնել փոխարժեքները"
+      }
+    };
+
+    function getFlag(code) {
+      return {
+        USD: '🇺🇸',
+        EUR: '🇪🇺',
+        JPY: '🇯🇵'
+      }[code] || '🏳️';
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleRates() {
+      const box = document.getElementById('rates-box');
+      const btn = document.getElementById('rates-toggle-btn');
+      const isOpen = box.style.display === 'block';
+      box.style.display = isOpen ? 'none' : 'block';
+      btn.textContent = isOpen ? translations[lang].showRates : translations[lang].hideRates;
+      if (!isOpen) updateRatesBlock();
+    }
+
+    async function updateRatesBlock() {
+      try {
+        const res = await fetch('https://api.exchangerate.host/latest?base=USD&symbols=RUB,EUR,JPY');
+        const data = await res.json();
+        const rub = data.rates.RUB.toFixed(2);
+        const eur = (data.rates.RUB / data.rates.EUR).toFixed(2);
+        const jpy = (data.rates.RUB / data.rates.JPY).toFixed(2);
+
+        const newRates = { USD: rub, EUR: eur, JPY: jpy };
+        const rows = Object.entries(newRates).map(([code, value]) => {
+          const old = previousRates[code];
+          let trend = '';
+          if (old !== null) {
+            if (+value > +old) trend = 'rate-up';
+            else if (+value < +old) trend = 'rate-down';
+          }
+          previousRates[code] = value;
+
+          return `<tr class="fade-in ${trend}">
+            <td>${getFlag(code)} ${code}</td>
+            <td>₽${value}</td>
+          </tr>`;
+        });
+
+        document.getElementById('rate-rows').innerHTML = rows.join('');
+      } catch (e) {
+        document.getElementById('rate-rows').innerHTML =
+          `<tr><td colspan="2">❌ ${translations[lang].rateError}</td></tr>`;
+      }
+    }
+
+    window.onload = () => {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') document.body.classList.add('dark');
+      updateRatesBlock();
+      setInterval(updateRatesBlock, 30 * 60 * 1000); // каждые 30 минут
+    };
+  </script>
+
+</body>
+</html>
