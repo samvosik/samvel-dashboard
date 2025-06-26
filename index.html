@@ -2,118 +2,215 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Курсы валют</title>
+  <title>Полезные ссылки</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #f0f0f0;
-      padding: 30px;
-      transition: background 0.3s, color 0.3s;
-    }
-    .dark {
-      background: #1a1a1a;
-      color: #f2f2f2;
-    }
-    button.link-button {
-      background: #2a84d2;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: 0.2s;
-    }
-    button.link-button:hover {
-      background: #206cb2;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    thead {
-      background: #2a84d2;
-      color: white;
-    }
-    th, td {
-      padding: 10px;
+      background: #f2f2f2;
+      padding: 40px;
       text-align: center;
     }
-
-    /* Анимация */
-    .fade-in {
-      animation: fadeIn 0.5s ease-in;
+    h1 {
+      color: #333;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
+    .link-button {
+      display: block;
+      margin: 15px auto;
+      padding: 15px 25px;
+      background: #2a84d2;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      max-width: 400px;
+      font-size: 1.1em;
+      transition: background 0.3s;
     }
-
-    /* Цветовые тренды */
-    .rate-up td:last-child {
-      color: green;
-      font-weight: bold;
+    .link-button:hover {
+      background: #1f6bb5;
     }
-    .rate-down td:last-child {
+    .ticker-container {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      background: #eef;
+      padding: 10px 40px 10px 10px;
+      border-radius: 10px;
+    }
+    .ticker-container span {
+      display: inline-block;
+      width: max-content;
+      animation: tickerMove 25s linear infinite;
+      animation-play-state: running;
+      cursor: pointer;
+    }
+    .ticker-container span:hover {
+      animation-play-state: paused;
       color: crimson;
-      font-weight: bold;
+      transform: scale(1.05);
+    }
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: #333;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .lang-switcher {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .lang-switcher button {
+      padding: 10px 15px;
+      font-size: 1em;
+      background: #ddd;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .lang-menu {
+      display: none;
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 5px;
+      z-index: 100;
+      width: 100%;
+    }
+    .lang-menu div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .lang-menu div:hover {
+      background: #f0f0f0;
+    }
+    @keyframes tickerMove {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    body.dark {
+      background: #181818;
+      color: #f0f0f0;
+    }
+    body.dark h1 {
+      color: #f0f0f0;
+    }
+    body.dark .link-button {
+      background: #444;
+      color: #fff;
+    }
+    body.dark .link-button:hover {
+      background: #666;
+    }
+    body.dark .ticker-container {
+      background: #333;
+    }
+    body.dark .close-btn {
+      color: #bbb;
     }
   </style>
 </head>
 <body>
 
-  <h1>📊 Курс валют</h1>
-
-  <button onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
-  <button onclick="toggleRates()" id="rates-toggle-btn" class="link-button" style="margin-left: 10px;">📉 Показать курсы валют</button>
-
-  <div id="rates-box" style="display: none; margin-top: 20px;">
-    <table>
-      <thead>
-        <tr>
-          <th>Валюта</th>
-          <th>Курс к ₽</th>
-        </tr>
-      </thead>
-      <tbody id="rate-rows">
-        <tr><td colspan="2">Загрузка...</td></tr>
-      </tbody>
-    </table>
+  <div class="ticker-container" id="ticker">
+    <span id="ticker-text">🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙</span>
+    <button class="close-btn" onclick="document.getElementById('ticker').style.display='none'">×</button>
   </div>
 
-  <script>
-    let lang = 'ru';
-    let previousRates = { USD: null, EUR: null, JPY: null };
+  <h1 id="page-title">🎁 Полезные ссылки</h1>
 
+
+  <div class="lang-switcher">
+    <button onclick="toggleLangMenu()">🌐  ▾</button>
+    <div id="lang-menu" class="lang-menu">
+      <div onclick="applyTranslation('ru')">🇷🇺 Русский</div>
+      <div onclick="applyTranslation('en')">🇬🇧 English</div>
+      <div onclick="applyTranslation('am')">🇦🇲 Հայերեն</div>
+    </div>
+  </div>
+  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;"></div>
+
+  <button id="toggle-theme-btn" onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
+
+  <!-- Твои ссылки (рефералы) -->
+  <a class="link-button" href="https://teaserfast.ru/u/SamvelVardanyan" target="_blank">🙌 teaserfast 🙌</a>
+  <!-- Добавляй остальные как хочешь -->
+  <a class="link-button" href="https://freebitco.in/?r=19299067" target="_blank">
+    🙌 freebitco.in 🙌
+  </a>
+
+  <a class="link-button" href="https://socpublic.com/?i=4713675&slide=1" target="_blank">
+    🙌 socpublic 🙌
+  </a>
+  
+   <a class="link-button" href="https://seo-fast.ru/?r=1891976" target="_blank">
+    🙌 seo-fast 🙌
+  </a>
+  
+    <a class="link-button" href="https://wmrfast.com/?r=1119276" target="_blank">
+    🙌 wmrfast 🙌
+  </a>
+  
+     <a class="link-button" href="https://doxod24.net/1372329" target="_blank">
+    🙌 SurfEarner 🙌
+  </a>
+  
+      <a class="link-button" href="https://aviso.bz/?r=samvosik" target="_blank">
+   🙌 aviso.bz 🙌
+  </a>
+  
+   <a class="link-button" href="https://vipip.ru/?refid=2131687" target="_blank">
+   🙌 vipip 🙌
+  </a>
+  
+  <a class="link-button" href="https://addon.money/p/96268" target="_blank">
+   🙌 addon.money 🙌
+  </a>
+  
+   <a class="link-button" href="https://surfe.be/ext/180667" target="_blank">
+   🙌 surfe.be 🙌
+  </a>
+  
+   <a class="link-button" href="https://www.neobux.com/?r=samvosik" target="_blank">
+    🙌 neobux 🙌
+  </a>
+  
+   <a class="link-button" href="https://www.kryptex.com/?ref=c1be79ef" target="_blank">
+     🙌 kryptex 🙌
+  </a>
+  
+   <a class="link-button" href="https://computta.com/?ref=597491" target="_blank">
+     🙌 computta 🙌
+  </a>
+  
+    <a class="link-button" href="https://payeer.com/?session=9999261" target="_blank">
+    🙌 payer 🙌
+  </a>
+  <script>
     const translations = {
       ru: {
-        showRates: "📉 Показать курсы валют",
-        hideRates: "📈 Скрыть курсы валют",
-        rateError: "Не удалось загрузить курсы"
+        title: "🎁 Полезные ссылки",
+        ticker: "🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙",
+        toggleTheme: "🌗 Переключить тему",
+        referralInfo: "Привет! 👋 Здесь собраны проверенные сервисы, с которыми я лично работаю. Переходи по ссылкам, регистрируйся — и давай вместе зарабатывать    онлайн 💸Мои личные рекомендации: сервисы, которые реально платят. Поддержи меня — переходи по ссылке и регистрируйся 💙Начни свой путь в онлайн-заработке уже сегодня! Ниже — самые удобные площадки, с которых когда-то начинал и я. Дерзай! 🔥"
       },
       en: {
-        showRates: "📉 Show Exchange Rates",
-        hideRates: "📈 Hide Exchange Rates",
-        rateError: "Failed to load rates"
+        title: "🎁 Useful Links",
+        ticker: "🔥 Follow the links and grab your bonuses! Thanks for the support 💙",
+        toggleTheme: "🌗 Toggle Theme",
+        referralInfo: "Hi there! 👋 Here are trusted platforms that I personally use. Follow the links, register, and let's earn online together 💸 My personal recommendations: services that actually pay. Support me by registering through the links 💙 Start your journey in online earnings today! Below are the best platforms I once started with. Let’s go! 🔥"
       },
       am: {
-        showRates: "📉 Ցուցադրել փոխարժեքները",
-        hideRates: "📈 Թաքցնել փոխարժեքները",
-        rateError: "Չհաջողվեց ներբեռնել փոխարժեքները"
+        title: "🎁 Օգտակար հղումներ",
+        ticker: "🔥 Անցիր հղումներով և ստացիր բոնուսներ։ Շնորհակալություն աջակցության համար 💙",
+        toggleTheme: "🌗 Փոխել թեման",
+        referralInfo: "Բարեւ՛։ 👋 Ահա վստահելի հարթակներ, որոնք անձամբ եմ օգտագործում։ Անցիր հղումներով, գրանցվիր՝ և եկ՛ միասին առցանց վաստակենք 💸 Իմ անձնական առաջարկները՝ այն ծառայություններն են, որոնք իրականում վճարում են։ Աջակցիր ինձ՝ գրանցվելով հղումներով 💙 Սկսիր քո ուղին առցանց վաստակման մեջ հենց այսօր։ Ստորև իմ սիրելի հարթակներն են։ Դեպի առաջ! 🔥"
       }
     };
-
-    function getFlag(code) {
-      return {
-        USD: '🇺🇸',
-        EUR: '🇪🇺',
-        JPY: '🇯🇵'
-      }[code] || '🏳️';
-    }
 
     function toggleTheme() {
       document.body.classList.toggle('dark');
@@ -121,51 +218,26 @@
       localStorage.setItem('theme', theme);
     }
 
-    function toggleRates() {
-      const box = document.getElementById('rates-box');
-      const btn = document.getElementById('rates-toggle-btn');
-      const isOpen = box.style.display === 'block';
-      box.style.display = isOpen ? 'none' : 'block';
-      btn.textContent = isOpen ? translations[lang].showRates : translations[lang].hideRates;
-      if (!isOpen) updateRatesBlock();
+    function toggleLangMenu() {
+      const menu = document.getElementById('lang-menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
 
-    async function updateRatesBlock() {
-      try {
-        const res = await fetch('https://api.exchangerate.host/latest?base=USD&symbols=RUB,EUR,JPY');
-        const data = await res.json();
-        const rub = data.rates.RUB.toFixed(2);
-        const eur = (data.rates.RUB / data.rates.EUR).toFixed(2);
-        const jpy = (data.rates.RUB / data.rates.JPY).toFixed(2);
-
-        const newRates = { USD: rub, EUR: eur, JPY: jpy };
-        const rows = Object.entries(newRates).map(([code, value]) => {
-          const old = previousRates[code];
-          let trend = '';
-          if (old !== null) {
-            if (+value > +old) trend = 'rate-up';
-            else if (+value < +old) trend = 'rate-down';
-          }
-          previousRates[code] = value;
-
-          return `<tr class="fade-in ${trend}">
-            <td>${getFlag(code)} ${code}</td>
-            <td>₽${value}</td>
-          </tr>`;
-        });
-
-        document.getElementById('rate-rows').innerHTML = rows.join('');
-      } catch (e) {
-        document.getElementById('rate-rows').innerHTML =
-          `<tr><td colspan="2">❌ ${translations[lang].rateError}</td></tr>`;
-      }
+    function applyTranslation(lang) {
+      const t = translations[lang] || translations.ru;
+      document.getElementById('page-title').textContent = t.title;
+      document.getElementById('ticker-text').textContent = t.ticker;
+      document.getElementById('toggle-theme-btn').textContent = t.toggleTheme;
+      localStorage.setItem('language', lang);
+      document.getElementById('lang-menu').style.display = 'none';
+      document.getElementById('referral-text').innerHTML = t.referralInfo;
     }
 
     window.onload = () => {
       const theme = localStorage.getItem('theme');
+      const lang = localStorage.getItem('language') || 'ru';
       if (theme === 'dark') document.body.classList.add('dark');
-      updateRatesBlock();
-      setInterval(updateRatesBlock, 30 * 60 * 1000); // каждые 30 минут
+      applyTranslation(lang);
     };
   </script>
 
