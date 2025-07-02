@@ -6,207 +6,127 @@
   <title>Полезные ссылки</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f2f2f2;
-      padding: 40px;
-      text-align: center;
-    }
-    h1 {
-      color: #333;
-    }
-    @keyframes neonCycle {
+  font-family: sans-serif;
+  background: #f2f2f2;
+  padding: 40px;
+  text-align: center;
+  color: #111;
+}
+body.dark {
+  background: #181818;
+  color: #f0f0f0;
+}
+
+h1 {
+  color: #333;
+}
+body.dark h1 {
+  color: #f0f0f0;
+}
+
+h1#page-title {
+  animation: neonCycle 5s linear infinite;
+  font-size: 2em;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 30px auto;
+  text-align: center;
+}
+
+@keyframes neonCycle {
   0%   { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
   25%  { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
   50%  { color: #00ff6a; text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a; }
   75%  { color: #ffd500; text-shadow: 0 0 5px #ffd500, 0 0 10px #ffd500; }
   100% { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
 }
-h1#page-title {
-  animation: neonCycle 5s linear infinite;
-  text-align: center;
+
+/* 🎯 Заголовок с иконкой */
+.icon-only-title {
+  text-align: left;
+  padding-left: 20px;
   font-size: 2em;
-  margin: 30px auto;
-  font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #00ffee;
+  margin: 30px 0;
+  text-shadow: 0 0 5px #00ffee, 0 0 10px #00ffee, 0 0 20px #00ffee;
 }
-    .link-button {
-      display: block;
-      margin: 15px auto;
-      padding: 15px 25px;
-      background: #2a84d2;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      max-width: 400px;
-      font-size: 1.1em;
-      transition: background 0.3s;
-    }
-    .link-button:hover {
-      background: #1f6bb5;
-    }
-    .ticker-container {
-      position: relative;
-      overflow: hidden;
-      white-space: nowrap;
-      background: #eef;
-      padding: 10px 40px 10px 10px;
-      border-radius: 10px;
-    }
-    .ticker-container span {
-      display: inline-block;
-      width: max-content;
-      animation: tickerMove 25s linear infinite;
-      animation-play-state: running;
-      cursor: pointer;
-    }
-    .ticker-container span:hover {
-      animation-play-state: paused;
-      color: crimson;
-      transform: scale(1.05);
-    }
-    .close-btn {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      background: transparent;
-      border: none;
-      color: #333;
-      font-size: 20px;
-      cursor: pointer;
-    }
+
+/* 📡 Контактный футер */
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 5px #00ffee; }
+  50%      { text-shadow: 0 0 15px #00ffee, 0 0 25px #00ffee; }
+}
+
+.icon-only-title {
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+.contact-footer {
+  position: relative;
+  background: #111;
+  color: #eee;
+  padding: 40px 40px 60px;
+  text-align: left;
+  margin: 40px 20px 10px;
+}
+body.dark .contact-footer {
+  background: #222;
+}
+
+.contacts h2,
+.contact-list a {
+  color: #00ffee;
+  text-shadow: 0 0 1px #00ffee;
+}
+
 .contact-list {
   list-style: none;
   padding: 0;
-  margin: 0 auto;
-  max-width: 400px;
+  margin: 30px;
+  max-width: 250px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .contact-list li {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  gap: 10px;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid #00ffee;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 5px #00ffee30;
+}
+.contact-list li:hover {
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 15px #00ffee, 0 0 25px #00ffee;
 }
 .contact-list img {
   width: 22px;
-  height: 18px;
-  margin-right: 10px;
+  height: 22px;
+  filter: drop-shadow(0 0 4px #00ffee);
 }
 .contact-list a {
-  color: #1da1f2;
+  font-weight: bold;
+  font-size: 1.05em;
   text-decoration: none;
-  font-size: 1em;
+  transition: 0.3s;
 }
 .contact-list a:hover {
-  text-decoration: underline;
+  color: #fff;
+  text-shadow: 0 0 2px #00ffee;
 }
-    .lang-switcher {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .lang-switcher button {
-      padding: 10px 15px;
-      font-size: 1em;
-      background: #ddd;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .lang-menu {
-      display: none;
-      position: absolute;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-top: 5px;
-      z-index: 100;
-      width: 100%;
-    }
-    .lang-menu div {
-      padding: 10px;
-      cursor: pointer;
-    }
-    .link-button:hover {
-  background: #0ff;
-  color: #111;
-  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
-  text-shadow: none;
-}
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
-  }
-  50% {
-    box-shadow: 0 0 15px #ff0080, 0 0 30px #ff0080;
-  }
+body.dark .contact-list a {
+  color: #4aa3ff;
 }
 
-.link-button.neon {
-  animation: pulseGlow 2s infinite;
-}
-.link-button.neon:hover {
-  background: #fff;
-  color: #111;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff, 0 0 40px #0ff;
-  text-shadow: none;
-}
-.link-button {
-  border: 2px solid #0ff;
-  color: #0ff;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff inset;
-}
-    .lang-menu div:hover {
-      background: #f0f0f0;
-    }
-    @keyframes tickerMove {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-      }
-.contact-footer {
-  position: relative;
-  padding: 40px;
-  margin-top: 40px;
-  background: #111;
-  color: #eee;
-  font-family: sans-serif;
-  text-align: left;
-  margin-left: 20px;
-  margin-bottom: 10px;
-  padding-bottom: 60px; /* чуть-чуть места под плеер */
-}
-.page-views {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #888;
-}
-.page-views img {
-  margin-top: 6px;
-  height: 20px;
-}
-.contact-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-width: 400px;
-}
-.contact-list li {
-  margin: 10px 0;
-}
-.contact-list a {
-  color: #1da1f2;
-  text-decoration: none;
-}
-.contact-list a:hover {
-  text-decoration: underline;
-}
+/* 🎧 Аудиоплеер футера */
 .footer-player {
   position: absolute;
-  right: 20px;
   bottom: 20px;
+  right: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -216,7 +136,6 @@ h1#page-title {
   box-shadow: 0 0 10px #0008;
   z-index: 999;
 }
-
 #playToggle {
   font-size: 1.2em;
   background: none;
@@ -224,13 +143,11 @@ h1#page-title {
   color: #1da1f2;
   cursor: pointer;
 }
-
 .equalizer {
   display: flex;
   align-items: end;
   gap: 3px;
 }
-
 .equalizer span {
   width: 4px;
   height: 10px;
@@ -238,7 +155,6 @@ h1#page-title {
   animation: bounce 1s infinite ease-in-out;
   animation-play-state: paused;
 }
-
 .equalizer span:nth-child(2) { animation-delay: 0.2s; }
 .equalizer span:nth-child(3) { animation-delay: 0.4s; }
 .equalizer span:nth-child(4) { animation-delay: 0.6s; }
@@ -247,32 +163,172 @@ h1#page-title {
   0%, 100% { height: 10px; }
   50% { height: 25px; }
 }
-body.dark .contact-footer {
-  background: #222;
+#playToggle {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
 }
-body.dark .contact-list a {
-  color: #4aa3ff;
+
+#playToggle:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
 }
-    body.dark {
-      background: #181818;
-      color: #f0f0f0;
-    }
-    body.dark h1 {
-      color: #f0f0f0;
-    }
-    body.dark .link-button {
-      background: #444;
-      color: #fff;
-    }
-    body.dark .link-button:hover {
-      background: #666;
-    }
-    body.dark .ticker-container {
-      background: #333;
-    }
-    body.dark .close-btn {
-      color: #bbb;
-    }
+.equalizer span {
+  background: #0ff;
+  animation: bounce 1s infinite ease-in-out;
+  animation-play-state: running; /* ← включаем постоянно */
+  box-shadow: 0 0 6px #0ff;
+}
+
+/* 📰 Бегущая строка */
+.ticker-container {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #eef;
+  padding: 10px 40px 10px 10px;
+  border-radius: 10px;
+}
+.ticker-container span {
+  display: inline-block;
+  width: max-content;
+  animation: tickerMove 25s linear infinite;
+  animation-play-state: running;
+  cursor: pointer;
+}
+.ticker-container span:hover {
+  animation-play-state: paused;
+  color: crimson;
+  transform: scale(1.05);
+}
+@keyframes tickerMove {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+body.dark .ticker-container {
+  background: #333;
+}
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+}
+body.dark .close-btn {
+  color: #bbb;
+}
+
+/* 🔘 Кнопки */
+.link-button {
+  width: 400px; /* ← фиксированная ширина */
+  display: block;
+  margin: 15px auto;
+  padding: 15px 25px;
+  background: #2a84d2;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff inset;
+  transition: all 0.3s ease;
+}
+.link-button:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff, 0 0 40px #0ff;
+  text-shadow: none;
+}
+body.dark .link-button {
+  background: #444;
+  color: #fff;
+}
+body.dark .link-button:hover {
+  background: #666;
+}
+
+/* 🌐 Переключатель языка */
+.lang-switcher {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.lang-switcher button {
+  padding: 10px 15px;
+  font-size: 1em;
+  background: #ddd;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.lang-menu {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+  z-index: 100;
+  width: 100%;
+}
+.lang-menu div {
+  padding: 10px;
+  cursor: pointer;
+}
+.lang-menu div:hover {
+  background: #f0f0f0;
+}
+#langToggle {
+  padding: 12px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #0ff;
+  background: transparent;
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  cursor: pointer;
+  text-shadow: 0 0 5px #0ff;
+  box-shadow: 0 0 10px #0ff inset, 0 0 15px #0ff;
+  transition: all 0.3s ease;
+}
+
+#langToggle:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+  text-shadow: none;
+}
+
+/* 🌟 Анимация кнопки */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
+  }
+  50% {
+    box-shadow: 0 0 15px #ff0080, 0 0 30px #ff0080;
+  }
+}
+.link-button.neon {
+  animation: pulseGlow 2s infinite;
+}
+.link-button.neon:hover {
+  background: #fff;
+  color: #111;
+  box-shadow: 0 0
+  
   </style>
 </head>
 <body>
@@ -411,10 +467,8 @@ body.dark .contact-list a {
   </script>
 
   <section class="contact-footer">
-  <h3 title="Связаться с нами"></h3>
-  <svg width="24" height="24" fill="#1da1f2" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 4v16h20V4H2zm2 2h16v.01L12 13 4 6.01V6zm0 2.83 6.76 5.74a1 1 0 0 0 1.24 0L20 8.83V18H4V8.83z"/>
-  </svg></h3>
+  <h2 class="icon-only-title" title="Связь для вопросов">📡</h2>
+  
   <ul class="contact-list">
     <li>
       <img src="icons/phone.png" alt="phone" width="22" height="18" />
