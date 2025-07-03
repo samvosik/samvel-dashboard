@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <title>Полезные ссылки</title>
   <style>
-    body {
+ body {
   font-family: sans-serif;
   background: #f2f2f2;
   padding: 40px;
@@ -267,12 +267,24 @@ body.dark .link-button:hover {
   text-align: center;
 }
 .lang-switcher button {
-  padding: 10px 15px;
+  padding: 12px 20px;
   font-size: 1em;
-  background: #ddd;
-  border: none;
-  border-radius: 6px;
+  font-weight: bold;
+  color: #0ff;
+  background: transparent;
+  border: 2px solid #0ff;
+  border-radius: 8px;
   cursor: pointer;
+  text-shadow: 0 0 5px #0ff;
+  box-shadow: 0 0 10px #0ff inset, 0 0 15px #0ff;
+  transition: all 0.3s ease;
+  animation: pulseGlow 2s infinite;
+}
+.lang-switcher button:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+  text-shadow: none;
 }
 .lang-menu {
   display: none;
@@ -329,6 +341,51 @@ body.dark .link-button:hover {
   color: #111;
   box-shadow: 0 0
   
+  } 
+    .background: #0a0a0a;{
+      color: #0ff;
+      font-family: monospace;
+      padding: 40px;
+      text-align: left;
+    }
+.neon-terminal-wrapper .terminal {
+  /* стили только для этого терминала */
+}
+body.dark .terminal,
+body.dark .theme .neon-terminal-wrapper .terminal {
+  background: #000;
+  color: #0ff;
+  box-shadow: 0 0 20px #00ffff55;
+}
+   
+.terminal {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffee;
+  max-width: 38vw;      /* ← вместо фиксированных пикселей */
+  width: 100%;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1em;
+  text-shadow: 0 0 4px #00ffee;
+  min-height: 200px;
+  position: relative;
+  color: #00ffee;
+  box-sizing: border-box;
+}
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ffee;
+      animation: blink 1s infinite step-end;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }  
   </style>
 </head>
 <body>
@@ -339,6 +396,7 @@ body.dark .link-button:hover {
   </div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
+  
 
 
   <div class="lang-switcher">
@@ -349,7 +407,10 @@ body.dark .link-button:hover {
       <div onclick="applyTranslation('am')">🇦🇲 Հայերեն</div>
     </div>
   </div>
-  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;"></div>
+  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;">
+  "Привет! 👋 Здесь собраны проверенные сервисы, с которыми я лично работаю. Переходи по ссылкам, регистрируйся — и давай вместе зарабатывать    онлайн 💸Мои личные рекомендации: сервисы, которые реально платят. Поддержи меня — переходи по ссылке и регистрируйся 💙Начни свой путь в онлайн-заработке уже сегодня! Ниже — самые удобные площадки, с которых когда-то начинал и я. Дерзай! 🔥"
+</div>
+
 
   <button id="toggle-theme-btn" onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
 
@@ -436,12 +497,16 @@ body.dark .link-button:hover {
         referralInfo: "Բարեւ՛։ 👋 Ահա վստահելի հարթակներ, որոնք անձամբ եմ օգտագործում։ Անցիր հղումներով, գրանցվիր՝ և եկ՛ միասին առցանց վաստակենք 💸 Իմ անձնական առաջարկները՝ այն ծառայություններն են, որոնք իրականում վճարում են։ Աջակցիր ինձ՝ գրանցվելով հղումներով 💙 Սկսիր քո ուղին առցանց վաստակման մեջ հենց այսօր։ Ստորև իմ սիրելի հարթակներն են։ Դեպի առաջ! 🔥"
       }
     };
+    const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark');
+}
 
     function toggleTheme() {
-      document.body.classList.toggle('dark');
-      const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
-      localStorage.setItem('theme', theme);
-    }
+  document.body.classList.toggle('dark');
+  const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+  localStorage.setItem('theme', theme);
+}
 
     function toggleLangMenu() {
       const menu = document.getElementById('lang-menu');
@@ -499,11 +564,15 @@ body.dark .link-button:hover {
       <a href="https://ok.ru/profile/268819542131" target="_blank">Samvel Vardanian</a>
     </li>
   </ul>
-  
   <div class="footer-player">
   <div class="equalizer">
     <span></span><span></span><span></span><span></span>
   </div>
+  
+     <div id="terminal-wrapper">
+  <div class="terminal" id="terminal"></div>
+</div>
+  
   <button id="playToggle">▶️</button>
   <audio id="radioAudio">
     <source src="https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3" type="audio/mpeg" />
@@ -530,6 +599,65 @@ body.dark .link-button:hover {
     }
   });
 </script>
+
+<script>
+  window.onload = function () {
+    const terminalWrapper = document.getElementById("terminal-wrapper");
+
+    const text = `root@samvel:~# npm run neon
+> Neon Dashboard Compiler v1.0.3
+
+✨ Loading interface...
+✅ CSS animations initialized
+✅ JavaScript injected
+🌐 Language module: Armenian / English / Russian
+📡 Connecting to server...
+
+💡 Interface ready! Welcome, Самвел.
+📡 Footer transmission initialized...
+
+💬 Спасибо, что посетили панель! 
+🚀 Возвращайтесь — система ждёт!
+💬 Thank you for visiting the panel! 
+🚀 Come back — the system is waiting!
+💬 Շնորհակալություն վահանակ այցելելու համար։ 
+🚀 Վերադարձեք՝ համակարգը սպասում է։`;
+
+    const typingSpeed = 35;
+
+    function typeText() {
+      const terminal = document.getElementById("terminal");
+      terminal.innerHTML = '';
+      let index = 0;
+
+      function loop() {
+        if (index <= text.length) {
+          terminal.innerHTML = text.slice(0, index++) + '<span class="cursor"></span>';
+          setTimeout(loop, typingSpeed);
+        }
+      }
+
+      loop();
+    }
+
+    function restartTerminal() {
+      const oldTerminal = document.getElementById("terminal");
+      if (oldTerminal) oldTerminal.remove();
+
+      const newTerminal = document.createElement("div");
+      newTerminal.className = "terminal";
+      newTerminal.id = "terminal";
+      terminalWrapper.appendChild(newTerminal);
+
+      typeText();
+    }
+
+    terminalWrapper.addEventListener("click", restartTerminal);
+    typeText();
+  };
+</script>
+
+
 
 
 
