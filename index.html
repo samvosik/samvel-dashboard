@@ -123,6 +123,26 @@ body.dark .contact-list a {
 }
 
 /* 🎧 Аудиоплеер футера */
+#nextStation {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 10px;
+  display: block;
+  width: 70px;
+  text-align: center;
+}
+#nextStation:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+}
 .footer-player {
   position: absolute;
   bottom: 20px;
@@ -131,10 +151,12 @@ body.dark .contact-list a {
   align-items: center;
   gap: 10px;
   background: #222;
+  background: rgba(0, 0, 0, 0.3);
   padding: 10px 15px;
   border-radius: 10px;
   box-shadow: 0 0 10px #0008;
   z-index: 999;
+  background: transparent;
 }
 #playToggle {
   font-size: 1.2em;
@@ -573,19 +595,53 @@ if (savedTheme === 'dark') {
   <div class="terminal" id="terminal"></div>
 </div>
   
+  <div class="radio-controls">
   <button id="playToggle">▶️</button>
-  <audio id="radioAudio">
-    <source src="https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3" type="audio/mpeg" />
-    Ваш браузер не поддерживает аудио.
-  </audio>
+  <button id="nextStation">⏭️</button>
+</div>
+
+  <audio id="radioAudio" autoplay></audio>
 </div>
 
 </section>
 
 <script>
+  const stations = [
+  {
+      name: 'Jazz Radio',
+      url: 'https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3'
+    },
+    {
+      name: 'Jazz Radio',
+      url: 'https://stream.nightride.fm/nightride.mp3'
+    },
+    {
+      name: 'Deep House Radio',
+      url: 'http://stream.intenseradio.net:8000/live'
+    },
+    {
+      name: 'Lounge FM Chill',
+      url: 'http://dancewave.online:8080/dance.mp3'
+    },
+    {
+      name: 'Lo-Fi HipHop',
+      url: 'https://edge11.streamonkey.net/nostalgie-live?aggregator=shorty'
+    }
+  ];
+
+  let currentStation = 0;
+
   const audio = document.getElementById('radioAudio');
   const playBtn = document.getElementById('playToggle');
+  const nextBtn = document.getElementById('nextStation');
   const bars = document.querySelectorAll('.equalizer span');
+
+  function playStation(index) {
+    audio.src = stations[index].url;
+    audio.play().catch(() => {});
+    playBtn.textContent = '⏸️';
+    bars.forEach(bar => bar.style.animationPlayState = 'running');
+  }
 
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
@@ -597,6 +653,11 @@ if (savedTheme === 'dark') {
       playBtn.textContent = '▶️';
       bars.forEach(bar => bar.style.animationPlayState = 'paused');
     }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentStation = (currentStation + 1) % stations.length;
+    playStation(currentStation);
   });
 </script>
 
