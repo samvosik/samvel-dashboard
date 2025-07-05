@@ -207,6 +207,25 @@ body.dark .contact-list a {
   animation-play-state: running; /* ← включаем постоянно */
   box-shadow: 0 0 6px #0ff;
 }
+.player-visuals {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ← чтобы станция и эквалайзер были по центру */
+  gap: 6px;
+}
+
+.station-info {
+  font-size: 0.85em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  text-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+}
+
 
 /* 📰 Бегущая строка */
 .ticker-container {
@@ -287,8 +306,11 @@ body.dark .link-button:hover {
   display: inline-block;
   margin-bottom: 20px;
   text-align: center;
+  width: 120px;
 }
-.lang-switcher button {
+
+.lang-switcher button,
+  #langToggle {
   padding: 12px 20px;
   font-size: 1em;
   font-weight: bold;
@@ -302,47 +324,42 @@ body.dark .link-button:hover {
   transition: all 0.3s ease;
   animation: pulseGlow 2s infinite;
 }
-.lang-switcher button:hover {
+
+.lang-switcher button:hover,
+#langToggle:hover {
   background: #0ff;
   color: #111;
   box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
   text-shadow: none;
 }
+
 .lang-menu {
   display: none;
   position: absolute;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 5px;
-  z-index: 100;
-  width: 100%;
-}
-.lang-menu div {
-  padding: 10px;
-  cursor: pointer;
-}
-.lang-menu div:hover {
-  background: #f0f0f0;
-}
-#langToggle {
-  padding: 12px 20px;
-  font-size: 1em;
-  font-weight: bold;
-  color: #0ff;
-  background: transparent;
+  background: #000;
   border: 2px solid #0ff;
   border-radius: 8px;
-  cursor: pointer;
-  text-shadow: 0 0 5px #0ff;
-  box-shadow: 0 0 10px #0ff inset, 0 0 15px #0ff;
-  transition: all 0.3s ease;
+  margin-top: 5px;
+  z-index: 100;
+  width: 120px;
+  min-width: 100px;
+  box-shadow: 0 0 10px #0ff;
+  padding: 2px 0;
 }
 
-#langToggle:hover {
+.lang-menu div {
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #0ff;
+  font-weight: bold;
+  white-space: nowrap;
+  text-shadow: 0 0 4px #0ff;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-menu div:hover {
   background: #0ff;
   color: #111;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
   text-shadow: none;
 }
 
@@ -587,9 +604,15 @@ if (savedTheme === 'dark') {
     </li>
   </ul>
   <div class="footer-player">
+  <div class="player-visuals">
   <div class="equalizer">
     <span></span><span></span><span></span><span></span>
   </div>
+  <div class="station-info">
+    <span id="stationLabel">1 / 9</span>
+  </div>
+</div>
+
   
      <div id="terminal-wrapper">
   <div class="terminal" id="terminal"></div>
@@ -607,7 +630,15 @@ if (savedTheme === 'dark') {
 
 <script>
   const stations = [
-  {
+    {
+     name: 'Lo-Fi HipHop',
+      url: 'https://ep256.hostingradio.ru:8052/europaplus256.mp3'
+    },
+    {
+     name: 'Lo-Fi HipHop',
+      url: 'https://chanson.hostingradio.ru:8041/chanson128.mp3'
+    },
+    {
       name: 'Jazz Radio',
       url: 'https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3'
     },
@@ -617,11 +648,11 @@ if (savedTheme === 'dark') {
     },
     {
       name: 'Deep House Radio',
-      url: 'http://stream.intenseradio.net:8000/live'
+      url: 'https://listen.181fm.com/181-eagle_128k.mp3'
     },
     {
       name: 'Lounge FM Chill',
-      url: 'http://dancewave.online:8080/dance.mp3'
+      url: 'https://relay3.radiotoolkit.com/rcmdeep'
     },
     {
       name: 'Lo-Fi HipHop',
@@ -636,12 +667,16 @@ if (savedTheme === 'dark') {
   const nextBtn = document.getElementById('nextStation');
   const bars = document.querySelectorAll('.equalizer span');
 
-  function playStation(index) {
-    audio.src = stations[index].url;
-    audio.play().catch(() => {});
-    playBtn.textContent = '⏸️';
-    bars.forEach(bar => bar.style.animationPlayState = 'running');
-  }
+ function playStation(index) {
+  audio.src = stations[index].url;
+  audio.play().catch(() => {});
+  playBtn.textContent = '⏸️';
+  bars.forEach(bar => bar.style.animationPlayState = 'running');
+  document.getElementById('stationLabel').textContent = 
+  `${index + 1} / ${stations.length}`;
+
+
+}
 
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
