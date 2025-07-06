@@ -225,7 +225,24 @@ body.dark .contact-list a {
   text-shadow: 0 0 6px #0ff;
   transition: all 0.3s ease;
 }
+.radio-controls button {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0 5px;
+}
 
+.radio-controls button:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+}
 
 /* 📰 Бегущая строка */
 .ticker-container {
@@ -268,6 +285,36 @@ body.dark .ticker-container {
 body.dark .close-btn {
   color: #bbb;
 }
+.ticker-neon {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #000;
+  border-top: 2px solid #0ff;
+  border-bottom: 2px solid #0ff;
+  padding: 8px 0;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.ticker-neon span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: tickerNeonMove 25s linear infinite;
+  color: #0ff;
+  text-shadow: 0 0 4px #0ff, 0 0 10px #0ff;
+}
+
+.ticker-neon a {
+  color: #ff0;
+  margin-left: 1em;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+@keyframes tickerNeonMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
 
 /* 🔘 Кнопки */
 .link-button {
@@ -289,15 +336,19 @@ body.dark .close-btn {
 .link-button:hover {
   background: #0ff;
   color: #111;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff, 0 0 40px #0ff;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
   text-shadow: none;
 }
 body.dark .link-button {
-  background: #444;
-  color: #fff;
+  background: #222;
+  color: #0ff;
+  text-shadow: 0 0 4px #0ff;
 }
 body.dark .link-button:hover {
-  background: #666;
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 20px #0ff, 0 0 36px #0ff;
+  text-shadow: none;
 }
 
 /* 🌐 Переключатель языка */
@@ -399,10 +450,10 @@ body.dark .theme .neon-terminal-wrapper .terminal {
    
 .terminal {
   background: #111;
-  padding: 10px 20px;
+  padding: 0.10px 0.10px;
   border-radius: 10px;
   box-shadow: 0 0 15px #00ffee;
-  max-width: 34.35vw;      /* ← вместо фиксированных пикселей */
+  max-width: 33vw;      /* ← вместо фиксированных пикселей */
   width: 100%;
   margin: 0 auto;
   white-space: pre-wrap;
@@ -454,66 +505,66 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   <button id="toggle-theme-btn" onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
 
   <!-- Твои ссылки (рефералы) -->
-  <a class="link-button neon" href="https://teaserfast.ru/u/SamvelVardanyan" target="_blank">🙌 teaserfast 🙌</a>
+  <a class="link-button neon" href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">🙌 teaserfast 🙌</a>
   <!-- Добавляй остальные как хочешь -->
-  <a class="link-button" href="https://freebitco.in/?r=19299067" target="_blank">
+  <a class="link-button" href="https://freebitco.in/?r=19299067&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 freebitco.in 🙌
   </a>
 
-  <a class="link-button" href="https://socpublic.com/?i=4713675&slide=1" target="_blank">
+  <a class="link-button" href="https://socpublic.com/?i=4713675&slide=1&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 socpublic 🙌
   </a>
   
-   <a class="link-button" href="https://seo-fast.ru/?r=1891976" target="_blank">
+   <a class="link-button" href="https://seo-fast.ru/?r=1891976&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 seo-fast 🙌
   </a>
   
-    <a class="link-button" href="https://wmrfast.com/?r=1119276" target="_blank">
+    <a class="link-button" href="https://wmrfast.com/?r=1119276&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 wmrfast 🙌
   </a>
   
-     <a class="link-button" href="https://doxod24.net/1372329" target="_blank">
+     <a class="link-button" href="https://doxod24.net/1372329?utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 SurfEarner 🙌
   </a>
   
-      <a class="link-button" href="https://aviso.bz/?r=samvosik" target="_blank">
+      <a class="link-button" href="https://aviso.bz/?r=samvosik&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
    🙌 aviso.bz 🙌
   </a>
   
-   <a class="link-button neon" href="https://vipip.ru/?refid=2131687" target="_blank">
+   <a class="link-button neon" href="https://vipip.ru/?refid=2131687&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
    🙌 vipip 🙌
   </a>
   
-  <a class="link-button neon" href="https://addon.money/p/96268" target="_blank">
+  <a class="link-button neon" href="https://addon.money/p/96268?utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
    🙌 addon.money 🙌
   </a>
   
-   <a class="link-button" href="https://surfe.be/ext/180667" target="_blank">
+   <a class="link-button" href="https://surfe.be/ext/180667?utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
    🙌 surfe.be 🙌
   </a>
   
-   <a class="link-button" href="https://www.neobux.com/?r=samvosik" target="_blank">
+   <a class="link-button" href="https://www.neobux.com/?r=samvosik&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 neobux 🙌
   </a>
   
-   <a class="link-button" href="https://www.coinpayu.com/?r=samvosik" target="_blank">
+   <a class="link-button" href="https://www.coinpayu.com/?r=samvosik&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 coinpayu 🙌
   </a>
   
-   <a class="link-button" href="https://www.kryptex.com/?ref=c1be79ef" target="_blank">
+   <a class="link-button" href="https://www.kryptex.com/?ref=c1be79ef&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
      🙌 kryptex 🙌
   </a>
   
-   <a class="link-button" href="https://earnbitmoon.club/?ref=507660" target="_blank">
+   <a class="link-button" href="https://earnbitmoon.club/?ref=507660&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
      🙌 earnbitmoon 🙌
   </a>
   
-    <a class="link-button" href="https://computta.com/?ref=597491" target="_blank">
+    <a class="link-button" href="https://computta.com/?ref=597491&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
      🙌 computta 🙌
   </a>
   
-    <a class="link-button neon" href="https://payeer.com/?session=9999261" target="_blank">
-    🙌 payer 🙌
+    <a class="link-button neon" href="https://payeer.com/?session=9999261&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
+    🙌 payeer 🙌
   </a>
   <script>
     const translations = {
@@ -571,6 +622,14 @@ if (savedTheme === 'dark') {
   </script>
 
   <section class="contact-footer">
+  
+  <div class="ticker-neon">
+  <span>
+    🎧 Включай плеер, слушай музыку и лови бонусы!  
+    <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
+  </span>
+</div>
+  
   <h2 class="icon-only-title" title="Связь для вопросов">📡</h2>
   
   <ul class="contact-list">
@@ -603,13 +662,16 @@ if (savedTheme === 'dark') {
       <a href="https://ok.ru/profile/268819542131" target="_blank">Samvel Vardanian</a>
     </li>
   </ul>
+  
   <div class="footer-player">
   <div class="player-visuals">
   <div class="equalizer">
     <span></span><span></span><span></span><span></span>
   </div>
+  
+  
   <div class="station-info">
-    <span id="stationLabel">1 / 9</span>
+    <span id="stationLabel">1 / 7</span>
   </div>
 </div>
 
@@ -617,13 +679,16 @@ if (savedTheme === 'dark') {
      <div id="terminal-wrapper">
   <div class="terminal" id="terminal"></div>
 </div>
+
   
   <div class="radio-controls">
   <button id="playToggle">▶️</button>
   <button id="nextStation">⏭️</button>
+  <button id="prevStation">⏮️</button>
 </div>
 
-  <audio id="radioAudio" autoplay></audio>
+
+  <audio id="radioAudio"></audio>
 </div>
 
 </section>
@@ -662,39 +727,76 @@ if (savedTheme === 'dark') {
 
   let currentStation = 0;
 
-  const audio = document.getElementById('radioAudio');
-  const playBtn = document.getElementById('playToggle');
-  const nextBtn = document.getElementById('nextStation');
-  const bars = document.querySelectorAll('.equalizer span');
+const audio = document.getElementById('radioAudio');
+const playBtn = document.getElementById('playToggle');
+const nextBtn = document.getElementById('nextStation');
+const prevBtn = document.getElementById('prevStation');
+const bars = document.querySelectorAll('.equalizer span');
+const label = document.getElementById('stationLabel');
 
- function playStation(index) {
-  audio.src = stations[index].url;
-  audio.play().catch(() => {});
-  playBtn.textContent = '⏸️';
-  bars.forEach(bar => bar.style.animationPlayState = 'running');
-  document.getElementById('stationLabel').textContent = 
-  `${index + 1} / ${stations.length}`;
-
-
+// 👉 Показываем только "1 / 7"
+function updateLabel(index) {
+  if (label) {
+    label.textContent = `${index + 1} / ${stations.length}`;
+  }
 }
 
-  playBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
+function playStation(index) {
+  audio.src = stations[index].url;
+  audio.play().then(() => {
+    playBtn.textContent = '⏸️';
+    bars.forEach(bar => bar.style.animationPlayState = 'running');
+    updateLabel(index);
+  }).catch(() => {
+    // Если автостарт запрещён — не меняем кнопку
+    playBtn.textContent = '▶️';
+    bars.forEach(bar => bar.style.animationPlayState = 'paused');
+    updateLabel(index);
+  });
+}
+
+// ▶️/⏸️ кнопка
+playBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().then(() => {
       playBtn.textContent = '⏸️';
       bars.forEach(bar => bar.style.animationPlayState = 'running');
-    } else {
-      audio.pause();
-      playBtn.textContent = '▶️';
-      bars.forEach(bar => bar.style.animationPlayState = 'paused');
-    }
-  });
+    }).catch(() => {});
+  } else {
+    audio.pause();
+    playBtn.textContent = '▶️';
+    bars.forEach(bar => bar.style.animationPlayState = 'paused');
+  }
+});
 
-  nextBtn.addEventListener('click', () => {
-    currentStation = (currentStation + 1) % stations.length;
-    playStation(currentStation);
-  });
+// ⏭️ кнопка
+nextBtn.addEventListener('click', () => {
+  currentStation = (currentStation + 1) % stations.length;
+  playStation(currentStation);
+});
+
+// ⏮️ кнопка
+prevBtn.addEventListener('click', () => {
+  currentStation = (currentStation - 1 + stations.length) % stations.length;
+  playStation(currentStation);
+});
+
+// 🚀 При загрузке: только устанавливаем первую станцию (без запуска)
+window.addEventListener('DOMContentLoaded', () => {
+  audio.src = stations[currentStation].url;
+  playBtn.textContent = '▶️';
+  bars.forEach(bar => bar.style.animationPlayState = 'paused');
+  updateLabel(currentStation);
+});
+
 </script>
+
+ <div class="ticker-neon">
+  <span>
+    🎧 Включай плеер, слушай музыку и лови бонусы!  
+    <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
+  </span>
+</div>
 
 <script>
   window.onload = function () {
@@ -751,6 +853,11 @@ if (savedTheme === 'dark') {
     terminalWrapper.addEventListener("click", restartTerminal);
     typeText();
   };
+  // Автоинициализация первой станции при загрузке страницы
+window.addEventListener('DOMContentLoaded', () => {
+  playStation(currentStation);
+});
+
 </script>
 
 
