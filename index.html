@@ -135,7 +135,7 @@ body.dark .contact-list a {
   cursor: pointer;
   margin-top: 10px;
   display: block;
-  width: 70px;
+  width: 55px;
   text-align: center;
 }
 #nextStation:hover {
@@ -249,22 +249,46 @@ body.dark .contact-list a {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
-  background: #eef;
+  background: #000;
   padding: 10px 40px 10px 10px;
   border-radius: 10px;
+  border: 2px solid #0ff;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
 }
+
 .ticker-container span {
   display: inline-block;
   width: max-content;
   animation: tickerMove 25s linear infinite;
+  color: #0ff;
+  font-weight: bold;
+  font-size: 1em;
+  text-shadow: 0 0 6px #0ff, 0 0 12px #0ff;
   animation-play-state: running;
   cursor: pointer;
 }
+
 .ticker-container span:hover {
   animation-play-state: paused;
-  color: crimson;
+  color: #fff;
   transform: scale(1.05);
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
 }
+@keyframes neonCycleText {
+  0%   { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+  25%  { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+  50%  { color: #00ff6a; text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a; }
+  75%  { color: #ffd500; text-shadow: 0 0 5px #ffd500, 0 0 10px #ffd500; }
+  100% { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+}
+@keyframes neonCycleText {
+  0%   { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+  25%  { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+  50%  { color: #00ff6a; text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a; }
+  75%  { color: #ffd500; text-shadow: 0 0 5px #ffd500, 0 0 10px #ffd500; }
+  100% { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+}
+
 @keyframes tickerMove {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
@@ -299,9 +323,12 @@ body.dark .close-btn {
 .ticker-neon span {
   display: inline-block;
   padding-left: 100%;
-  animation: tickerNeonMove 25s linear infinite;
-  color: #0ff;
-  text-shadow: 0 0 4px #0ff, 0 0 10px #0ff;
+  animation: 
+  tickerNeonMove 25s linear infinite,
+  neonCycleText 5s linear infinite;
+  animation-play-state: running;
+  text-shadow: 0 0 6px #0ff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .ticker-neon a {
@@ -310,11 +337,23 @@ body.dark .close-btn {
   text-decoration: underline;
   font-weight: bold;
 }
+@keyframes neonCycleText {
+  0%   { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+  25%  { color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff; }
+  50%  { color: #00ff6a; text-shadow: 0 0 5px #00ff6a, 0 0 10px #00ff6a; }
+  75%  { color: #ffd500; text-shadow: 0 0 5px #ffd500, 0 0 10px #ffd500; }
+  100% { color: #ff0080; text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+}
 
 @keyframes tickerNeonMove {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
+.ticker-neon span:hover {
+  animation-play-state: paused;
+  transform: scale(1.05);
+}
+
 
 /* 🔘 Кнопки */
 .link-button {
@@ -857,6 +896,24 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('DOMContentLoaded', () => {
   playStation(currentStation);
 });
+
+(function detectUTM() {
+  const params = new URLSearchParams(window.location.search);
+  const campaign = params.get('utm_campaign');
+  const source = params.get('utm_source');
+  const medium = params.get('utm_medium');
+  const terminal = document.getElementById("terminal");
+
+  if ((campaign || source || medium) && terminal) {
+    const msg = `📦 UTM Detected:
+  → campaign: ${campaign || '—'}
+  → source:   ${source || '—'}
+  → medium:   ${medium || '—'}`;
+    
+    terminal.innerHTML += `\n\n${msg}`;
+  }
+})();
+
 
 </script>
 
