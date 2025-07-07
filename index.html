@@ -519,10 +519,10 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 </head>
 <body>
 
-  <div class="ticker-container" id="ticker">
-    <span id="ticker-text">🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙</span>
-    <button class="close-btn" onclick="document.getElementById('ticker').style.display='none'">×</button>
-  </div>
+  <div class="ticker-container">
+  <span id="ticker-text"></span>
+  <button class="close-btn">×</button>
+</div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
   
@@ -664,12 +664,12 @@ if (savedTheme === 'dark') {
   
   <div class="ticker-neon">
   <span>
-    🎧 Включай плеер, слушай музыку и лови бонусы!  
+    🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно...  
     <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
   </span>
 </div>
-  
-  <h2 class="icon-only-title" title="Связь для вопросов">📡</h2>
+
+<h2 class="icon-only-title" id="matrixTrigger" title="Связь для вопросов">📡</h2>
   
   <ul class="contact-list">
     <li>
@@ -914,6 +914,120 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
+
+</script>
+
+<script>
+async function fetchRates() {
+  try {
+    const res = await fetch('https://api.exchangerate.fun/latest?base=USD');
+    const data = await res.json();
+    const r = data.rates;
+
+    const items = [
+      `🇺🇸 USD → 1.00 $`,
+      `🇪🇺 EUR → ${(1 / r.EUR).toFixed(2)} €`,
+      `🇬🇧 GBP → ${(1 / r.GBP).toFixed(2)} £`,
+      `🇷🇺 RUB → ${(1 / r.RUB).toFixed(2)} ₽`,
+      `🇦🇲 AMD → ${(1 / r.AMD).toFixed(2)} ֏`,
+      `🇬🇪 GEL → ${(1 / r.GEL).toFixed(2)} ₾`
+    ];
+
+    const ticker = document.getElementById('ticker-text');
+    if (ticker) ticker.textContent = items.join('   ');
+  } catch (e) {
+    console.error('📉 Ошибка получения курсов:', e);
+  }
+}
+
+fetchRates();
+setInterval(fetchRates, 60_000); // обновление каждую минуту
+
+</script>
+
+<script>
+// === ASCII-баннер с 3 языками и скрытым запуском по 📡 ===
+
+let secretClicks = 0;
+let secretTabs = 0;
+let matrixArmed = false;
+
+const matrixEl = document.getElementById('matrixTrigger');
+const terminalWrapper = document.getElementById('terminal-wrapper');
+
+// 💾 Баннеры (добавляй любые)
+const asciiBanners = [
+`███████╗ █████╗ ███╗   ███╗██╗   ██╗███████╗██╗     
+██╔════╝██╔══██╗████╗ ████║██║   ██║██╔════╝██║     
+█████╗  ███████║██╔████╔██║██║   ██║█████╗  ██║     
+██╔══╝  ██╔══██║██║╚██╔╝██║██║   ██║██╔══╝  ██║     
+██║     ██║  ██║██║ ╚═╝ ██║╚██████╔╝███████╗███████╗
+╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚══════╝`,
+
+`╔═╗┬  ┌─┐┬ ┬┌┬┐┌─┐┬─┐    ╔═╗┌┐┌┌─┐┌┐┌┌┬┐┌─┐
+╚═╗│  │ ││ │ │ ├┤ ├┬┘───  ╠═╣│││├─┤│││ │ └─┐
+╚═╝┴─┘└─┘└─┘ ┴ └─┘┴└─     ╩ ╩┘└┘┴ ┴┘└┘ ┴ └─┘`
+];
+
+let currentBanner = 0;
+
+// 📌 Строки на трёх языках
+const footerMultilang = `
+💡 System active. Click terminal to reboot.
+💡 Система активна. Нажмите терминал для перезапуска.
+💡 Համակարգը պատրաստ է։ Սեղմիր վերակատարելու համար։`;
+
+if (matrixEl) {
+  matrixEl.tabIndex = 0;
+
+  matrixEl.addEventListener('click', () => {
+    secretClicks++;
+    if (secretClicks >= 3 && !matrixArmed) activateAsciiMode();
+  });
+
+  matrixEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      secretTabs++;
+      if (secretTabs >= 3 && !matrixArmed) activateAsciiMode();
+    }
+  });
+}
+
+function activateAsciiMode() {
+  matrixArmed = true;
+  const terminal = document.getElementById("terminal");
+  if (!terminal) return;
+
+  terminal.textContent = "🧪 Hidden Command Accepted...\n⌛ Loading banner core...\n";
+  setTimeout(renderAsciiBanner, 1000);
+}
+
+function renderAsciiBanner() {
+  const terminal = document.getElementById("terminal");
+  if (!terminal) return;
+
+  const banner = asciiBanners[currentBanner];
+  currentBanner = (currentBanner + 1) % asciiBanners.length;
+
+  terminal.innerHTML = `
+    <span style="color:#00ff66; white-space:pre;">${banner}</span>
+    <br><br>
+    <span style="color:#88ff88; white-space:pre-line;">${footerMultilang}</span>`;
+}
+
+terminalWrapper.addEventListener("click", () => {
+  restartTerminal();
+
+  if (matrixArmed) {
+    setTimeout(() => {
+      const terminal = document.getElementById("terminal");
+      if (terminal) {
+        terminal.textContent = "🔁 Rebooting banner...\n";
+        setTimeout(renderAsciiBanner, 800);
+      }
+    }, 400);
+  }
+});
 
 </script>
 
