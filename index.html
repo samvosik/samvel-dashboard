@@ -497,12 +497,14 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   margin: 0 auto;
   white-space: pre-wrap;
   line-height: 1.6;
-  font-size: 1em;
+  font-size: 15.35px;
   text-shadow: 0 0 4px #00ffee;
   min-height: 200px;
   position: relative;
   color: #00ffee;
   box-sizing: border-box;
+  max-height: 515px;
+  
 }
     .cursor {
       display: inline-block;
@@ -521,7 +523,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 
   <div class="ticker-container">
   <span id="ticker-text"></span>
-  <button class="close-btn">×</button>
+  <!--<button class="close-btn">×</button>-->
 </div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
@@ -606,26 +608,34 @@ body.dark .theme .neon-terminal-wrapper .terminal {
     🙌 payeer 🙌
   </a>
   <script>
-    const translations = {
-      ru: {
-        title: "🎁 Полезные ссылки",
-        ticker: "🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙",
-        toggleTheme: "🌗 Переключить тему",
-        referralInfo: "Привет! 👋 Здесь собраны проверенные сервисы, с которыми я лично работаю. Переходи по ссылкам, регистрируйся — и давай вместе зарабатывать    онлайн 💸Мои личные рекомендации: сервисы, которые реально платят. Поддержи меня — переходи по ссылке и регистрируйся 💙Начни свой путь в онлайн-заработке уже сегодня! Ниже — самые удобные площадки, с которых когда-то начинал и я. Дерзай! 🔥"
-      },
-      en: {
-        title: "🎁 Useful Links",
-        ticker: "🔥 Follow the links and grab your bonuses! Thanks for the support 💙",
-        toggleTheme: "🌗 Toggle Theme",
-        referralInfo: "Hi there! 👋 Here are trusted platforms that I personally use. Follow the links, register, and let's earn online together 💸 My personal recommendations: services that actually pay. Support me by registering through the links 💙 Start your journey in online earnings today! Below are the best platforms I once started with. Let’s go! 🔥"
-      },
-      am: {
-        title: "🎁 Օգտակար հղումներ",
-        ticker: "🔥 Անցիր հղումներով և ստացիր բոնուսներ։ Շնորհակալություն աջակցության համար 💙",
-        toggleTheme: "🌗 Փոխել թեման",
-        referralInfo: "Բարեւ՛։ 👋 Ահա վստահելի հարթակներ, որոնք անձամբ եմ օգտագործում։ Անցիր հղումներով, գրանցվիր՝ և եկ՛ միասին առցանց վաստակենք 💸 Իմ անձնական առաջարկները՝ այն ծառայություններն են, որոնք իրականում վճարում են։ Աջակցիր ինձ՝ գրանցվելով հղումներով 💙 Սկսիր քո ուղին առցանց վաստակման մեջ հենց այսօր։ Ստորև իմ սիրելի հարթակներն են։ Դեպի առաջ! 🔥"
-      }
-    };
+ const translations = {
+  ru: {
+    title: "🎁 Полезные ссылки",
+    ticker: "🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙",
+    toggleTheme: "🌗 Переключить тему",
+    referralInfo: `Привет! 👋 Здесь собраны проверенные сервисы, с которыми я лично работаю. Переходи по ссылкам, регистрируйся — и давай вместе зарабатывать онлайн 💸<br><br>Мои личные рекомендации: сервисы, которые реально платят. Поддержи меня — переходи по ссылке и регистрируйся 💙<br><br>Начни свой путь в онлайн-заработке уже сегодня! Ниже — самые удобные площадки, с которых когда-то начинал и я. Дерзай! 🔥`,
+    tickerNeon: `🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно...`,
+    tickerBottom: `🎧 Включай плеер, слушай музыку и лови бонусы!`
+  },
+  en: {
+    title: "🎁 Useful Links",
+    ticker: "🔥 Follow the links and grab your bonuses! Thanks for the support 💙",
+    toggleTheme: "🌗 Toggle Theme",
+    referralInfo: `Hi there! 👋 Here are trusted platforms that I personally use. Follow the links, register — and let's earn online together 💸<br><br>My personal picks: these are services that actually pay. Support me by registering through the link 💙<br><br>Start your journey in online income today! Below are my favorite platforms I once started with. Let's go! 🔥`,
+    tickerNeon: `🎧 Search 📡 — and the system will reveal a secret... Try touching 📡...📡...📡 The neon station hides more than meets the eye...`,
+    tickerBottom: `🎧 Turn on the player, enjoy the music and grab rewards!`
+  },
+  am: {
+    title: "🎁 Օգտակար հղումներ",
+    ticker: "🔥 Անցիր հղումներով և ստացիր բոնուսներ։ Շնորհակալություն աջակցության համար 💙",
+    toggleTheme: "🌗 Փոխել թեման",
+    referralInfo: `Բարև՛։ 👋 Ահա վստահելի հարթակներ, որոնք անձամբ եմ օգտագործում։ Անցիր հղումներով, գրանցվիր — և եկ միասին առցանց վաստակենք 💸<br><br>Իմ անձնական ընտրանին՝ ծառայություններ, որոնք իրոք վճարում են։ Աջակցիր ինձ՝ գրանցվելով հղմամբ 💙<br><br>Սկսիր քո ուղին առցանց վաստակման մեջ հենց այսօր։ Ստորև իմ սիրելի հարթակներն են։ Դեպի առաջ! 🔥`,
+    tickerNeon: `🎧 Փնտրիր 📡 — և համակարգը կբացի գաղտնիքը... Փորձիր դիպչել 📡...📡...📡 Նեոնային կայանը թաքցնում է ավելին, քան տեսնում ես...`,
+    tickerBottom: `🎧 Միացրու նվագարկիչը, վայելիր երաժշտությունը և ստացիր բոնուսներ։`
+  }
+};
+
+
     const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
   document.body.classList.add('dark');
@@ -649,7 +659,9 @@ if (savedTheme === 'dark') {
       document.getElementById('toggle-theme-btn').textContent = t.toggleTheme;
       localStorage.setItem('language', lang);
       document.getElementById('lang-menu').style.display = 'none';
+      document.getElementById('ticker-neon-text').innerHTML = t.tickerNeon;
       document.getElementById('referral-text').innerHTML = t.referralInfo;
+      document.getElementById('ticker-bottom-text').textContent = t.tickerBottom;
     }
 
     window.onload = () => {
@@ -661,10 +673,9 @@ if (savedTheme === 'dark') {
   </script>
 
   <section class="contact-footer">
-  
   <div class="ticker-neon">
-  <span>
-    🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно...  
+  <span id="ticker-neon-text">
+    🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно... 
     <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
   </span>
 </div>
@@ -831,11 +842,11 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 
  <div class="ticker-neon">
-  <span>
-    🎧 Включай плеер, слушай музыку и лови бонусы!  
-    <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
+  <span id="ticker-bottom-text">
+    🎧 Включай плеер, слушай музыку и лови бонусы!
   </span>
 </div>
+
 
 <script>
   window.onload = function () {
@@ -957,17 +968,9 @@ const terminalWrapper = document.getElementById('terminal-wrapper');
 
 // 💾 Баннеры (добавляй любые)
 const asciiBanners = [
-`███████╗ █████╗ ███╗   ███╗██╗   ██╗███████╗██╗     
-██╔════╝██╔══██╗████╗ ████║██║   ██║██╔════╝██║     
-█████╗  ███████║██╔████╔██║██║   ██║█████╗  ██║     
-██╔══╝  ██╔══██║██║╚██╔╝██║██║   ██║██╔══╝  ██║     
-██║     ██║  ██║██║ ╚═╝ ██║╚██████╔╝███████╗███████╗
-╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚══════╝`,
-
-`╔═╗┬  ┌─┐┬ ┬┌┬┐┌─┐┬─┐    ╔═╗┌┐┌┌─┐┌┐┌┌┬┐┌─┐
-╚═╗│  │ ││ │ │ ├┤ ├┬┘───  ╠═╣│││├─┤│││ │ └─┐
-╚═╝┴─┘└─┘└─┘ ┴ └─┘┴└─     ╩ ╩┘└┘┴ ┴┘└┘ ┴ └─┘`
+  `   W A I T I N G  . . .`
 ];
+
 
 let currentBanner = 0;
 
@@ -1010,9 +1013,9 @@ function renderAsciiBanner() {
   currentBanner = (currentBanner + 1) % asciiBanners.length;
 
   terminal.innerHTML = `
-    <span style="color:#00ff66; white-space:pre;">${banner}</span>
-    <br><br>
-    <span style="color:#88ff88; white-space:pre-line;">${footerMultilang}</span>`;
+    <span style="color:#00ff66; white-space:pre; font-size: 0.9em; line-height: 0.9;">${banner}</span>
+  <br><br
+     <span style="color:#88ff88; white-space:pre-line; font-size: 0.40em;">${footerMultilang}</span>`;
 }
 
 terminalWrapper.addEventListener("click", () => {
