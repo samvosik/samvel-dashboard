@@ -499,7 +499,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   line-height: 1.6;
   font-size: 15.35px;
   text-shadow: 0 0 4px #00ffee;
-  min-height: 200px;
+  min-height: 20px;
   position: relative;
   color: #00ffee;
   box-sizing: border-box;
@@ -516,7 +516,46 @@ body.dark .theme .neon-terminal-wrapper .terminal {
     @keyframes blink {
       0%, 100% { opacity: 0; }
       50% { opacity: 1; }
-    }  
+    }
+ /* 1) Определяем анимацию пульсации */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 15px currentColor,
+      0 0 15px currentColor;
+  }
+  50% {
+    box-shadow:
+      inset 0 0 30px currentColor,
+      0 0 30px currentColor;
+  }
+}
+
+/* 2) Применяем анимацию на кнопку постоянно */
+.neon-theme-btn {
+  /* остальные ваши стили */
+  animation: neonPulse 2.5s ease-in-out infinite;
+}
+
+/* 3) При наведении ускоряем и усиливаем пульсацию */
+.neon-theme-btn:hover {
+  animation-duration: 1s;
+  box-shadow:
+    inset 0 0 40px currentColor,
+    0 0 40px currentColor;
+  transform: scale(1.03);
+}
+
+/* ваша кнопка */
+.neon-theme-btn {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
+}
+.neon-theme-btn {
+  font-size: 35px; /* вместо 24px, подбирай своё значение */
+}
+    
   </style>
 </head>
 <body>
@@ -543,7 +582,8 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 </div>
 
 
-  <button id="toggle-theme-btn" onclick="toggleTheme()" class="link-button">🌗 Переключить тему</button>
+  <button id="toggle-theme-btn" onclick="toggleTheme()" class="neon-theme-btn" style="width:160px;">🌗</button>
+
 
   <!-- Твои ссылки (рефералы) -->
   <a class="link-button neon" href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">🙌 teaserfast 🙌</a>
@@ -612,7 +652,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   ru: {
     title: "🎁 Полезные ссылки",
     ticker: "🔥 Переходи по ссылкам — и получай бонусы! Спасибо за поддержку 💙",
-    toggleTheme: "🌗 Переключить тему",
+    toggleTheme: "🌗 ",
     referralInfo: `Привет! 👋 Здесь собраны проверенные сервисы, с которыми я лично работаю. Переходи по ссылкам, регистрируйся — и давай вместе зарабатывать онлайн 💸<br><br>Мои личные рекомендации: сервисы, которые реально платят. Поддержи меня — переходи по ссылке и регистрируйся 💙<br><br>Начни свой путь в онлайн-заработке уже сегодня! Ниже — самые удобные площадки, с которых когда-то начинал и я. Дерзай! 🔥`,
     tickerNeon: `🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно...`,
     tickerBottom: `🎧 Включай плеер, слушай музыку и лови бонусы!`
@@ -620,7 +660,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   en: {
     title: "🎁 Useful Links",
     ticker: "🔥 Follow the links and grab your bonuses! Thanks for the support 💙",
-    toggleTheme: "🌗 Toggle Theme",
+    toggleTheme: "🌗 ",
     referralInfo: `Hi there! 👋 Here are trusted platforms that I personally use. Follow the links, register — and let's earn online together 💸<br><br>My personal picks: these are services that actually pay. Support me by registering through the link 💙<br><br>Start your journey in online income today! Below are my favorite platforms I once started with. Let's go! 🔥`,
     tickerNeon: `🎧 Search 📡 — and the system will reveal a secret... Try touching 📡...📡...📡 The neon station hides more than meets the eye...`,
     tickerBottom: `🎧 Turn on the player, enjoy the music and grab rewards!`
@@ -628,7 +668,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   am: {
     title: "🎁 Օգտակար հղումներ",
     ticker: "🔥 Անցիր հղումներով և ստացիր բոնուսներ։ Շնորհակալություն աջակցության համար 💙",
-    toggleTheme: "🌗 Փոխել թեման",
+    toggleTheme: "🌗 ",
     referralInfo: `Բարև՛։ 👋 Ահա վստահելի հարթակներ, որոնք անձամբ եմ օգտագործում։ Անցիր հղումներով, գրանցվիր — և եկ միասին առցանց վաստակենք 💸<br><br>Իմ անձնական ընտրանին՝ ծառայություններ, որոնք իրոք վճարում են։ Աջակցիր ինձ՝ գրանցվելով հղմամբ 💙<br><br>Սկսիր քո ուղին առցանց վաստակման մեջ հենց այսօր։ Ստորև իմ սիրելի հարթակներն են։ Դեպի առաջ! 🔥`,
     tickerNeon: `🎧 Փնտրիր 📡 — և համակարգը կբացի գաղտնիքը... Փորձիր դիպչել 📡...📡...📡 Նեոնային կայանը թաքցնում է ավելին, քան տեսնում ես...`,
     tickerBottom: `🎧 Միացրու նվագարկիչը, վայելիր երաժշտությունը և ստացիր բոնուսներ։`
@@ -641,11 +681,12 @@ if (savedTheme === 'dark') {
   document.body.classList.add('dark');
 }
 
-    function toggleTheme() {
-  document.body.classList.toggle('dark');
-  const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
-  localStorage.setItem('theme', theme);
+ function toggleTheme() {
+  document.body.classList.toggle('dark');       // <-- ставим/снимаем .dark
+  document.body.classList.toggle('dark-theme'); // <-- дублируем для безопасности
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 }
+
 
     function toggleLangMenu() {
       const menu = document.getElementById('lang-menu');
