@@ -555,10 +555,28 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 .neon-theme-btn {
   font-size: 35px; /* вместо 24px, подбирай своё значение */
 }
-    
+.terminal-log {
+  font-family: monospace;
+  background: #000;
+  color: #0f0;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #0f0;
+  margin-top: 10px;
+}  
   </style>
+  
 </head>
 <body>
+
+<script>window.dataLayer = window.dataLayer || [];</script>
+
+<!-- 🌌 Блок событий -->
+<h2 id="log-toggle" class="icon-only-title" title="Показать терминал">📡</h2>
+<div id="event-log-wrapper" style="display: none;">
+  <div id="event-log" class="terminal-log"></div>
+</div>
 
   <div class="ticker-container">
   <span id="ticker-text"></span>
@@ -566,8 +584,6 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 </div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
-  
-
 
   <div class="lang-switcher">
     <button onclick="toggleLangMenu()">🌐  ▾</button>
@@ -582,7 +598,7 @@ body.dark .theme .neon-terminal-wrapper .terminal {
 </div>
 
 
-  <button id="toggle-theme-btn" onclick="toggleTheme()" class="neon-theme-btn" style="width:160px;">🌗</button>
+  <button id="toggle-theme-btn"  class="neon-theme-btn" style="width:160px;">🌗</button>
 
 
   <!-- Твои ссылки (рефералы) -->
@@ -647,6 +663,8 @@ body.dark .theme .neon-terminal-wrapper .terminal {
     <a class="link-button neon" href="https://payeer.com/?session=9999261&utm_source=github&utm_medium=button&utm_campaign=referral_links" target="_blank">
     🙌 payeer 🙌
   </a>
+  
+  
   <script>
  const translations = {
   ru: {
@@ -703,7 +721,17 @@ if (savedTheme === 'dark') {
       document.getElementById('ticker-neon-text').innerHTML = t.tickerNeon;
       document.getElementById('referral-text').innerHTML = t.referralInfo;
       document.getElementById('ticker-bottom-text').textContent = t.tickerBottom;
-    }
+      // 🛰️ GTM-событие
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'language_switch',
+      language: lang
+    });
+  }
+
+  // 📡 Терминальный лог
+  logEvent('language_switch', lang);
+}
 
     window.onload = () => {
       const theme = localStorage.getItem('theme');
@@ -1042,6 +1070,16 @@ function activateAsciiMode() {
   const terminal = document.getElementById("terminal");
   if (!terminal) return;
 
+  // 📡 Событие + терминальный лог
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'ascii_mode_activated',
+      trigger: '📡 matrixTrigger'
+    });
+  }
+
+  logEvent('ascii_mode_activated', 'Triggered via 📡 matrix');
+
   terminal.textContent = "🧪 Hidden Command Accepted...\n⌛ Loading banner core...\n";
   setTimeout(renderAsciiBanner, 1000);
 }
@@ -1075,6 +1113,103 @@ terminalWrapper.addEventListener("click", () => {
 
 </script>
 
+<script>
+  // Инициализация dataLayer
+  window.dataLayer = window.dataLayer || [];
+
+  // 🔎 Функция вывода события
+  function logEvent(type, data) {
+    const log = document.getElementById('event-log');
+    const line = document.createElement('div');
+    const timestamp = new Date().toLocaleTimeString();
+
+    line.textContent = `🕒 [${timestamp}] ${type}: ${data}`;
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  // 🎯 Кнопки-ссылки
+  document.querySelectorAll('.link-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const label = button.textContent.trim();
+      const url = button.getAttribute('href');
+
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'button_click',
+          buttonText: label,
+          buttonHref: url
+        });
+      }
+
+      logEvent('button_click', label);
+    });
+  });
+
+  // 🌙 Темная/светлая тема
+  const themeBtn = document.getElementById('toggle-theme-btn');
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+    localStorage.setItem('theme', currentTheme);
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'theme_switched',
+        theme: currentTheme
+      });
+    }
+
+    logEvent('theme_switched', currentTheme);
+  });
+
+  // 🛰️ Антенна — пасхалка
+  const antenna = document.getElementById('antenna-trigger');
+  if (antenna) {
+    antenna.addEventListener('click', () => {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'antenna_click',
+          message: '📡 Easter Egg activated!'
+        });
+      }
+
+      logEvent('antenna_click', 'Easter Egg activated');
+    });
+  }
+
+  // 🌐 Переключатель языка
+  document.querySelectorAll('#lang-menu button').forEach(langBtn => {
+    langBtn.addEventListener('click', () => {
+      const lang = langBtn.textContent.trim();
+
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'language_switch',
+          language: lang
+        });
+      }
+
+      logEvent('language_switch', lang);
+    });
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('log-toggle');
+  const wrapper = document.getElementById('event-log-wrapper');
+
+  toggle.addEventListener('click', () => {
+    const isVisible = wrapper.style.display === 'block';
+    wrapper.style.display = isVisible ? 'none' : 'block';
+
+    // 💬 Добавляем лог
+    logEvent('log_terminal_visibility', isVisible ? 'Hidden' : 'Visible');
+ ;
+});
+ })
+</script>
 
 
 
