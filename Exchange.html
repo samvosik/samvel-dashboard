@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обменник валют</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            text-align: center;
+            padding: 50px;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        select, input, button {
+            font-size: 20px;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        button {
+            background-color: #ffbe00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff9900;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #28a745;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* 🔥 Стили для бегущей строки */
+        .ticker-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .ticker-container span {
+            display: inline-block;
+            animation: tickerMove 25s linear infinite;
+            display: inline-block;
+            width: max-content;
+        }
+
+        @keyframes tickerMove {
+            0% { transform: translateX(30%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        #ticker-text {
+            font-size: 35px;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ticker-container">
+        <span id="ticker-text"> 🔥Страница на разработке спасибо за посещение.🔥 Page under construction, thanks for visiting.🔥 Էջը կառուցման փուլում է, շնորհակալություն այցելության համար։🔥</span>
+    </div>
+    <div id="terminal-log" style="margin-top:30px;font-family:monospace;color:#fff;"></div>
+
+    <div class="container">
+        <h2>🚀 Обменник валют</h2>
+        <label>Сумма: <input type="number" id="amount" value="100"></label><br>
+
+        <label>Из:
+            <select id="fromCurrency">
+                <option value="USD">Доллар</option>
+                <option value="RUB">Рубль</option>
+                <option value="AMD">Драм</option>
+                <option value="EUR">Евро</option>
+                <option value="GEL">Лари</option>
+                <option value="BTC">Биткоин</option>
+            </select>
+        </label><br>
+
+        <label>В:
+            <select id="toCurrency">
+                <option value="USD">Доллар</option>
+                <option value="RUB">Рубль</option>
+                <option value="AMD">Драм</option>
+                <option value="EUR">Евро</option>
+                <option value="GEL">Лари</option>
+                <option value="BTC">Биткоин</option>
+            </select>
+        </label><br>
+
+        <button onclick="convertCurrency()">🔥 Обменять</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        /* 🚀 Обновление бегущей строки с курсами валют */
+        async function fetchExchangeRates() {
+            try {
+                const response = await fetch('https://api.exchangeratesapi.io/latest?base=USD');
+                const data = await response.json();
+                return data.rates;
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+                return null;
+            }
+        }
+
+        async function updateTicker() {
+            const rates = await fetchExchangeRates();
+            if (!rates) return;
+
+            let tickerText = Object.keys(rates)
+                .filter(currency => ["USD", "RUB", "AMD", "EUR", "GEL", "BTC"].includes(currency))
+                .map(currency => `${currency}: ${rates[currency].toFixed(2)}`)
+                .join(" | ");
+
+            document.getElementById("ticker-text").textContent = tickerText;
+        }
+
+        setInterval(updateTicker, 30000);
+        updateTicker();
+
+        /* 💰 Конвертация валют */
+        function convertCurrency() {
+            var amount = parseFloat(document.getElementById("amount").value);
+            var fromCurrency = document.getElementById("fromCurrency").value;
+            var toCurrency = document.getElementById("toCurrency").value;
+
+            fetchExchangeRates().then(rates => {
+                if (!rates) return;
+                var result = amount * (rates[toCurrency] / rates[fromCurrency]);
+                var resultElement = document.getElementById("result");
+                resultElement.innerHTML = "Вы получите: " + result.toFixed(8) + " " + toCurrency;
+                resultElement.style.opacity = 0;
+                setTimeout(() => resultElement.style.opacity = 1, 200);
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Скидки</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    /* 💠 Базовые стили */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fdfdfd;
+  color: #333;
+}
+
+/* 💠 Заголовок */
+.neon-header {
+  color: #00ffff;
+  font-family: monospace;
+  font-size: 1.8em;
+  text-align: center;
+  border: 2px solid #00ffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  margin: 20px 0;
+}
+
+/* 🧠 Шапка */
+header {
+  background: #8B008B;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* 📟 Навигация */
+nav {
+  display: flex;
+  justify-content: center;
+  background: #f0f0f0;
+  padding: 10px;
+}
+
+nav button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+/* 🎛️ Карточки профиля и скидки */
+.profile, .discount {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: white;
+}
+
+.discount {
+  background: #999999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.discount:hover {
+  transform: scale(1.02);
+}
+
+/* 🖼️ Изображения */
+.discount img {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 15px auto;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.discount img:hover {
+  box-shadow: 0 0 20px #00ffff;
+  transform: scale(1.03);
+}
+
+/* 💰 Секция скидок в сетке */
+#discounts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+/* 🔐 Формы, инпуты и кнопки */
+input[type="password"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: monospace;
+}
+
+/* Общие кнопки */
+button,
+form button {
+  background-color: #00ffff;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 0 8px #00ffff;
+  transition: all 0.3s ease;
+  font-family: monospace;
+}
+
+button:hover,
+form button:hover {
+  background-color: #00e0e0;
+  transform: scale(1.05);
+}
+
+/* 📦 Форма заявки */
+form {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffff inset, 0 0 8px #00ffff;
+  color: #0ff;
+  font-family: monospace;
+  max-width: 500px;
+  margin: 20px auto;
+  border-top: 1px dashed #0ff;
+  padding-top: 10px;
+}
+
+form input,
+form textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border: 1px solid #0ff;
+  background: #000;
+  color: #0ff;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+/* 💳 Кнопка оплаты */
+.pay-btn {
+  display: inline-block;
+  background-color: #0ff;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 0 5px #0ff;
+}
+.pay-btn:hover {
+  background-color: #00e0e0;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px #00ffff;
+}
+
+/* 📝 Информационный блок в форме */
+.submission-panel p:first-child {
+  background-color: #000;
+  border: 1px dashed #0ff;
+  outline: 1px solid #0ff;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+/* 💡 Подсветка <code> */
+code {
+  background: #000;
+  color: #0ff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* 📱 Адаптив */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+
+  nav button {
+    margin: 5px 0;
+    width: 90%;
+  }
+
+  .profile img,
+  .discount img {
+    width: 100% !important;
+    max-width: none;
+    float: none;
+    margin: 0 0 10px 0;
+  }
+
+  .profile,
+  .discount {
+    padding: 10px;
+    font-size: 1em;
+  }
+  /* 📲 QR-доступ */
+
+    .background: {
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .qr-wrapper {
+      display: inline-block;
+      padding: 10px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow:
+        0 0 10px #0ff,
+        0 0 20px #0ff;
+      animation: neonPulse 2s infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .qr-wrapper:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 20px #0ff,
+        0 0 40px #0ff,
+        0 0 60px #0ff;
+    }
+
+    .qr-wrapper img {
+      width: 160px;
+      height: 160px;
+      border-radius: 10px;
+    }
+
+    @keyframes neonPulse {
+      0% {
+        box-shadow:
+          0 0 10px #0ff,
+          0 0 20px #0ff;
+      }
+      100% {
+        box-shadow:
+          0 0 20px #0ff,
+          0 0 40px #0ff,
+          0 0 60px #0ff;
+      }
+  </style>
+</head>
+<body>
+
+<header>
+
+  <h1 class="neon-header">💰 Система скидок</h1>
+  <p class="neon-header" style="font-size: 1.5em; font-weight: normal;">
+    Скидки доступны только после получения кода стоимостью <strong>1000 драм</strong>.  
+    Код необходимо показать сотрудникам магазина, ресторана или отеля, указанного в соответствующем разделе.
+  </p>
+
+<div class="discount" style="width: 170px; height: 155px; margin: 10px auto; padding: 20px;">
+   <div class="qr-wrapper">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://teaserfast.ru/u/SamvelVardanyan" alt="QR Code">
+  </div>
+
+   </div>
+  <p class="neon-header" style="font-size: 1.5em;">
+    ⚙️ 🔐 Пройдите активацию → Получите персональный код → предъявите в пункте назначения → получите скидку.
+  </p> 
+  
+</header>
+
+<section id="discounts">
+
+  <div class="discount">
+    <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr9xO5WWjgYSTZeXb-nha1CFHK1ow3Tw1x_BQEzdvaCWHIzYXGxWeEUTJwnVdHEc3WACLZ0ZbLhPyhgsFgd0RwXnpb-MjF_sW9mu4bBqgGBx6PjYqm0F61snQ-3zaIfnHGJpz8-=s680-w680-h510-rw"
+         alt="SKY Electronics"
+         style="border-radius: 8px; margin-bottom: 15px;" />
+         <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <h3>🖥️ Компьютерный магазин SKY Electronics — Гюмри</h3>
+      <p><strong>Адрес:</strong> 50, ул. Горького 8, Гюмри</p>
+    <p><strong>Телефон:</strong> <a href="tel:+37498768271">098 768271</a></p>
+    <p><strong>Часы работы:</strong></p>
+    <ul style="padding-left: 20px; margin-top: 5px;">
+      <li>Понедельник: 10:00–19:00</li>
+      <li>Вторник: 10:00–19:00</li>
+      <li>Среда: 10:00–19:00</li>
+      <li>Четверг: 10:00–19:00</li>
+      <li>Пятница: 10:00–19:00</li>
+      <li>Суббота: 10:00–19:00</li>
+      <li>Воскресенье: 11:00–18:00</li>
+      <li>Доставка</li>
+       </ul>
+      <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
+     
+  <p>💳 <span style="color:#0ff;">Для получения скидки на SKY Electronics 
+  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
+    💳 Перейти к оплате
+  </a>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="text" name="transaction" placeholder="ID транзакции" required>
+    <input type="email" name="email" placeholder="Email (по желанию)">
+    <input type="hidden" name="object" value="Объект скидки">
+    <button type="submit">📨 Подтвердить оплату</button>
+  </form>
+  <p style="font-size:0.9em; color:#0f0;">
+  💡  Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+</p>
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  
+ <input type="password" id="accessCode-1" placeholder="Введите пароль для скидки" />
+<button onclick="revealDiscountCode('accessCode-1','secretCode-1')">Показать код скидки</button>
+<div id="secretCode-1" style="display:none;"></div>
+
+               <p id="waitMsg" style="font-family:monospace; color:#0f0;">
+  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
+</p> 
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+   </div>
+   
+      
+    <div class="discount">
+    <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npkyQ90IF0tjrpuveLK_Y9tTxfbb0T_7swqMEGrtXo-PPSa3PQgKlUDrEwfpj0KvGDPmH0X6cGZmmedoSrtsZUwnx1tLvFlWVyTfCXb1Ui85AUpnzXXFEK5Xqg1_RZ5y0VfH93u=s680-w680-h510-rw"
+         alt="Welux"
+         style="border-radius: 8px; margin-bottom: 15px;" />
+         <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <h3>🖥️  Магазин електроники Welux — Гюмри</h3>
+     <p><strong>Адрес:</strong> 200/2 Ул Шаумяна, Gyumri 3104</p>
+    <p><strong>Телефон:</strong> <a href="tel:+37477 938489">077 938489</a></p>
+    <p><strong>Часы работы:</strong></p>
+    <ul style="padding-left: 20px; margin-top: 5px;">
+      <li>Понедельник: 09:00–19:00</li>
+      <li>Вторник: 09:00–19:00</li>
+      <li>Среда: 09:00–19:00</li>
+      <li>Четверг: 09:00–19:00</li>
+      <li>Пятница: 09:00–19:00</li>
+      <li>Суббота: 09:00–19:00</li>
+      <li>Воскресенье: 09:00–19:00</li>
+      <li>Доставка</li>
+       </ul>
+      <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
+    
+  <p>💳 <span style="color:#0ff;">Для получения скидки на Welux
+  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
+    💳 Перейти к оплате
+  </a>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="text" name="transaction" placeholder="ID транзакции" required>
+    <input type="email" name="email" placeholder="Email (по желанию)">
+    <input type="hidden" name="object" value="Объект скидки">
+    <button type="submit">📨 Подтвердить оплату</button>
+  </form>
+  <p style="font-size:0.9em; color:#0f0;">
+  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+</p>
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  
+  <input type="password" id="accessCode-2" placeholder="Введите пароль для скидки" />
+<button onclick="revealDiscountCode('accessCode-2','secretCode-2')">Показать код скидки</button>
+<div id="secretCode-2" style="display:none;"></div>
+
+          <p id="waitMsg" style="font-family:monospace; color:#0f0;">
+  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
+</p>     
+         <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+   </div>
+   
+    <div class="discount">
+    <img src="https://lh3.googleusercontent.com/p/AF1QipOixinrBepZ0qD5c--aueujQKVGZXmWLXyw_Ypk=s680-w680-h510-rw"
+         alt="Vesta"
+         style="border-radius: 8px; margin-bottom: 15px;" />
+         <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <h3>🖥️  Магазин електроники Vesta— Гюмри</h3>
+     <p><strong>Адрес:</strong>  M1, Gyumri </p>
+    <p><strong>Телефон:</strong> <a href="tel:+374 93 588880"> 093 588880</a></p>
+    <p><strong>Часы работы:</strong></p>
+    <ul style="padding-left: 20px; margin-top: 5px;">
+      <li>Понедельник: 10:00–19:00</li>
+      <li>Вторник: 10:00–19:00</li>
+      <li>Среда: 10:00–19:00</li>
+      <li>Четверг: 10:00–19:00</li>
+      <li>Пятница: 10:00–19:00</li>
+      <li>Суббота: 10:00–19:00</li>
+      <li>Воскресенье: 10:00–19:00</li>
+      <li>Доставка</li>
+       </ul>
+      <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
+     
+  <p>💳 <span style="color:#0ff;">Для получения скидки на Vesta 
+  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
+    💳 Перейти к оплате
+  </a>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="text" name="transaction" placeholder="ID транзакции" required>
+    <input type="email" name="email" placeholder="Email (по желанию)">
+    <input type="hidden" name="object" value="Объект скидки">
+    <button type="submit">📨 Подтвердить оплату</button>
+  </form>
+  <p style="font-size:0.9em; color:#0f0;">
+  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+</p>
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  
+   <input type="password" id="accessCode-3" placeholder="Введите пароль для скидки" />
+<button onclick="revealDiscountCode('accessCode-3','secretCode-3')">Показать код скидки</button>
+<div id="secretCode-3" style="display:none;"></div>
+
+ <p id="waitMsg" style="font-family:monospace; color:#0f0;">
+  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
+</p> 
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+   </div>
+   
+   <div class="discount">
+  <img src="https://nika35.ru/wp-content/uploads/2016/09/reklama-na-bilbordah.jpg"
+       alt="Объект скидки"
+       style="height: 300px; width: auto; object-fit: cover;" />
+       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <h3>🖥️  Будет добавлен.</h3>
+   <p><strong>Адрес:</strong> Будет добавлен</p>
+  <p><strong>Телефон:</strong> <a href="tel:+374Будет добавлен.">Будет добавлен</a></p>
+  <p><strong>Часы работы:</strong></p>
+  <ul>
+    <li>Понедельник: 10:00–19:00</li>
+      <li>Вторник: 10:00–19:00</li>
+      <li>Среда: 10:00–19:00</li>
+      <li>Четверг: 10:00–19:00</li>
+      <li>Пятница: 10:00–19:00</li>
+      <li>Суббота: 10:00–19:00</li>
+      <li>Воскресенье: 11:00–18:00</li>
+      <li>Доставка</li>
+    </ul>
+    <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
+ 
+  <p>💳 <span style="color:#0ff;">Для получения скидки на объект  X 
+  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
+    💳 Перейти к оплате
+  </a>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="text" name="transaction" placeholder="ID транзакции" required>
+    <input type="email" name="email" placeholder="Email (по желанию)">
+    <input type="hidden" name="object" value="Объект скидки">
+    <button type="submit">📨 Подтвердить оплату</button>
+  </form>
+  <p style="font-size:0.9em; color:#0f0;">
+  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+</p>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+
+ <input type="password" id="accessCode-4" placeholder="Введите пароль для скидки" />
+<button onclick="revealDiscountCode('accessCode-4','secretCode-4')">Показать код скидки</button>
+<div id="secretCode-4" style="display:none;"></div>
+
+  <div class="qr-access">
+   <p id="waitMsg" style="font-family:monospace; color:#0f0;">
+  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
+</p> 
+  </div>  
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+</div>
+
+  <div class="discount">
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <h3>🏨 Отель "Romantic Inn"</h3>
+    <p>условиями скидки вас ознакомят сотрудники заведения.</p>
+    <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  </div>
+ 
+  <div class="discount">
+  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+    <h3>🍽️ Ресторан "Amore"</h3>
+    <p>условиями скидки вас ознакомят сотрудники заведения.</p>
+    <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  </div>
+</section>
+
+<p style="background-color: #000; color: #0ff; font-size: 1.9em; font-family: monospace; padding: 10px; border-radius: 8px;">
+  <strong>🆓 Бесплатно</strong> для частных лиц и владельцев  
+  <br>🔐 После модерации ваш объект появится в списке в течение суток
+</p>
+
+  <form action="https://formspree.io/f/meozqqeb" method="POST">
+    <input type="text" name="name" placeholder="Название объекта" required>
+    <input type="text" name="address" placeholder="Адрес" required>
+    <input type="tel" name="phone" placeholder="Контактный номер" required>
+    <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
+    <button type="submit">🚀 Отправить заявку</button>
+  </form>
+
+  <p id="thanksMsg" style="display:none; color:#0f0; font-family:monospace;">
+    ✅ Заявка отправлена! Мы добавим ваш объект вручную в течение суток.
+  </p>
+</div>
+
+<script>
+  // 🔓 Проверка пароля и отображение кода
+  function revealDiscountCode(inputId, outputId) {
+    const input = document.getElementById(inputId);
+    const output = document.getElementById(outputId);
+
+    const password = atob("bG92ZW1lZXQ"); 
+    const code = atob("MTk3Ng==");    
+
+    if (input.value.toLowerCase() === password) {
+      output.innerHTML = `
+        <p style="background:#000; color:#0ff; padding:10px; border-radius:8px;">
+          🔓 Ваш код доступа: <strong>${code}</strong>
+        </p>`;
+      output.style.display = "block";
+      input.style.display = "none";
+    } else {
+      alert("🚫 Неверный пароль");
+    }
+  }
+
+  // 📨 Подтверждение формы и сообщение
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    const msg = document.getElementById("thanksMsg");
+    if (form && msg) {
+      form.addEventListener("submit", () => {
+        setTimeout(() => {
+          msg.style.display = "block";
+        }, 400);
+      });
+    }
+
+    // 📡 Визуальный лог и трекинг ссылок
+    const logPanel = document.getElementById("logPanel");
+    function log(msg) {
+      if (logPanel) {
+        const line = document.createElement("div");
+        line.textContent = `🧠 ${msg}`;
+        logPanel.appendChild(line);
+      }
+      console.log(msg);
+    }
+
+    document.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        const href = link.getAttribute("href");
+        log(`🔗 Клик по ссылке: ${href}`);
+      });
+    });
+  });
+</script>
+
+<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
+  <strong>📡 Активность:</strong>
+</div>
+
+
+
+
+
+</body>
+
+</html>

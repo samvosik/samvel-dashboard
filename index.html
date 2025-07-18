@@ -565,6 +565,95 @@ body.dark .theme .neon-terminal-wrapper .terminal {
   border: 1px solid #0f0;
   margin-top: 10px;
 }  
+.neon-hub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.neon-link {
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  background: black;
+  font-family: monospace;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  transition: all 0.3s ease;
+}
+
+.neon-link:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+  transform: scale(1.05);
+}
+ {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .qr-wrapper {
+      display: inline-block;
+      padding: 10px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow:
+        0 0 10px #0ff,
+        0 0 20px #0ff;
+      animation: neonPulse 2s infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .qr-wrapper:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 20px #0ff,
+        0 0 40px #0ff,
+        0 0 60px #0ff;
+    }
+
+    .qr-wrapper img {
+      width: 160px;
+      height: 160px;
+      border-radius: 10px;
+    }
+
+    @keyframes neonPulse {
+      0% {
+        box-shadow:
+          0 0 10px #0ff,
+          0 0 20px #0ff;
+      }
+      100% {
+        box-shadow:
+          0 0 20px #0ff,
+          0 0 40px #0ff,
+          0 0 60px #0ff;
+      }
+    }
+    .donate-title {
+  font-family: monospace;
+  font-size: 2em;
+  text-align: center;
+  background: linear-gradient(90deg, #0ff, #f0f, #0f0);
+  background-size: 200% auto;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  animation: glow 3s linear infinite;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #f0f, 0 0 15px #0f0;
+}
+
+@keyframes glow {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
   </style>
   
 </head>
@@ -596,6 +685,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span id="ticker-text"></span>
   <!--<button class="close-btn">×</button>-->
 </div>
+
+<div class="neon-hub">
+  <a href="lovemeet.html" class="neon-link" target="_blank">💖 LoveMeet (Разработка) </a>
+  <a href="discounts.html" class="neon-link" target="_blank">💰 Скидки</a>
+  <a href="ascii-mode.html" class="neon-link"target="_blank">📟 ASCII режим (Разработка) </a>
+  <a href="Games.html" class="neon-link"target="_blank">🎮 Games (Разработка) </a>
+  <a href="Exchange.html" class="neon-link"target="_blank">🌐 Exchange (Разработка) </a>
+</div>
+
+ <h1 class="donate-title">💰 Для донатов</h1>
+
+  <div class="qr-wrapper">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://teaserfast.ru/u/SamvelVardanyan" alt="QR Code">
+  </div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
 
@@ -1018,14 +1121,14 @@ async function fetchRates() {
     const data = await res.json();
     const r = data.rates;
 
-    const items = [
-      `🇺🇸 USD → 1.00 $`,
-      `🇪🇺 EUR → ${(1 / r.EUR).toFixed(2)} €`,
-      `🇬🇧 GBP → ${(1 / r.GBP).toFixed(2)} £`,
-      `🇷🇺 RUB → ${(1 / r.RUB).toFixed(2)} ₽`,
-      `🇦🇲 AMD → ${(1 / r.AMD).toFixed(2)} ֏`,
-      `🇬🇪 GEL → ${(1 / r.GEL).toFixed(2)} ₾`
-    ];
+   const items = [
+  `🇺🇸 USD → 1.00 $`,
+  `🇪🇺 EUR → ${r.EUR.toFixed(2)} €`,
+  `🇬🇧 GBP → ${r.GBP.toFixed(2)} £`,
+  `🇷🇺 RUB → ${r.RUB.toFixed(2)} ₽`,
+  `🇦🇲 AMD → ${r.AMD.toFixed(2)} ֏`,
+  `🇬🇪 GEL → ${r.GEL.toFixed(2)} ₾`
+];
 
     const ticker = document.getElementById('ticker-text');
     if (ticker) ticker.textContent = items.join('   ');

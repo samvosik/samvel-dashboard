@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon Terminal</title>
+  <style>
+    body {
+}
+.terminal-footer {
+  margin-top: 30px;
+  background: #0a0a0a;
+  padding: 20px;
+  border-radius: 8px;
+  color: #0ff;
+  font-family: monospace;
+  white-space: pre-wrap;
+  text-shadow: 0 0 3px #0ff;
+  box-shadow: 0 0 10px #00ffee60;
+  position: relative;
+  min-height: 150px;
+  line-height: 1.4;
+  font-size: 0.95em;
+}
+.terminal-footer .cursor {
+  display: inline-block;
+  width: 10px;
+  background: #0ff;
+  animation: blink 1s infinite step-end;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+  </style>
+</head>
+<body>
+
+  <div id="terminal-wrapper">
+  <div class="terminal-footer" id="terminal"></div>
+
+ <script>
+  window.onload = function () {
+    const terminalWrapper = document.getElementById("terminal-wrapper");
+
+const text = `root@samvel:~# npm run neon
+> Neon Dashboard Compiler v1.0.3
+
+✨ Loading interface...
+✅ CSS animations initialized
+✅ JavaScript injected
+🌐 Language module: Armenian / English / Russian
+📡 Connecting to server...
+
+💡 Interface ready! Welcome, Самвел.
+📡 Footer transmission initialized...
+
+💬 Страница в разработке — спасибо за посещение. 
+🚀 Возвращайтесь — система ждёт!
+💬 Page under construction, thanks for visiting.
+🚀 Come back — the system is waiting!
+💬 Էջը կառուցման փուլում է, շնորհակալություն այցելության համար։
+🚀 Վերադարձեք՝ համակարգը սպասում է։`;
+
+
+    const typingSpeed = 35;
+
+    function typeText() {
+      const terminal = document.getElementById("terminal");
+      terminal.innerHTML = '';
+      let index = 0;
+
+      function loop() {
+        if (index <= text.length) {
+          terminal.innerHTML = text.slice(0, index++) + '<span class="cursor"></span>';
+          setTimeout(loop, typingSpeed);
+        }
+      }
+
+      loop();
+    }
+
+    function restartTerminal() {
+      const oldTerminal = document.getElementById("terminal");
+      if (oldTerminal) oldTerminal.remove();
+
+      const newTerminal = document.createElement("div");
+      newTerminal.className = "terminal-footer";
+      newTerminal.id = "terminal";
+      terminalWrapper.appendChild(newTerminal);
+
+      typeText();
+    }
+
+    terminalWrapper.addEventListener("click", restartTerminal);
+    typeText();
+  };
+</script>
+
+
+
+</body>
+</html>
