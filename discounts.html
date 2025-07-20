@@ -5,6 +5,7 @@
   <title>Скидки</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
+  
     /* 💠 Базовые стили */
 body {
   font-family: sans-serif;
@@ -12,6 +13,55 @@ body {
   padding: 0;
   background: #fdfdfd;
   color: #333;
+}
+.icon-only-title {
+  font-size: 1.4em;
+  color: #0ff;
+  margin-bottom: 15px;
+  max-width: 195px;
+  background: #000;
+  padding: 5px 12px;
+  border-radius: 6px;
+  text-shadow: 0 0 4px #0ff;
+  box-shadow: 0 0 8px #0ff;
+}
+.contact-list {
+  background: #000;
+  border-radius: 10px;
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  max-width: 180px;
+  box-shadow: 0 0 8px #0ff;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.contact-list img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0ff; 
+  box-shadow: 0 0 6px #0ff;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 1px #0ff);
+}
+
+.contact-list a {
+  color: #0ff;
+  font-family: monospace;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
 }
 
 /* 💠 Заголовок */
@@ -217,7 +267,7 @@ code {
   }
   /* 📲 QR-доступ */
 
-    .background: {
+    .background {
       color: #fff;
       font-family: sans-serif;
       text-align: center;
@@ -248,41 +298,41 @@ code {
       width: 160px;
       height: 160px;
       border-radius: 10px;
+    }    
+  @keyframes neonPulse {
+    0% {
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
     }
-
-    @keyframes neonPulse {
-      0% {
-        box-shadow:
-          0 0 10px #0ff,
-          0 0 20px #0ff;
-      }
-      100% {
-        box-shadow:
-          0 0 20px #0ff,
-          0 0 40px #0ff,
-          0 0 60px #0ff;
-      }
+    100% {
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff;
+    }
   </style>
 </head>
 <body>
 
 <header>
 
-  <h1 class="neon-header">💰 Система скидок</h1>
-  <p class="neon-header" style="font-size: 1.5em; font-weight: normal;">
-    Скидки доступны только после получения кода стоимостью <strong>1000 драм</strong>.  
-    Код необходимо показать сотрудникам магазина, ресторана или отеля, указанного в соответствующем разделе.
-  </p>
+ <h1 class="neon-header">💰 Система скидок</h1>
+<p class="neon-header" style="font-size: 1.7em; font-weight: normal;">
+  Скидки предоставляются <strong>после оплаты 1000 драм</strong> — это даёт вам персональный <span style="color:#0ff;">доступный код</span>, который нужно показать сотрудникам указанного объекта (магазина, отеля или ресторана).
+</p>
+
+<p style="color:#0ff; font-size: 1.5em; background-color: transparent;">
+  💳 Оплатите через QR-код или приложение <strong>Idram</strong>  
+  🔐 Затем введите <strong>ID: транзакции</strong>  или свяжитесь напрямую  
+  📦 <em>Найти ID можно в истории операций в приложении Idram Banking</em>
+</p>
 
 <div class="discount" style="width: 200px; height: 200px; margin: 10px auto; padding: 10px;">
-   <div class="qr-wrapper">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150 margin: 10px auto; padding: 10px; &data=https://teaserfast.ru/u/SamvelVardanyan" alt="QR Code">
+  <div class="qr-wrapper">
+    <img src="qr-code.png" alt="QR для оплаты Idram" style="width: 100%; border-radius: 8px;">
   </div>
+</div>
 
-   </div>
-  <p class="neon-header" style="font-size: 1.5em;">
-    ⚙️ 🔐 Пройдите активацию → Получите персональный код → предъявите в пункте назначения → получите скидку.
-  </p> 
+<p class="neon-header" style="font-size: 1.6em;">
+  ⚙️ Вы также можете связаться напрямую → получить персональный код → предъявить на месте → активировать скидку.
+</p>
+
   
 </header>
 
@@ -308,23 +358,19 @@ code {
       <li>Доставка</li>
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
-     
-  <p>💳 <span style="color:#0ff;">Для получения скидки на SKY Electronics 
-  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p> 
+ <p style="color:#0ff;">
+  💳 Для получения скидки на объект <strong>SKY Electronics</strong>  
+  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
+  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
+</p>
   <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
     💳 Перейти к оплате
   </a>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
-    <input type="text" name="name" placeholder="Ваше имя" required>
-    <input type="text" name="transaction" placeholder="ID транзакции" required>
-    <input type="email" name="email" placeholder="Email (по желанию)">
-    <input type="hidden" name="object" value="Объект скидки">
-    <button type="submit">📨 Подтвердить оплату</button>
-  </form>
+    
   <p style="font-size:0.9em; color:#0f0;">
-  💡  Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+  💡  Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
 </p>
   <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
   
@@ -345,7 +391,7 @@ code {
          style="border-radius: 8px; margin-bottom: 15px;" />
          <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
     <h3>🖥️  Магазин електроники Welux — Гюмри</h3>
-     <p><strong>Адрес:</strong> 200/2 Ул Шаумяна, Gyumri 3104</p>
+     <p><strong>Адрес:</strong> 200/2 Ул Шаумяна, 3104</p>
     <p><strong>Телефон:</strong> <a href="tel:+37477 938489">077 938489</a></p>
     <p><strong>Часы работы:</strong></p>
     <ul style="padding-left: 20px; margin-top: 5px;">
@@ -360,22 +406,18 @@ code {
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
     <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
-    
-  <p>💳 <span style="color:#0ff;">Для получения скидки на Welux
-  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+ <p style="color:#0ff;">
+  💳 Для получения скидки на объект <strong>Welux</strong>  
+  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
+  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
+</p>
   <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
     💳 Перейти к оплате
   </a>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
-    <input type="text" name="name" placeholder="Ваше имя" required>
-    <input type="text" name="transaction" placeholder="ID транзакции" required>
-    <input type="email" name="email" placeholder="Email (по желанию)">
-    <input type="hidden" name="object" value="Объект скидки">
-    <button type="submit">📨 Подтвердить оплату</button>
-  </form>
+
   <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
 </p>
   <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
   
@@ -409,23 +451,19 @@ code {
       <li>Доставка</li>
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
-     
-  <p>💳 <span style="color:#0ff;">Для получения скидки на Vesta 
-  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>    
+ <p style="color:#0ff;">
+  💳 Для получения скидки на объект <strong>Vesta</strong>  
+  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
+  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
+</p>
   <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
     💳 Перейти к оплате
   </a>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
-    <input type="text" name="name" placeholder="Ваше имя" required>
-    <input type="text" name="transaction" placeholder="ID транзакции" required>
-    <input type="email" name="email" placeholder="Email (по желанию)">
-    <input type="hidden" name="object" value="Объект скидки">
-    <button type="submit">📨 Подтвердить оплату</button>
-  </form>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;"> 
+ 
   <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
 </p>
   <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
   
@@ -444,9 +482,9 @@ code {
        alt="Объект скидки"
        style="height: 300px; width: auto; object-fit: cover;" />
        <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <h3>🖥️  Будет добавлен.</h3>
+   <h3>🖥️  Будет добавлен --     ---     — Гюмри</h3>
    <p><strong>Адрес:</strong> Будет добавлен</p>
-  <p><strong>Телефон:</strong> <a href="tel:+374Будет добавлен.">Будет добавлен</a></p>
+  <p><strong>Телефон:</strong> <a href="tel:+374 Будет добавлен.">Будет добавлен</a></p>
   <p><strong>Часы работы:</strong></p>
   <ul>
     <li>Понедельник: 10:00–19:00</li>
@@ -460,22 +498,20 @@ code {
     </ul>
     <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
   <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
- 
-  <p>💳 <span style="color:#0ff;">Для получения скидки на объект  X 
-  Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code></p>
+<p style="color:#0ff;">
+  💳 Для получения скидки на объект <strong>--- X ---</strong>  
+  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
+  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
+  </p>
   <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
     💳 Перейти к оплате
   </a>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <form action="https://formspree.io/f/meozqqeb" method="POST" style="margin-top:15px;">
-    <input type="text" name="name" placeholder="Ваше имя" required>
-    <input type="text" name="transaction" placeholder="ID транзакции" required>
-    <input type="email" name="email" placeholder="Email (по желанию)">
-    <input type="hidden" name="object" value="Объект скидки">
-    <button type="submit">📨 Подтвердить оплату</button>
+ 
+
   </form>
   <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email, и мы отправим пароль для активации скидочного кода в виде письма. Вводить его необязательно.
+  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
 </p>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 
@@ -506,23 +542,84 @@ code {
   </div>
 </section>
 
-<p style="background-color: #000; color: #0ff; font-size: 1.9em; font-family: monospace; padding: 10px; border-radius: 8px;">
-  <strong>🆓 Бесплатно</strong> для частных лиц и владельцев  
-  <br>🔐 После модерации ваш объект появится в списке в течение суток
+<p style="background-color: #000; color: #0ff; font-size: 1.7em; font-family: monospace; padding: 10px; border-radius: 8px;">
+  <strong>🆓 Бесплатно</strong> для частных лиц и владельцев (без ID: транзакций)  
+  <br>🔐 После модерации ваш объект появится в списке в течение суток.
 </p>
 
-  <form action="https://formspree.io/f/meozqqeb" method="POST">
-    <input type="text" name="name" placeholder="Название объекта" required>
-    <input type="text" name="address" placeholder="Адрес" required>
-    <input type="tel" name="phone" placeholder="Контактный номер" required>
-    <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
-    <button type="submit">🚀 Отправить заявку</button>
-  </form>
+<section id="form-section" style="margin-top:40px; padding:20px; background:#111; border-radius:12px; max-width:600px; margin:auto; color:#0ff; box-shadow:0 0 20px #0ff;">
+  <h2 style="text-align:center;">📨 Отправить заявку</h2>
 
-  <p id="thanksMsg" style="display:none; color:#0f0; font-family:monospace;">
-    ✅ Заявка отправлена! Мы добавим ваш объект вручную в течение суток.
-  </p>
-</div>
+  <div class="form-wrapper">
+    <div id="form-front" class="form-face">
+      <form action="https://getform.io/f/boloerka" method="POST" id="form-with-txn" onsubmit="return validateTxnForm()">
+        <input type="text" name="name" placeholder="Название объекта" required>
+        <input type="tel" name="phone" placeholder="Контактный номер" required>
+        <input type="text" name="transaction" id="txnInput" placeholder="ID транзакции (14 цифр, начинается с 2507)" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
+        <button type="submit" id="confirmBtn" disabled style="opacity: 0.6; cursor: not-allowed;">📨 Подтвердить оплату</button>
+      </form>
+      <p style="font-size: 0.8em; margin-top:10px;">
+        Нет ID транзакции? <button type="button" onclick="toggleForm()" style="background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Перейти к форме без ID</button>
+      </p>
+    </div>
+
+    <div id="form-back" class="form-face" style="display:none;">
+      <form action="https://getform.io/f/boloerka" method="POST" id="form-no-txn">
+        <input type="text" name="name" placeholder="Название объекта" required>
+        <input type="tel" name="phone" placeholder="Контактный номер" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
+        <button type="submit" id="confirmBtn2" style="opacity: 1; cursor: pointer;">📨 Отправить заявку</button>
+      </form>
+      <p style="font-size: 0.8em; margin-top:10px;">
+        Есть ID транзакции? <button type="button" onclick="toggleForm()" style="background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Вернуться к форме с ID</button>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function toggleForm() {
+    const front = document.getElementById('form-front');
+    const back = document.getElementById('form-back');
+    if (front.style.display === 'none') {
+      front.style.display = 'block';
+      back.style.display = 'none';
+    } else {
+      front.style.display = 'none';
+      back.style.display = 'block';
+    }
+  }
+
+  const txnInput = document.getElementById('txnInput');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  function validateTxn(value) {
+    return /^2507\d{10}$/.test(value);
+  }
+
+  txnInput.addEventListener('input', () => {
+    if (validateTxn(txnInput.value)) {
+      confirmBtn.disabled = false;
+      confirmBtn.style.opacity = '1';
+      confirmBtn.style.cursor = 'pointer';
+    } else {
+      confirmBtn.disabled = true;
+      confirmBtn.style.opacity = '0.6';
+      confirmBtn.style.cursor = 'not-allowed';
+    }
+  });
+
+  function validateTxnForm() {
+    if (!validateTxn(txnInput.value)) {
+      alert('Введите корректный ID транзакции, начинающийся с 2507 и состоящий из 14 цифр.');
+      return false;
+    }
+    return true;
+  }
+</script>
 
 <script>
   // 🔓 Проверка пароля и отображение кода
@@ -544,38 +641,30 @@ code {
       alert("🚫 Неверный пароль");
     }
   }
+  </script>
 
-  // 📨 Подтверждение формы и сообщение
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form");
-    const msg = document.getElementById("thanksMsg");
-    if (form && msg) {
-      form.addEventListener("submit", () => {
-        setTimeout(() => {
-          msg.style.display = "block";
-        }, 400);
-      });
-    }
 
-    // 📡 Визуальный лог и трекинг ссылок
-    const logPanel = document.getElementById("logPanel");
-    function log(msg) {
-      if (logPanel) {
-        const line = document.createElement("div");
-        line.textContent = `🧠 ${msg}`;
-        logPanel.appendChild(line);
-      }
-      console.log(msg);
-    }
 
-    document.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        const href = link.getAttribute("href");
-        log(`🔗 Клик по ссылке: ${href}`);
-      });
-    });
-  });
-</script>
+
+<div class="contact-panel">
+  <h2 class="icon-only-title" id="matrixTrigger" title="Связь для вопросов" style="text-align:left;">📡 Связь</h2>
+  <ul class="contact-list">
+    <li><img src="icons/phone.png" alt="phone" /><a href="tel:+37493446453">+374 93 44 64 53</a></li>
+    <li><img src="icons/viber.png" alt="Viber" /><a href="viber://chat?number=%2B37493446453">Viber</a></li>
+    <li><img src="icons/WhatsApp.png" alt="WhatsApp" /><a href="https://wa.me/37493446453">WhatsApp</a></li>
+    <li><img src="icons/Telegram.png" alt="Telegram" /><a href="https://t.me/samvosik" target="_blank">@samvosik</a></li>
+    <li><img src="icons/Instagram.png" alt="Instagram" /><a href="https://instagram.com/samvel43" target="_blank">@samvel43</a></li>
+    <li><img src="icons/Facebook.png" alt="Facebook" /><a href="https://facebook.com/samvel.vardanyan.96" target="_blank">Facebook</a></li>
+    <li><img src="icons/OK.ru.png" alt="OK.ru" /><a href="https://ok.ru/profile/268819542131" target="_blank">OK.ru</a></li>
+  </ul>
+</div>
+
+
+
+
+
+
+
 
 <div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
   <strong>📡 Активность:</strong>

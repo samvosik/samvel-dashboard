@@ -106,7 +106,12 @@ body.dark .contact-footer {
 .contact-list img {
   width: 22px;
   height: 22px;
-  filter: drop-shadow(0 0 4px #00ffee);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0ff; 
+  box-shadow: 0 0 6px #0ff;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 1px #0ff);
 }
 .contact-list a {
   font-weight: bold;
@@ -697,7 +702,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  <h1 class="donate-title">💰 Для донатов</h1>
 
   <div class="qr-wrapper">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://teaserfast.ru/u/SamvelVardanyan" alt="QR Code">
+  <img src="qr-code.png" alt="QR для донатов">
   </div>
 
   <h1 id="page-title">🎁 Полезные ссылки</h1>
