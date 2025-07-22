@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
+ <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
   <meta charset="UTF-8" />
   <title>Скидки</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,6 +17,194 @@ body {
   padding: 0;
   background: #fdfdfd;
   color: #333;
+  background: linear-gradient(#8B008B, #8B008B, #8B008B);
+}
+/* 🎧 Аудиоплеер футера */
+#nextStation {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  display: block;
+  width: 51px;
+  text-align: center;
+}
+#nextStation:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+}
+.footer-player {
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #222;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0008;
+  z-index: 999;
+  background: transparent;
+}
+#playToggle {
+  font-size: 1.2em;
+  background: none;
+  border: none;
+  color: #1da1f2;
+  cursor: pointer;
+}
+.equalizer {
+  display: flex;
+  align-items: end;
+  gap: 3px;
+}
+.equalizer span {
+  width: 4px;
+  height: 10px;
+  background: #1da1f2;
+  animation: bounce 1s infinite ease-in-out;
+  animation-play-state: paused;
+}
+.equalizer span:nth-child(2) { animation-delay: 0.2s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; }
+.equalizer span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes bounce {
+  0%, 100% { height: 10px; }
+  50% { height: 25px; }
+}
+#playToggle {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+}
+
+#playToggle:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+}
+.equalizer span {
+  background: #0ff;
+  animation: bounce 1s infinite ease-in-out;
+  animation-play-state: running; /* ← включаем постоянно */
+  box-shadow: 0 0 6px #0ff;
+}
+.player-visuals {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ← чтобы станция и эквалайзер были по центру */
+  gap: 6px;
+}
+
+.station-info {
+  font-size: 0.85em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  text-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+}
+.radio-controls button {
+  font-size: 1.4em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.radio-controls button:hover {
+  background: #0ff;
+  color: #111;
+  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
+}
+  /* стили только для этого терминала */
+}
+.dark .terminal,
+.dark .theme .neon-terminal-wrapper .terminal {
+  background: #000;
+  color: #0ff;
+  box-shadow: 0 0 20px #00ffff55;
+}
+   
+.terminal {
+  background: #111;
+  padding: 0.10px 0.10px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ffee;
+  max-width: 33vw;      /* ← вместо фиксированных пикселей */
+  width: 100%;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 15.35px;
+  text-shadow: 0 0 4px #00ffee;
+  min-height: 20px;
+  position: relative;
+  color: #00ffee;
+  box-sizing: border-box;
+  max-height: 515px;
+  
+}
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ffee;
+      animation: blink 1s infinite step-end;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    .site-footer {
+  background: #111;
+  color: #111;
+  padding: 30px 20px;
+  font-family: monospace;
+  border-top: 20px solid #111;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+   
+ /* 1) Определяем анимацию пульсации */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 15px currentColor,
+      0 0 15px currentColor;
+  }
+  50% {
+    box-shadow:
+      inset 0 0 30px currentColor,
+      0 0 30px currentColor;
+  }
 }
 .icon-only-title {
   font-size: 1.4em;
@@ -541,12 +733,16 @@ code {
     <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
   </div>
 </section>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 
+<canvas id="cmatrix"style="width: 1351px; height: 130px;"></canvas>
+
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 <p style="background-color: #000; color: #0ff; font-size: 1.7em; font-family: monospace; padding: 10px; border-radius: 8px;">
   <strong>🆓 Бесплатно</strong> для частных лиц и владельцев (без ID: транзакций)  
   <br>🔐 После модерации ваш объект появится в списке в течение суток.
 </p>
-
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 <section id="form-section" style="margin-top:40px; padding:20px; background:#111; border-radius:12px; max-width:600px; margin:auto; color:#0ff; box-shadow:0 0 20px #0ff;">
   <h2 style="text-align:center;">📨 Отправить заявку</h2>
 
@@ -579,6 +775,47 @@ code {
     </div>
   </div>
 </section>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+
+<footer>
+
+<footer class="site-footer">
+  <div class="footer-content">        
+    <audio id="radioAudio"></audio>
+
+    <!-- Контакты -->
+    <div class="contact-panel">
+      <h2 class="icon-only-title" title="Связь для вопросов">📡 Связь</h2>
+      <ul class="contact-list">
+        <li><img src="icons/phone.png" alt="phone" /><a href="tel:+37493446453">+374 93 44 64 53</a></li>
+        <li><img src="icons/viber.png" alt="Viber" /><a href="viber://chat?number=%2B37493446453">Viber</a></li>
+        <li><img src="icons/WhatsApp.png" alt="WhatsApp" /><a href="https://wa.me/37493446453">WhatsApp</a></li>
+        <li><img src="icons/Telegram.png" alt="Telegram" /><a href="https://t.me/samvosik" target="_blank">@samvosik</a></li>
+        <li><img src="icons/Instagram.png" alt="Instagram" /><a href="https://instagram.com/samvel43" target="_blank">@samvel43</a></li>
+        <li><img src="icons/Facebook.png" alt="Facebook" /><a href="https://facebook.com/samvel.vardanyan.96" target="_blank">Facebook</a></li>
+        <li><img src="icons/OK.ru.png" alt="OK.ru" /><a href="https://ok.ru/profile/268819542131" target="_blank">OK.ru</a></li>
+      </ul>
+    </div>
+   
+<div class="footer-player">
+    <div class="radio-controls">
+      <button id="prevStation">⏮️</button>
+      <button id="playToggle">▶️</button>
+      <button id="nextStation">⏭️</button>
+  <div id="terminal-wrapper">
+    <div class="terminal" id="terminal"></div> 
+</div>
+
+</footer>
+<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; margin-top:20px; border-top:1px dashed #0ff;">
+
+<canvas id="cmatrix-1"style="width: 1350px; height: 130px;"></canvas>
+
+<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
+  <strong>📡 Активность:</strong>
+</div>
+
 
 <script>
   function toggleForm() {
@@ -643,34 +880,211 @@ code {
   }
   </script>
 
+<script>
+  const stations = [
+    {
+     name: 'Lo-Fi HipHop',
+      url: 'https://ep256.hostingradio.ru:8052/europaplus256.mp3'
+    },
+    {
+     name: 'Lo-Fi HipHop',
+      url: 'https://chanson.hostingradio.ru:8041/chanson128.mp3'
+    },
+    {
+      name: 'Jazz Radio',
+      url: 'https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3'
+    },
+    {
+      name: 'Jazz Radio',
+      url: 'https://stream.nightride.fm/nightride.mp3'
+    },
+    {
+      name: 'Deep House Radio',
+      url: 'https://listen.181fm.com/181-eagle_128k.mp3'
+    },
+    {
+      name: 'Lounge FM Chill',
+      url: 'https://relay3.radiotoolkit.com/rcmdeep'
+    },
+    {
+      name: 'Lo-Fi HipHop',
+      url: 'https://edge11.streamonkey.net/nostalgie-live?aggregator=shorty'
+    }
+  ];
 
+  let currentStation = 0;
 
+const audio = document.getElementById('radioAudio');
+const playBtn = document.getElementById('playToggle');
+const nextBtn = document.getElementById('nextStation');
+const prevBtn = document.getElementById('prevStation');
+const bars = document.querySelectorAll('.equalizer span');
+const label = document.getElementById('stationLabel');
 
-<div class="contact-panel">
-  <h2 class="icon-only-title" id="matrixTrigger" title="Связь для вопросов" style="text-align:left;">📡 Связь</h2>
-  <ul class="contact-list">
-    <li><img src="icons/phone.png" alt="phone" /><a href="tel:+37493446453">+374 93 44 64 53</a></li>
-    <li><img src="icons/viber.png" alt="Viber" /><a href="viber://chat?number=%2B37493446453">Viber</a></li>
-    <li><img src="icons/WhatsApp.png" alt="WhatsApp" /><a href="https://wa.me/37493446453">WhatsApp</a></li>
-    <li><img src="icons/Telegram.png" alt="Telegram" /><a href="https://t.me/samvosik" target="_blank">@samvosik</a></li>
-    <li><img src="icons/Instagram.png" alt="Instagram" /><a href="https://instagram.com/samvel43" target="_blank">@samvel43</a></li>
-    <li><img src="icons/Facebook.png" alt="Facebook" /><a href="https://facebook.com/samvel.vardanyan.96" target="_blank">Facebook</a></li>
-    <li><img src="icons/OK.ru.png" alt="OK.ru" /><a href="https://ok.ru/profile/268819542131" target="_blank">OK.ru</a></li>
-  </ul>
-</div>
+// 👉 Показываем только "1 / 7"
+function updateLabel(index) {
+  if (label) {
+    label.textContent = `${index + 1} / ${stations.length}`;
+  }
+}
 
+function playStation(index) {
+  audio.src = stations[index].url;
+  audio.play().then(() => {
+    playBtn.textContent = '⏸️';
+    bars.forEach(bar => bar.style.animationPlayState = 'running');
+    updateLabel(index);
+  }).catch(() => {
+    // Если автостарт запрещён — не меняем кнопку
+    playBtn.textContent = '▶️';
+    bars.forEach(bar => bar.style.animationPlayState = 'paused');
+    updateLabel(index);
+  });
+}
 
+// ▶️/⏸️ кнопка
+playBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play().then(() => {
+      playBtn.textContent = '⏸️';
+      bars.forEach(bar => bar.style.animationPlayState = 'running');
+    }).catch(() => {});
+  } else {
+    audio.pause();
+    playBtn.textContent = '▶️';
+    bars.forEach(bar => bar.style.animationPlayState = 'paused');
+  }
+});
 
+// ⏭️ кнопка
+nextBtn.addEventListener('click', () => {
+  currentStation = (currentStation + 1) % stations.length;
+  playStation(currentStation);
+});
 
+// ⏮️ кнопка
+prevBtn.addEventListener('click', () => {
+  currentStation = (currentStation - 1 + stations.length) % stations.length;
+  playStation(currentStation);
+});
 
+// 🚀 При загрузке: только устанавливаем первую станцию (без запуска)
+window.addEventListener('DOMContentLoaded', () => {
+  audio.src = stations[currentStation].url;
+  playBtn.textContent = '▶️';
+  bars.forEach(bar => bar.style.animationPlayState = 'paused');
+  updateLabel(currentStation);
+});
 
+</script>
 
+<script>
+  window.onload = function () {
+    const terminalWrapper = document.getElementById("terminal-wrapper");
 
-<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
-  <strong>📡 Активность:</strong>
-</div>
+    const text = `
+💬 Спасибо, что посетили. 
+💬 Thank you for visiting. 
+💬 Շնորհակալություն այցելելու համար։ 
+`;
 
+    const typingSpeed = 35;
 
+    function typeText() {
+      const terminal = document.getElementById("terminal");
+      terminal.innerHTML = '';
+      let index = 0;
+
+      function loop() {
+        if (index <= text.length) {
+          terminal.innerHTML = text.slice(0, index++) + '<span class="cursor"></span>';
+          setTimeout(loop, typingSpeed);
+        }
+      }
+
+      loop();
+    }
+
+    function restartTerminal() {
+      const oldTerminal = document.getElementById("terminal");
+      if (oldTerminal) oldTerminal.remove();
+
+      const newTerminal = document.createElement("div");
+      newTerminal.className = "terminal";
+      newTerminal.id = "terminal";
+      terminalWrapper.appendChild(newTerminal);
+
+      typeText();
+    }
+
+    terminalWrapper.addEventListener("click", restartTerminal);
+    typeText();
+  };
+  // Автоинициализация первой станции при загрузке страницы
+window.addEventListener('DOMContentLoaded', () => {
+  playStation(currentStation);
+});
+
+(function detectUTM() {
+  const params = new URLSearchParams(window.location.search);
+  const campaign = params.get('utm_campaign');
+  const source = params.get('utm_source');
+  const medium = params.get('utm_medium');
+  const terminal = document.getElementById("terminal");
+
+  if ((campaign || source || medium) && terminal) {
+    const msg = `📦 UTM Detected:
+  → campaign: ${campaign || '—'}
+  → source:   ${source || '—'}
+  → medium:   ${medium || '—'}`;
+    
+    terminal.innerHTML += `\n\n${msg}`;
+  }
+})();
+
+</script>
+
+<script>
+function matrixRain(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight || 130;
+
+  const chars = "アァイィウヴエェ...0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+
+  function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00FF00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
+
+  window.addEventListener("resize", () => {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight || 130;
+  });
+}
+
+// 🚀 Вызов для двух матриц
+matrixRain("cmatrix");
+matrixRain("cmatrix-1");
+
+</script>
 
 
 
