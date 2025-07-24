@@ -8,8 +8,55 @@
   <meta charset="UTF-8" />
   <title>Скидки</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
   <style>
   
+ .ticker-neon {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+  border-top: 1px solid #0ff;
+  border-bottom: 1px solid #0ff;
+  position: relative;
+}
+
+.ticker-track {
+  width: max-content;
+}
+
+#ticker-bottom-text {
+  display: inline-block;
+  white-space: nowrap;
+  color: #0ff;
+  padding: 10px;
+  font-size: 1.2em;
+  font-family: monospace;
+  animation: scroll-left 45s linear infinite;
+  transition: text-shadow 0.3s ease;
+}
+
+#ticker-bottom-text:hover {
+  animation-play-state: paused;
+  text-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+}
+
+@keyframes scroll-left {
+  0%   { transform: translateX(41%); }
+  100% { transform: translateX(-100%); }
+} 
+a.neon-link {
+  color: #0ff;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 0 2px #0ff;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+a.neon-link:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+}
+
     /* 💠 Базовые стили */
 body {
   font-family: sans-serif;
@@ -21,7 +68,7 @@ body {
 }
 /* 🎧 Аудиоплеер футера */
 #nextStation {
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: #0ff;
   border: 2px solid #0ff;
   border-radius: 6px;
@@ -441,6 +488,7 @@ code {
     100% {
       box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff;
     }
+    
   </style>
 </head>
 <body>
@@ -496,6 +544,14 @@ code {
 
   
 </header>
+
+<div class="ticker-neon">
+  <div class="ticker-track">
+    <div id="ticker-bottom-text">
+      🎧 Բարև ձեզ։ Այս կայքը կարող է օգտակար լինել ձեզ։ Մեր կայքում կա "Զեղչեր" բաժին, որտեղ օգտատերերը կարող են տեսնել հաստատված առաջարկներ։ 4-նիշանոց գաղտնաբառ, ստանալով այդ կոդը, կարող եք  օգտվել առաջարկից՝ հաստատության վայրում։ 💡 Կարող եք նաև ուղարկել հայտ՝ լրացնելով ձևը այստեղ: Շնորհակալություն։  <a href="https://samvosik.github.io/samvel-dashboard/discounts.html" class="neon-link" target="_blank">👉 samvosik.github.io/samvel-dashboard/discounts.html</a>
+    </div>
+  </div>
+</div>
 
 <section id="discounts">
 
@@ -794,11 +850,22 @@ code {
   display: block;
   max-width: 1350px;
   margin: 0 auto;"></canvas>
+  
+  <div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
+   <button id="scrollTopBtn" title="Наверх">🔼</button>
 
 <div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
   <strong>📡 Активность:</strong>
 </div>
 
+
+ 
+  
+  <script>
+  document.getElementById('scrollTopBtn').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
 
 <script>
   function toggleForm() {

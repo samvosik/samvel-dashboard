@@ -659,6 +659,27 @@
   50% { background-position: 100% center; }
   100% { background-position: 0% center; }
 }
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #000;
+  color: #0ff;
+  border: 1px solid #0ff;
+  border-radius: 50%;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 1.4em;
+  box-shadow: 0 0 6px #0ff;
+  z-index: 100;
+  transition: transform 0.3s;
+}
+
+#scrollTopBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px #0ff;
+}
+
   </style>
   
 </head>
@@ -670,7 +691,6 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NJG845S"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<script>window.dataLayer = window.dataLayer || [];</script>
 
 <!-- 🌌 Блок событий -->
 <h2 id="log-toggle" class="icon-only-title" title="Показать терминал">📡</h2>
@@ -784,7 +804,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="ticker-neon">
   <span id="ticker-neon-text">
     🎧 Поищи 📡 — и система раскроет секрет...Попробуй коснуться 📡...📡...📡 Неоновая станция таит больше, чем видно... 
-    <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Подробнее</a>
+    <a href="https://autodengi.com/pr/690795" target="_blank">👉 Автомат </a>
   </span>
 </div>
 
@@ -854,6 +874,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  <div class="ticker-neon">
   <span id="ticker-bottom-text">
     🎧 Включай плеер, слушай музыку и лови бонусы!
+    <a href="https://teaserfast.ru/u/SamvelVardanyan?utm_source=neon_ticker&utm_medium=scroll&utm_campaign=player_call" target="_blank">👉 Полуавтомат минимал вывод на PAYEER 1 руб.</a>
   </span>
 </div>
 
@@ -861,6 +882,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 
+<button
+ id="scrollTopBtn" title="Наверх">🔼</button>
+
+<script>document.getElementById('scrollTopBtn').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+
+
+<script>window.dataLayer = window.dataLayer || [];</script>
 
 <!-- Google Tag Manager -->
 <script>
