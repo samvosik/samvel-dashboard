@@ -11,6 +11,43 @@
   
   <style>
   
+  .logPanel {
+  background: #000;
+  color: #0ff;
+  font-family: monospace;
+  padding: 20px;
+  margin: 30px auto;
+  border: 1px dashed #0ff;
+  max-width: 800px;
+  box-shadow: 0 0 20px #0ff;
+  overflow-y: auto;
+  max-height: 400px;
+  position: relative;
+}
+
+.logTitle {
+  margin-bottom: 10px;
+  color: #0ff;
+  font-size: 18px;
+}
+
+.logContent p {
+  margin: 0;
+  padding: 4px 0;
+}
+
+.scrollTopBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: #0ff;
+  color: #000;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+  
  .ticker-neon {
   width: 100%;
   overflow: hidden;
@@ -497,7 +534,7 @@ code {
 
  <h1 class="neon-header">💰 Система скидок</h1>
 <p class="neon-header" style="font-size: 1.7em; font-weight: normal;">
-  Скидки предоставляются <strong>после оплаты 1000 драм</strong> — это даёт вам персональный <span style="color:#0ff;">доступный код</span>, который нужно показать сотрудникам указанного объекта (магазина, отеля или ресторана).
+  Скидки предоставляются <strong>после оплаты 1000 драм</strong> — это даёт вам персональную <span style="color:#0ff;">скидку</span>, который нужно проверять сотрудникам указанного объекта (магазина, отеля или ресторана).
 </p>
 
 <p style="color:#0ff; font-size: 1.5em; background-color: transparent;">
@@ -513,7 +550,7 @@ code {
 </div>
 
 <p class="neon-header" style="font-size: 1.6em;">
-  ⚙️ Вы также можете связаться напрямую → получить персональный код → предъявить на месте → активировать скидку.
+  ⚙️ Оплатите ниже → Заполните заявку → посетите с паспортом на место назначения → получите скидку.
 </p>
 
 <div class="discount-announcement" style="
@@ -548,7 +585,7 @@ code {
 <div class="ticker-neon">
   <div class="ticker-track">
     <div id="ticker-bottom-text">
-      🎧 Բարև ձեզ։ Այս կայքը կարող է օգտակար լինել ձեզ։ Մեր կայքում կա "Զեղչեր" բաժին, որտեղ օգտատերերը կարող են տեսնել հաստատված առաջարկներ։ 4-նիշանոց գաղտնաբառ, ստանալով այդ կոդը, կարող եք  օգտվել առաջարկից՝ հաստատության վայրում։ 💡 Կարող եք նաև ուղարկել հայտ՝ լրացնելով ձևը այստեղ: Շնորհակալություն։  <a href="https://samvosik.github.io/samvel-dashboard/discounts.html" class="neon-link" target="_blank">👉 samvosik.github.io/samvel-dashboard/discounts.html</a>
+      💡 Բարև ։ Այս կայքը կարող է օգտակար լինել ձեզ։ Մեր կայքում կա "Զեղչեր" բաժին, որտեղ օգտատերերը կարող են տեսնել հաստատված առաջարկներ։  💡  կարող եք  օգտվել առաջարկից՝ հաստատության վայրում։ 💡 Կարող եք նաև ուղարկել հայտ՝ ձեր օբեկտը տեղադրելու մեր կայքում: Լրացնելով ձևը այստեղ:   <a href="https://samvosik.github.io/samvel-dashboard/discounts.html" class="neon-link" target="_blank">👉 samvosik.github.io/samvel-dashboard/discounts.html</a>  💡 Շնորհակալություն։
     </div>
   </div>
 </div>
@@ -575,33 +612,7 @@ code {
       <li>Доставка</li>
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p> 
- <p style="color:#0ff;">
-  💳 Для получения скидки на объект <strong>SKY Electronics</strong>  
-  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
-  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
-</p>
-  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
-    💳 Перейти к оплате
-  </a>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    
-  <p style="font-size:0.9em; color:#0f0;">
-  💡  Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
-</p>
-  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  
- <input type="password" id="accessCode-1" placeholder="Введите пароль для скидки" />
-<button onclick="revealDiscountCode('accessCode-1','secretCode-1')">Показать код скидки</button>
-<div id="secretCode-1" style="display:none;"></div>
-
-               <p id="waitMsg" style="font-family:monospace; color:#0f0;">
-  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
-</p> 
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-   </div>
-   
-      
+   </div>         
     <div class="discount">
     <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npkyQ90IF0tjrpuveLK_Y9tTxfbb0T_7swqMEGrtXo-PPSa3PQgKlUDrEwfpj0KvGDPmH0X6cGZmmedoSrtsZUwnx1tLvFlWVyTfCXb1Ui85AUpnzXXFEK5Xqg1_RZ5y0VfH93u=s680-w680-h510-rw"
          alt="Welux"
@@ -622,32 +633,7 @@ code {
       <li>Доставка</li>
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
- <p style="color:#0ff;">
-  💳 Для получения скидки на объект <strong>Welux</strong>  
-  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
-  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
-</p>
-  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
-    💳 Перейти к оплате
-  </a>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-
-  <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
-</p>
-  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  
-  <input type="password" id="accessCode-2" placeholder="Введите пароль для скидки" />
-<button onclick="revealDiscountCode('accessCode-2','secretCode-2')">Показать код скидки</button>
-<div id="secretCode-2" style="display:none;"></div>
-
-          <p id="waitMsg" style="font-family:monospace; color:#0f0;">
-  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
-</p>     
-         <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-   </div>
-   
+   </div>   
     <div class="discount">
     <img src="https://lh3.googleusercontent.com/p/AF1QipOixinrBepZ0qD5c--aueujQKVGZXmWLXyw_Ypk=s680-w680-h510-rw"
          alt="Vesta"
@@ -668,32 +654,7 @@ code {
       <li>Доставка</li>
        </ul>
       <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-    <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>    
- <p style="color:#0ff;">
-  💳 Для получения скидки на объект <strong>Vesta</strong>  
-  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
-  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
-</p>
-  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
-    💳 Перейти к оплате
-  </a>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;"> 
- 
-  <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
-</p>
-  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  
-   <input type="password" id="accessCode-3" placeholder="Введите пароль для скидки" />
-<button onclick="revealDiscountCode('accessCode-3','secretCode-3')">Показать код скидки</button>
-<div id="secretCode-3" style="display:none;"></div>
-
- <p id="waitMsg" style="font-family:monospace; color:#0f0;">
-  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
-</p> 
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-   </div>
-   
+   </div>  
    <div class="discount">
   <img src="https://nika35.ru/wp-content/uploads/2016/09/reklama-na-bilbordah.jpg"
        alt="Объект скидки"
@@ -714,36 +675,8 @@ code {
       <li>Доставка</li>
     </ul>
     <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-  <p><span style="color:#0ff;"><strong>Скидка:</strong> С условиями скидки вас ознакомят сотрудники магазина. </p>
-<p style="color:#0ff;">
-  💳 Для получения скидки на объект <strong>--- X ---</strong>  
-  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
-  <br>После ввода ID: транзакций станет доступна кнопка подтверждения внизу
-  </p>
-  <a href="https://banking.idram.am/pages/other-idram-id" target="_blank" class="pay-btn">
-    💳 Перейти к оплате
-  </a>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
- 
-
-  </form>
-  <p style="font-size:0.9em; color:#0f0;">
-  💡 Оставьте email или номер телефона и мы отправим пароль для активации скидочного кода в виде письма.
-</p>
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-
- <input type="password" id="accessCode-4" placeholder="Введите пароль для скидки" />
-<button onclick="revealDiscountCode('accessCode-4','secretCode-4')">Показать код скидки</button>
-<div id="secretCode-4" style="display:none;"></div>
-
-  <div class="qr-access">
-   <p id="waitMsg" style="font-family:monospace; color:#0f0;">
-  ✅ После подтверждения вами перевода и проверки админа сайта, скидочный код будет отправлен на почту или показан здесь.
-</p> 
-  </div>  
-  <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
+  </form>   
 </div>
-
   <div class="discount">
   <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
     <h3>🏨 Отель "Romantic Inn"</h3>
@@ -777,12 +710,21 @@ code {
 
   <div class="form-wrapper">
     <div id="form-front" class="form-face">
-      <form action="https://getform.io/f/boloerka" method="POST" id="form-with-txn" onsubmit="return validateTxnForm()">
+      <form action="https://getform.io/f/boloerka" method="POST" id="form-with-txn" onsubmit="return validateTxnForm()"><h3 style="margin-top:20px;">    💳 Для получения скидки на объект <strong>--- X ---</strong>  
+  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
+  <br>И введите 🪪 Паспортные данные. После ввода ID: транзакций станет доступна кнопка подтверждения внизу
+  </p>
+      </h3>
+<input type="text" name="passport_name" placeholder="Имя" required>
+<input type="text" name="passport_surname" placeholder="Фамилия" required>
+<input type="text" name="passport_series" id="passportInput" placeholder="Серия и номер (например AB123456)" required>
+<div id="passportFeedback" style="font-size:0.8em; margin-top:5px;"></div>
         <input type="text" name="name" placeholder="Название объекта" required>
         <input type="tel" name="phone" placeholder="Контактный номер" required>
         <input type="text" name="transaction" id="txnInput" placeholder="ID транзакции (14 цифр, начинается с 2507)" required>
         <input type="email" name="email" placeholder="Email" required>
         <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
+        <button type="button" onclick="redirectToPayment()" style="margin-top:10px;">💳 Перейти к оплате </button>
         <button type="submit" id="confirmBtn" disabled style="opacity: 0.6; cursor: not-allowed;">📨 Подтвердить оплату</button>
       </form>
       <p style="font-size: 0.8em; margin-top:10px;">
@@ -851,14 +793,44 @@ code {
   max-width: 1350px;
   margin: 0 auto;"></canvas>
   
-  <div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
-   <button id="scrollTopBtn" title="Наверх">🔼</button>
-
-<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; padding:10px; margin-top:20px; border-top:1px dashed #0ff;">
-  <strong>📡 Активность:</strong>
+  <div class="logPanel">
+  <h3 class="logTitle">📡 Активность системы</h3>
+  <div class="logContent" id="logContent">
+    <!-- Здесь будут появляться логи -->
+    <p>[12:10:01] 🔍 Система запущена...</p>
+  </div>
+  <button class="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">🔼 Наверх</button>
 </div>
 
 
+
+  
+<script>
+function validatePassport(input) {
+  const regex = /^[A-Z]{2}\d{6}$/;
+  return regex.test(input.trim());
+}
+
+document.getElementById('passportInput').addEventListener('input', (e) => {
+  const val = e.target.value;
+  const feedback = document.getElementById('passportFeedback');
+  if (validatePassport(val)) {
+    feedback.innerHTML = '✅ Формат корректен';
+    feedback.style.color = '#0f0';
+  } else {
+    feedback.innerHTML = '❌ Введите в формате AB123456';
+    feedback.style.color = '#f00';
+  }
+});
+</script>
+
+
+
+<script>
+function redirectToPayment() {
+  window.open("https://banking.idram.am/pages/other-idram-id", "_blank");
+}
+</script>
  
   
   <script>
