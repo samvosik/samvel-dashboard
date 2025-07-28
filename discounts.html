@@ -709,43 +709,57 @@ code {
   <h2 style="text-align:center;">📨 Отправить заявку</h2>
 
   <div class="form-wrapper">
+    <!-- Покупка скидки -->
     <div id="form-front" class="form-face">
-      <form action="https://getform.io/f/boloerka" method="POST" id="form-with-txn" onsubmit="return validateTxnForm()"><h3 style="margin-top:20px;">    💳 Для получения скидки на объект <strong>--- X ---</strong>  
-  <br>Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code>  
-  <br>И введите 🪪 Паспортные данные. После ввода ID: транзакций станет доступна кнопка подтверждения внизу
-  </p>
-      </h3>
-<input type="text" name="passport_name" placeholder="Имя" required>
-<input type="text" name="passport_surname" placeholder="Фамилия" required>
-<input type="text" name="passport_series" id="passportInput" placeholder="Серия и номер (например AB123456)" required>
-<div id="passportFeedback" style="font-size:0.8em; margin-top:5px;"></div>
+      <form action="https://getform.io/f/boloerka" method="POST" id="form-with-txn" onsubmit="return validateTxnForm()">
+        <h3 style="margin-top:20px;">
+          💳 Для получения скидки на объект <strong>--- X ---</strong><br>
+          Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code><br>
+          И введите 🪪 Паспортные данные. После ввода ID транзакции станет доступна кнопка подтверждения внизу.
+        </h3>
+
+        <input type="text" name="passport_name" placeholder="Имя" required>
+        <input type="text" name="passport_surname" placeholder="Фамилия" required>
+        <input type="text" name="passport_series" id="passportInput" placeholder="Серия и номер (например AB123456)" required>
+        <div id="passportFeedback" style="font-size:0.8em; margin-top:5px;"></div>
+
         <input type="text" name="name" placeholder="Название объекта" required>
         <input type="tel" name="phone" placeholder="Контактный номер" required>
-        <input type="text" name="transaction" id="txnInput" placeholder="ID транзакции (14 цифр, начинается с 2507)" required>
+        <input type="text" name="transaction" id="txnInput" placeholder="ID транзакции" required>
         <input type="email" name="email" placeholder="Email" required>
         <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
-        <button type="button" onclick="redirectToPayment()" style="margin-top:10px;">💳 Перейти к оплате </button>
-        <button type="submit" id="confirmBtn" disabled style="opacity: 0.6; cursor: not-allowed;">📨 Подтвердить оплату</button>
+
+        <button type="button" onclick="redirectToPayment()" style="margin-top:10px;">💳 Перейти к оплате</button>
+        <button type="submit" id="confirmBtn" disabled style="opacity:0.6; cursor:not-allowed;">📨 Подтвердить оплату</button>
       </form>
+
       <p style="font-size: 1.3em; margin-top:10px;">
-       💳 Купить скмдку <button type="button" onclick="toggleForm()" style="font-size: 1.3em; margin-top:10px;background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Перейти к форме Добавить обект </button>
+        💳 Купить скидку <button type="button" onclick="toggleForm()" style="background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Перейти к форме Добавить объект</button>
       </p>
     </div>
 
+    <!-- Добавление объекта -->
     <div id="form-back" class="form-face" style="display:none;">
       <form action="https://getform.io/f/boloerka" method="POST" id="form-no-txn">
+        <h3 style="margin-top:20px;">
+          🏨🍽️🖥️ Для добавления объекта <strong>--- X ---</strong> бесплатно<br>
+          Оформляете форму <strong>и ждите</strong> — в течение 24 часов <code>ваш объект</code> после проверки будет добавлен на наш сайт
+        </h3>
+
         <input type="text" name="name" placeholder="Название объекта" required>
         <input type="tel" name="phone" placeholder="Контактный номер" required>
         <input type="email" name="email" placeholder="Email" required>
         <textarea name="description" placeholder="Описание или условия скидки" required></textarea>
         <button type="submit" id="confirmBtn2" style="opacity: 1; cursor: pointer;">📨 Отправить заявку</button>
       </form>
+
       <p style="font-size: 1.3em; margin-top:10px;">
-        🏨🍽️🖥️ Добавить обект <button type="button" onclick="toggleForm()" style="font-size: 1.3em; margin-top:10px;background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Вернуться к форме Купить скмдку. </button>
+        🏨🍽️🖥️ Добавить объект <button type="button" onclick="toggleForm()" style="background:none; border:none; color:#0ff; cursor:pointer; text-decoration:underline; padding:0;">Вернуться к форме Купить скидку</button>
       </p>
     </div>
   </div>
 </section>
+
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 
 <footer>
