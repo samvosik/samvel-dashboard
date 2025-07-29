@@ -109,7 +109,7 @@ body {
   color: #0ff;
   border: 2px solid #0ff;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 8px 12px;
   background: transparent;
   box-shadow: 0 0 6px #0ff;
   transition: all 0.3s ease;
@@ -119,18 +119,17 @@ body {
   text-align: center;
 }
 .footer-player {
-  bottom: 20px;
-  right: 20px;
+  position: absolute; /* позиционирование внутри родителя */
+  bottom: 30px;       /* поднятие на 3 см */
+  right: 5px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #222;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 10px 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #0008;
+  gap: 1px;
+  background: rgba(0, 0, 0, 0.0);
+  padding: 1px;
+  border-radius: 1px;
+  box-shadow: 0 0 1px #0008;
   z-index: 999;
-  background: transparent;
 }
 
 #playToggle {
@@ -139,7 +138,7 @@ body {
   border: 2px solid #0ff;
   border-radius: 6px;
   padding: 6px 12px;
-  background: transparent;
+  background: 0000;
   box-shadow: 0 0 6px #0ff;
   transition: all 0.3s ease;
 }
@@ -158,14 +157,51 @@ body {
   box-shadow: 0 0 6px #0ff;
   transition: all 0.3s ease;
   cursor: pointer;
-  margin: 0 5px;
+  margin:  0.1px;
 }
 
 .radio-controls button:hover {
-  background: #0ff;
-  color: #111;
+  background: 0000;
+  color: 0000;
   box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
 }
+
+.player-visuals {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ← чтобы станция и эквалайзер были по центру */
+  gap: 6px;
+}
+.equalizer span {
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  margin: 0 2px;
+  background: #0ff;
+  box-shadow: 0 0 6px #0ff;
+  animation: bounce 1s infinite ease-in-out;
+}
+.station-info {
+  font-size: 0.85em;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  box-shadow: 0 0 6px #0ff;
+  text-shadow: 0 0 6px #0ff;
+  transition: all 0.3s ease;
+}
+@keyframes bounce {
+  0%   { height: 8px; opacity: 0.7; }
+  50%  { height: 24px; opacity: 1; }
+  100% { height: 8px; opacity: 0.7; }
+}
+.equalizer span:nth-child(1) { animation-delay: 0s; }
+.equalizer span:nth-child(2) { animation-delay: 0.2s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; }
+.equalizer span:nth-child(4) { animation-delay: 0.6s; }
+
   /* стили только для этого терминала */
 }
 .dark .terminal,
@@ -182,7 +218,7 @@ body {
   box-shadow: 0 0 15px #00ffee;
   max-width: 28vw;      /* ← вместо фиксированных пикселей */
   width: 100%;
-  margin: 0 auto;
+  margin: 50 auto;
   white-space: pre-wrap;
   line-height: 1.6;
   font-size: 11.98px;
@@ -206,6 +242,7 @@ body {
       50% { opacity: 1; }
     }
     .site-footer {
+    position: relative;
   background: #111;
   color: #111;
   padding: 30px 20px;
@@ -237,7 +274,7 @@ body {
   font-size: 1.1em;
   color: #0ff;
   margin-bottom: 12px;
-  max-width: 163px;
+  max-width: 55px;
   background: #000;
   padding: 5px 12px;
   border-radius: 6px;
@@ -250,7 +287,7 @@ body {
   list-style: none;
   padding: 20px;
   margin: 0;
-  max-width: 155px;
+  max-width: 25px;
   box-shadow: 0 0 8px #0ff;
 }
 
@@ -578,7 +615,6 @@ code {
     margin-top: 6px;
   ">🛍️ Օգտվել առաջարկից →</a>
 </div>
-
   
 </header>
 
@@ -762,40 +798,53 @@ code {
 
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 
-<footer>
-
-<footer class="site-footer">
-  <div class="footer-content">        
-    <audio id="radioAudio"></audio>
+    <footer>  
+   
+   <footer class="site-footer">   
 
     <!-- Контакты -->
     <div class="contact-panel">
       <h2 class="icon-only-title" title="Связь для вопросов">📡 Связь</h2>
       <ul class="contact-list">
-        <li><img src="icons/phone.png" alt="phone" /><a href="tel:+37493446453">+374 93 44 64 53</a></li>
-        <li><img src="icons/viber.png" alt="Viber" /><a href="viber://chat?number=%2B37493446453">Viber</a></li>
-        <li><img src="icons/WhatsApp.png" alt="WhatsApp" /><a href="https://wa.me/37493446453">WhatsApp</a></li>
-        <li><img src="icons/Telegram.png" alt="Telegram" /><a href="https://t.me/samvosik" target="_blank">@samvosik</a></li>
-        <li><img src="icons/Instagram.png" alt="Instagram" /><a href="https://instagram.com/samvel43" target="_blank">@samvel43</a></li>
-        <li><img src="icons/Facebook.png" alt="Facebook" /><a href="https://facebook.com/samvel.vardanyan.96" target="_blank">Facebook</a></li>
-        <li><img src="icons/OK.ru.png" alt="OK.ru" /><a href="https://ok.ru/profile/268819542131" target="_blank">OK.ru</a></li>
-      </ul>
+  <li><a href="tel:+37493446453"><img src="icons/phone.png" alt="phone" title="Позвонить" /></a></li>
+  <li><a href="viber://chat?number=%2B37493446453"><img src="icons/viber.png" alt="Viber" title="Написать в Viber" /></a></li>
+  <li><a href="https://wa.me/37493446453"target="_blank"><img src="icons/WhatsApp.png" alt="WhatsApp" title="Написать в WhatsApp" /></a></li>
+  <li><a href="https://t.me/samvosik" target="_blank"><img src="icons/Telegram.png" alt="Telegram" title="Написать в Telegram" /></a></li>
+  <li><a href="https://instagram.com/samvel43" target="_blank"><img src="icons/Instagram.png" alt="Instagram" title="Открыть Instagram" /></a></li>
+  <li><a href="https://facebook.com/samvel.vardanyan.96" target="_blank"><img src="icons/Facebook.png" alt="Facebook" title="Открыть Facebook" /></a></li>
+  <li><a href="https://ok.ru/profile/268819542131" target="_blank"><img src="icons/OK.ru.png" alt="OK.ru" title="Открыть Одноклассники" /></a></li>
+</ul>
+  
+  <div class="footer-player">  
+   <div class="equalizer">
+    <span></span><span></span><span></span><span></span>
+  </div>
+    
+  <div class="footer-content">  
+                     
+    <audio id="radioAudio"></audio>   
+              
+      <div class="radio-controls">      
+      
+      <div class="player-visuals">     
+                  
+        <button id="playToggle">▶️</button>        
+        
+        <button id="nextStation">⏭️</button>        
+        
+        <button id="prevStation">⏮️</button>              
+  
+  <div class="station-info">
+    <span id="stationLabel">1 / 7</span>
+  </div>
+</div>   
+      
+  </div>
+       <div id="terminal-wrapper">
+        <div class="terminal" id="terminal"></div>
+      </div>
     </div>
-   
-<div class="footer-player">
-
-    <div class="radio-controls">
-    <button id="playToggle">▶️</button>
-            
-  <div id="terminal-wrapper">
-  
-    <div class="terminal" id="terminal"></div> 
-</div>
-<button id="nextStation">⏭️</button>
-
-<button id="prevStation">⏮️</button>
-  
-</div>
+  </div>   
 
 </footer>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
@@ -815,8 +864,6 @@ code {
   </div>
   <button class="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">🔼 Наверх</button>
 </div>
-
-
 
   
 <script>
