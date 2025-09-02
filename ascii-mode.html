@@ -1,103 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Neon Terminal</title>
+<link rel="icon" href="favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Гадание на игральных картах</title>
   <style>
     body {
-}
-.terminal-footer {
-  margin-top: 30px;
-  background: #0a0a0a;
-  padding: 20px;
-  border-radius: 8px;
-  color: #0ff;
-  font-family: monospace;
-  white-space: pre-wrap;
-  text-shadow: 0 0 3px #0ff;
-  box-shadow: 0 0 10px #00ffee60;
-  position: relative;
-  min-height: 150px;
-  line-height: 1.4;
-  font-size: 0.95em;
-}
-.terminal-footer .cursor {
-  display: inline-block;
-  width: 10px;
-  background: #0ff;
-  animation: blink 1s infinite step-end;
-  margin-left: 2px;
-}
-@keyframes blink {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
+      background: url('Copilot_20250808_142325.png') center center / cover no-repeat fixed;
+      background-color: #000;
+      color: #0ff;
+      font-family: monospace;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .hidden { display: none; }
+
+    input, button, select {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #0ff;
+    }
+    button {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Контейнер для закреплённых форм */
+    .fixed-forms {
+      position: fixed;
+      top: 40px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      z-index: 1000;
+      pointer-events: none;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .deposit-section {
+      pointer-events: auto;
+      background: rgba(17, 17, 17, 0.9);
+      border: 1px solid #0ff;
+      padding: 10px;
+      border-radius: 8px;
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      max-width: 220px;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .deposit-section input,
+    .deposit-section select {
+      width: 80%;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      margin: 5px 0;
+    }
+
+    .deposit-section button {
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .qr-wrapper {
+      display: inline-block;
+      padding: 8px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      animation: neonPulse 2s infinite alternate;
+      transition: transform 0.3s ease;
+    }
+    .qr-wrapper img {
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+    }
+
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+      100% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
+    }
+
+    .mini-stream {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      width: 260px;
+      height: 150px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0ff;
+      z-index: 999;
+      background: #000;
+      padding: 5px;
+    }
+
+    .mini-stream iframe {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+    }
+
+    .mini-stream button {
+      margin-top: 5px;
+      width: 100%;
+      padding: 6px;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .contact-bar {
+      max-width: 400px;
+      position: fixed;
+      top: 0;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.85);
+      border-bottom: 2px solid #0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 8px;
+      z-index: 1000;
+      font-family: monospace;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .contact-bar a img {
+      width: 28px;
+      height: 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-bar a img:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    /* ✅ Адаптация для мобильных */
+    @media (max-width: 768px) {
+      body { padding: 10px; font-size: 0.9em; }
+
+      .fixed-forms {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        top: auto;
+        bottom: 10px;
+      }
+
+      .deposit-section { max-width: 95%; }
+
+      .qr-wrapper img { width: 100px; height: 100px; }
+
+      .mini-stream {
+        width: 90%;
+        height: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .mini-stream iframe { height: 180px; }
+
+      .contact-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 6px;
+        right: 0;
+        left: 0;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mini-stream iframe { height: 150px; }
+      button, input, select { font-size: 0.9em; }
+    }
   </style>
 </head>
 <body>
 
-  <div id="terminal-wrapper">
-  <div class="terminal-footer" id="terminal"></div>
+<div class="ritual-gate">
+  <h2>Добро пожаловать в круг предсказания</h2>
+  <p>Трансляция начнётся <strong>После оплаты</strong></p>
+</div>
+<p>Если хотите получить индивидуальное предсказание — напишите в удобный мессенджер:</p>
+<p>🕯️ Ответ возможен в течение дня. Все обращения — как часть обряда.</p>
 
- <script>
-  window.onload = function () {
-    const terminalWrapper = document.getElementById("terminal-wrapper");
+<div class="mini-stream" id="streamBox">
+  <iframe id="streamFrame" src="https://www.youtube.com/embed/live_stream?channel=UCJ9YT-5gt4fVG_WIKXeonrA" frameborder="0" allowfullscreen></iframe>
+  <button onclick="openFullscreen()">🔮 На весь экран</button>
+</div>
 
-const text = `root@samvel:~# npm run neon
-> Neon Dashboard Compiler v1.0.3
+<a href="https://youtube.com/live/Y8obEMj5oQA" target="_blank">
+  <button>🔮 Смотреть эфир</button>
+</a>
 
-✨ Loading interface...
-✅ CSS animations initialized
-✅ JavaScript injected
-🌐 Language module: Armenian / English / Russian
-📡 Connecting to server...
+<div class="contact-bar">
+  <a href="viber://chat?number=%2B37493719873" title="Viber"><img src="icons/viber.png" alt="Viber" /></a>
+  <a href="https://wa.me/37493719873" target="_blank" title="WhatsApp"><img src="icons/WhatsApp.png" alt="WhatsApp" /></a>
+  <a href="https://t.me/@Hayarph" target="_blank" title="Telegram"><img src="icons/Telegram.png" alt="Telegram" /></a>
+</div>
 
-💡 Interface ready! Welcome, Самвел.
-📡 Footer transmission initialized...
+<div class="fixed-forms">
+  <div class="deposit-section">
+    <div class="qr-wrapper"><img src="qr-code.png" alt="QR для донатов"></div>
+    <p style="color:#0ff;"><br> 💎 Оплатите <strong>1000 AMD</strong> на IDram: <code>250703718</code> </p>
+    <input type="number" id="deposit-amount" placeholder="Сумма монет" min="1" />
+    <select id="deposit-method">
+      <option value="IDram">IDram</option>
+      <option value="Карта">Карта (временно недоступно)</option>
+      <option value="Крипта">Крипта (временно недоступно)</option>
+      <option value="PayPal">PayPal (временно недоступно)</option>
+    </select>
+    <button onclick="handlePayment()" class="pay-btn">🔁 Оплатить</button>
+    <p id="deposit-status"></p>
+  </div>
+</div>
 
-💬 Страница в разработке — спасибо за посещение. 
-🚀 Возвращайтесь — система ждёт!
-💬 Page under construction, thanks for visiting.
-🚀 Come back — the system is waiting!
-💬 Էջը կառուցման փուլում է, շնորհակալություն այցելության համար։
-🚀 Վերադարձեք՝ համակարգը սպասում է։`;
+<script>
+function handlePayment() {
+  const amount = parseFloat(document.getElementById("deposit-amount").value);
+  const statusEl = document.getElementById("deposit-status");
 
+  if (isNaN(amount) || amount <= 0) {
+    statusEl.textContent = "Введите корректную сумму.";
+    statusEl.style.color = "#f00";
+    return;
+  }
 
-    const typingSpeed = 35;
+  statusEl.textContent = "";
+  window.open("https://banking.idram.am/pages/other-idram-id", "_blank");
+}
 
-    function typeText() {
-      const terminal = document.getElementById("terminal");
-      terminal.innerHTML = '';
-      let index = 0;
-
-      function loop() {
-        if (index <= text.length) {
-          terminal.innerHTML = text.slice(0, index++) + '<span class="cursor"></span>';
-          setTimeout(loop, typingSpeed);
-        }
-      }
-
-      loop();
-    }
-
-    function restartTerminal() {
-      const oldTerminal = document.getElementById("terminal");
-      if (oldTerminal) oldTerminal.remove();
-
-      const newTerminal = document.createElement("div");
-      newTerminal.className = "terminal-footer";
-      newTerminal.id = "terminal";
-      terminalWrapper.appendChild(newTerminal);
-
-      typeText();
-    }
-
-    terminalWrapper.addEventListener("click", restartTerminal);
-    typeText();
-  };
+function openFullscreen() {
+  const iframe = document.getElementById("streamFrame");
+  if (iframe.requestFullscreen) iframe.requestFullscreen();
+  else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+  else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+}
 </script>
-
-
 
 </body>
 </html>
