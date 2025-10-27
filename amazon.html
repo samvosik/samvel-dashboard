@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -115,6 +116,16 @@ h1, h2, h3 {
   line-height: 1.4;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+h2 {
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, #0ff, #ff00cc) 1;
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+}
+h2 {
+  text-shadow: 0 0 6px #0ff;
+  letter-spacing: 0.5px;
+}
+
 
 /* Заголовок 1 — главный */
 h1 {
@@ -176,6 +187,85 @@ h2 {
   display: block;
   margin: 0 auto;
 }
+.poetic-sidebar ul {
+  display: flex;
+  flex-wrap: wrap; /* если хочешь перенос при нехватке ширины */
+  gap: 12px;
+  justify-content: center; /* выравнивание по центру */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.poetic-sidebar li {
+  margin: 0;
+}
+
+.poetic-sidebar a {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.poetic-sidebar a:hover {
+  background-color: #0ff;
+  color: #000;
+  text-shadow: 0 0 5px #0ff;
+}
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.search-bar button {
+  padding: 8px 16px;
+  background-color: #0ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 6px #0ff;
+}
+.cat-item.search-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cat-item.search-item input {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95em;
+}
+
+.cat-item.search-item button {
+  padding: 6px 12px;
+  background-color: #0ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 6px #0ff;
+}
 
   </style>
   
@@ -186,9 +276,13 @@ h2 {
  <div class="container">
     <!-- Весь контент -->
   </div>
+<header style="background-color: #00D3FF; padding: 20px 0; text-align: center; box-shadow: 0 0 12px rgba(0,0,0,0.1);">
+  <img src="amazon_images/Amazon-27-10-2025.jpg" alt="Temu Logo" style="height: 100px; margin-bottom: 50px; border: 4px solid transparent; border-image: linear-gradient(to right, #fff, #ffcc00) 1;">
+   <h1 id="page-title">🎁 Рекомендуемые товары с Amazon</h1>
+<p style="color: #fff; font-size: 1em; margin-top: 6px;">Одежда, игрушки, стиль и выгода — всё в одном месте</p>
+</header>
 
-  <h1 id="page-title">🎁 Рекомендуемые товары с Amazon</h1>
-
+ 
   
  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;">
   Привет! 👋 💙 🔥 Уважаемые пользователи!  
@@ -197,10 +291,102 @@ h2 {
   <strong>примерно на 100 товаров + 5 бесплатно (в зависимости от цены)</strong>.
 </div>
   
+<div id="categories-ritual" class="widget poetic-sidebar widget_categories">
+  <h2 class="widget-title h4">📂Все Категории </h2>
+  <ul>  
+    <li class="cat-item"><a href="#style-m">🧥 Мужской стиль: одежда и обувь</a></li>
+    <li class="cat-item"><a href="#style-zh">👠 Женский стиль: одежда и обувь</a></li>
+    <li class="cat-item"><a href="#kuhnya">🍳 Кухня</a></li>
+    <li class="cat-item"><a href="#elektronika">📱 Электроника</a></li>
+    <li class="cat-item"><a href="#Sport">🧠 Спорт</a></li>
+    <li class="cat-item"><a href="#aksessuary">🎒 Аксессуары</a></li>
+  </ul>
+</div>
+
+<hr style="margin: 40px auto; border: none; height: 2px; background: linear-gradient(to right, #0ff, #ff00cc); max-width: 300px; border-radius: 2px;">
+
   <section class="product-gallery">
 
+ <section id="Sport">
+  <h2>📱 Спорт</h2>
+  <!-- карточки по теме -->
+   
+  <section class="product-row">
+  <img src="amazon_images/71GEQVYT7uL._AC_SL1500_.jpg" alt="Trideer Yoga Ball" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🧘 Trideer Yoga Ball — анти-взрывной мяч для фитнеса, беременности и терапии</h3>
+    <p>Многофункциональный мяч от Trideer — для йоги, растяжки, родов, офиса и домашнего зала. Изготовлен из прочного PVC, устойчив к разрыву, подходит для взрослых. Цвет: Rosy Morning Glow. Доступен в размерах M, L, XL и в 5 цветах.</p>
+    <ul>
+      <li>💰 Цена: <strong>$18.99</strong> (скидка 21%, была $23.99)</li>
+      <li>🛍️ Рейтинг: 4.6 из 5 (5,127 отзывов)</li>
+      <li>📏 Размер: L (23–26 дюймов / 58–65 см)</li>
+      <li>🎨 Цвета: Rosy Morning Glow, Blush Dawn Pink, Midnight Blue, Grey, Mint Green</li>
+      <li>🚚 Доставка в Армению: $53.66, без пошлин</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/4o3kbfj" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
+<section class="product-row">
+  <img src="amazon_images/61buP+VkgfL._AC_SL1000_.jpg" alt="FateFan Tension Rope" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🧘 FateFan 6-трубочный эспандер с педалями — для растяжки, пресса, талии и ног</h3>
+    <p>Многофункциональный тренажёр из натурального латекса — для йоги, пилатеса, фитнеса и домашней терапии. Подходит для растяжки, укрепления мышц живота, талии, рук и ног. Цвет: фиолетовый. Вес: 300 г.</p>
+    <ul>
+      <li>💰 Цена: <strong>$15.98</strong> (скидка 6%, была $16.99)</li>
+      <li>🛍️ Рейтинг: 3.9 из 5 (3,306 отзывов)</li>
+      <li>🎨 Цвета: Purple, Pink</li>
+      <li>📦 Вес: 300 г</li>
+      <li>🚚 Доставка в Армению: $47.68, без пошлин</li>
+      <li>🎟️ Купон: $0.80 скидка при оформлении</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/4oclZmn" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
+    <section id="elektronika">
+  <h2>📱 Электроника</h2>
+  <!-- карточки по теме -->
+
+  <section class="product-row">
+  <img src="amazon_images/613sNsqfo-L._AC_SL1500_.jpg" alt="Emerson SmartSet Alarm Clock" width="300" height="200">
+  <div class="product-right-text">
+    <h3>⏰ Emerson SmartSet CKS1500 — будильник с радио и автонастройкой времени</h3>
+    <p>Классический цифровой будильник от Emerson — с AM/FM радио, автонастройкой времени, синим LED-дисплеем и 4 уровнями яркости. Идеален для спальни, офиса или путешествий. Встроен таймер сна и двойной будильник.</p>
+    <ul>
+      <li>💰 Цена: <strong>$14.22</strong></li>
+      <li>🛍️ Рейтинг: 4.0 из 5 (180 отзывов)</li>
+      <li>📻 Радио: AM/FM</li>
+      <li>🌙 Таймер сна + двойной будильник</li>
+      <li>💡 LED-дисплей: 0.9", синий, 4 уровня яркости</li>
+      <li>🚚 Доставка в Армению: $43.83, без пошлин</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/3L9Wy6c" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
+<section class="product-row">
+  <img src="amazon_images/61-ZTbzw6oL._AC_SL1500_.jpg" alt="Uliptz Bluetooth Headphones" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🎧 Uliptz Bluetooth наушники — 65 часов, 6 EQ режимов</h3>
+    <p>Наушники от Uliptz — для путешествий, офиса, спорта и музыки. 40 мм HiFi-динамики, 6 режимов эквалайзера, Bluetooth 5.3, встроенный микрофон. Мягкие амбушюры, складная конструкция, до 65 часов воспроизведения. Доступны в 4 цветах: Black, Purple, Rose Gold, Silver.</p>
+    <ul>
+      <li>💰 Цена: <strong>$14.98</strong> (скидка 25%, была $19.99)</li>
+      <li>🛍️ Рейтинг: 4.5 из 5 (12,653 отзывов)</li>
+      <li>🔋 Время работы: до 65 часов</li>
+      <li>🎛️ Режимы: 6 эквалайзеров</li>
+      <li>📶 Bluetooth: версия 5.3</li>
+      <li>🚚 Доставка в Армению: $43.65, без пошлин</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/4ovkRtM" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
   <div class="product-row">
-   <img src="71IwxDRg8zL._AC_SL1500_.jpg" alt="Товар 2" width="300" height="200">
+   <img src="amazon_images/71IwxDRg8zL._AC_SL1500_.jpg" alt="Товар 2" width="300" height="200">
 
     <div class="product-right-text">
       <h3>Tablet 7Inch Android 14.0 with Protective Case, 8GB(4+4GB Expand) RAM+ 32GB ROM, IPS Screen, Dual Camera, Bluetooth 5.0 WiFi Tab (Pink)
@@ -218,8 +404,29 @@ Display Resolution Maximum	1024 Pixels</p>
     </div>
   </div> 
   
+ <section id="aksessuary">
+  <h2>🎒 Аксессуары</h2>
+  <!-- карточки по теме -->
+<section class="product-row">
+  <img src="amazon_images/71DVfwSDN-L._AC_SL1500_.jpg" alt="Amazon Basics Stereo 2.0 Speakers" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🔊 Amazon Basics Stereo 2.0 — USB-колонки для ПК и ноутбуков</h3>
+    <p>Минималистичные и надёжные колонки от Amazon Basics — для офиса, дома и повседневного звука. Подключение через USB и 3.5 мм AUX, мощность 5 Вт, компактный размер 3.9 дюйма. Доступны в чёрном и серебристом цвете.</p>
+    <ul>
+      <li>💰 Цена: <strong>$14.76</strong> (Black), <strong>$17.82</strong> (Silver)</li>
+      <li>🛍️ Рейтинг: 4.4 из 5 (76,574 отзывов)</li>
+      <li>🔌 Питание: от USB</li>
+      <li>🎧 Подключение: AUX 3.5 мм</li>
+      <li>📦 Размер: 3.9 дюйма, 1 пара</li>
+      <li>🚚 Доставка в Армению: $49.12, без пошлин</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/3L0JiRv" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
   <div class="product-row">
-   <img src="81Dg5edWMxL._AC_SL1500_.jpg" alt="Товар 3" width="300" height="200">
+   <img src="amazon_images/81Dg5edWMxL._AC_SL1500_.jpg" alt="Товар 3" width="300" height="200">
 
     <div class="product-right-text">
       <h3>FNTCASE for Samsung Galaxy A26-5G Case: Military Grade for Galaxy A26-5G Phone Case with Kickstand & Slide | Protective Heavy Duty Rugged Dropproof Cell Phone Cover Bumper Textured Protector (Blue)
@@ -238,8 +445,30 @@ Material	Thermoplastic Polyurethane</p>
     </div>
   </div> 
   
+  <section id="style-zh">
+  <h2>👠 Женский стиль: одежда и обувь</h2>
+  <!-- карточки -->
+<section class="product-row">
+  <img src="amazon_images/Screenshot_7.jpg" alt="Canvas Tote Bag for Women" width="300" height="200">
+  <div class="product-right-text">
+    <h3>👜 Canvas Tote Bag — хлопковая сумка с магнитной застёжкой и внутренним карманом</h3>
+    <p>Лёгкая и стильная сумка из хлопкового канваса — с магнитной застёжкой, внутренним карманом на молнии и размерами 43×41 см. Подходит для прогулок, офиса, подарка или повседневного ритуала. Доступна в 3 цветах: Boho, Cherry, Summer.</p>
+    <ul>
+      <li>💰 Цена: <strong>$11.99</strong></li>
+      <li>🛍️ Рейтинг: 4.5 из 5 (21 отзыв)</li>
+      <li>🎨 Цвета: Boho, Cherry, Summer</li>
+      <li>📐 Размер: 43 × 41 см</li>
+      <li>🧼 Уход: машинная и ручная стирка</li>
+      <li>🚚 Доставка в Армению: $43.28, без пошлин</li>
+      <li>🎟️ Купон: $6.00 скидка при оформлении</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/4qKXMFx" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
    <div class="product-row">
-   <img src="61rCWy4vmZL._AC_SX569_.jpg" alt="Товар 3" width="300" height="200">
+   <img src="amazon_images/61rCWy4vmZL._AC_SX569_.jpg" alt="Товар 3" width="300" height="200">
 
     <div class="product-right-text">
       <h3>CHRLEISURE Leggings with Pockets for Women - Tummy Control High Waisted Soft Workout Yoga Pants
@@ -255,8 +484,30 @@ Closure typePull On</p>
     </div>
   </div> 
   
+ <section id="style-m">
+  <h2>🧥 Мужской стиль: одежда и обувь</h2>
+  <!-- карточки -->
+
+  <section class="product-row">
+  <img src="amazon_images/Screenshot_6.jpg" alt="Pioneer Camp Winter Jacket" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🧥 Pioneer Camp зимняя мужская куртка — утеплённая парка с капюшоном</h3>
+    <p>Тёплая зимняя куртка от Pioneer Camp — с подкладкой Sherpa, водоотталкивающая, средней плотности, с капюшоном и стёганым утеплителем. Подходит для города, прогулок, путешествий. Доступна в 6 цветах и 5 размерах.</p>
+    <ul>
+      <li>💰 Цена: <strong>$69.99</strong> (скидка 13%, была $79.99)</li>
+      <li>🛍️ Рейтинг: 4.5 из 5 (174 отзыва)</li>
+      <li>🎨 Цвета: Black White, Black Grey, Grey Black, Navy, Navy Black, Olive Green</li>
+      <li>📏 Размеры: S, M, L, XL, XXL</li>
+      <li>🚚 Доставка в Армению: $69.09, без пошлин</li>
+      <li>🧼 Уход: машинная стирка</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/3J0FhvK" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+
    <div class="product-row">
-   <img src="61E2-Faa8SL._AC_SX679_.jpg" alt="Товар 3" width="300" height="200">
+   <img src="amazon_images/61E2-Faa8SL._AC_SX679_.jpg" alt="Товар 3" width="300" height="200">
 
     <div class="product-right-text">
       <h3>Gildan Adult Softstyle Crewneck Sweatshirt, Style GSF000
@@ -274,8 +525,44 @@ Closure typePull On
       <a class="link-button neon" href="https://amzn.to/3KSQmzu" target="_blank">🙌 Купить через Amazon 🙌</a>
     </div>
   </div> 
-
 </section>
+
+
+<section id="kuhnya">
+  <h2>🍳 Кухня</h2>
+<!-- карточки -->
+<section class="product-row">
+  <img src="amazon_images/61m6eAej0ML._AC_SL1500_.jpg" alt="Товар 3" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🍚 Aroma рисоварка 6 чашек (ARC-363NG)</h3>
+    <p>Компактная рисоварка от Aroma — для приготовления риса, каш, супов и овощей. Объём 1.5 Qt, 6 чашек готового продукта. Один режим — простое нажатие. Идеальна для кухни, где вкус — это ритуал.</p>
+    <ul>
+      <li>💰 Цена: <strong>$19.86</strong> (скидка 21%)</li>
+      <li>🛍️ Рейтинг: 4.5 из 5 (23,619 отзывов)</li>
+      <li>📦 Вместимость: 6 чашек готового / 3 чашки сырого</li>
+      <li>⚡ Источник питания: электросеть</li>
+      <li>🧼 Уход: ручная мойка</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/4qqtLug" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
+<section class="product-row">
+  <img src="amazon_images/paket.jpg" alt="Slow Cooker Liners" width="300" height="200">
+  <div class="product-right-text">
+    <h3>🧼 Slow Cooker Liners — 50 пакетов для мультиварки (6–10 QT)</h3>
+    <p>Одноразовые пакеты от WZHSBSAQ — для мультиварок объёмом от 6 до 10 кварт. Размер 14×22 дюйма. Упрощают уборку, защищают чашу от загрязнений. Прозрачный пластик, 50 штук в упаковке.</p>
+    <ul>
+      <li>💰 Цена: <strong>$16.99</strong></li>
+      <li>🛍️ Рейтинг: 3.9 из 5 (22 отзыва)</li>
+      <li>📦 Объём: до 10 QT</li>
+      <li>📐 Размер: 14" × 22"</li>
+      <li>🌍 Доставка в Армению: $43.73, без пошлин</li>
+    </ul>
+    <a class="link-button neon" href="https://amzn.to/47nzo3F" target="_blank">🙌 Купить через Amazon 🙌</a>
+  </div>
+</section>
+
 
   <section class="contact-footer">
 
@@ -312,13 +599,16 @@ Closure typePull On
     </li>
   </ul>
   
- 
 
 </section>
 
 <button
  id="scrollTopBtn" title="Наверх">🔼</button>
 
+
+<footer>
+  <p>@samvosik kontent</p>
+</footer>
 
 <script>
   const scrollBtn = document.getElementById("scrollTopBtn");

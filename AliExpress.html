@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -115,6 +116,16 @@ h1, h2, h3 {
   line-height: 1.4;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
+h2 {
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, #0ff, #ff00cc) 1;
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+}
+h2 {
+  text-shadow: 0 0 6px #0ff;
+  letter-spacing: 0.5px;
+}
+
 
 /* Заголовок 1 — главный */
 h1 {
@@ -176,16 +187,97 @@ h2 {
   display: block;
   margin: 0 auto;
 }
+.poetic-sidebar ul {
+  display: flex;
+  flex-wrap: wrap; /* если хочешь перенос при нехватке ширины */
+  gap: 12px;
+  justify-content: center; /* выравнивание по центру */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.poetic-sidebar li {
+  margin: 0;
+}
+
+.poetic-sidebar a {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.poetic-sidebar a:hover {
+  background-color: #0ff;
+  color: #000;
+  text-shadow: 0 0 5px #0ff;
+}
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.search-bar button {
+  padding: 8px 16px;
+  background-color: #0ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 6px #0ff;
+}
+.cat-item.search-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cat-item.search-item input {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95em;
+}
+
+.cat-item.search-item button {
+  padding: 6px 12px;
+  background-color: #0ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 6px #0ff;
+}
+
 
   </style>
+  
 
-<!-- Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4K3D850BP"></script>
 <script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id=GTM-5NJG845S'+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5NJG845S');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z4K3D850BP');
 </script>
 
   
@@ -193,17 +285,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NJG845S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-
  <div class="container">
     <!-- Весь контент -->
   </div>
-
-  <h1 id="page-title">🎁 Рекомендуемые товары с AliExpress</h1>
-
+<header style="background-color: red; padding: 20px 0; text-align: center; box-shadow: 0 0 12px rgba(0,0,0,0.1);">
+  <img src="aliexpess-images/Screenshot_1.jpg" alt="Temu Logo" style="height: 100px; margin-bottom: 50px; border: 4px solid transparent; border-image: linear-gradient(to right, #fff, #ffcc00) 1;">
+   <h1 id="page-title">🎁 Рекомендуемые товары с AliExpress</h1>
+<p style="color: #fff; font-size: 1em; margin-top: 6px;">Одежда, игрушки, стиль и выгода — всё в одном месте</p>
+</header>
+  
   
  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;">
   Привет! 👋 💙 🔥 Уважаемые пользователи!  
@@ -212,81 +302,223 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <strong>примерно на 100 товаров + 5 бесплатно (в зависимости от цены)</strong>.
 </div>
 
-<section class="product-row">
-  <img src="aliexpess-images/Screenshot_13.jpg" alt="MIJIA MicroSD карта памяти" width="200" />
+<div id="categories-ritual" class="widget poetic-sidebar widget_categories">
+  <h2 class="widget-title h4">📂 Категории</h2>
+  <ul>
+    <li class="cat-item"><a href="#zapchasti">Автозапчасти</a></li>
+    <li class="cat-item"><a href="#remont">Ремонт</a></li>
+    <li class="cat-item"><a href="#santehnika">Сантехника</a></li>
+    <li class="cat-item"><a href="#kuhnya">Кухня</a></li>
+    <li class="cat-item"><a href="#elektronika">Электроника</a></li>
+    <li class="cat-item"><a href="#ustroistvo">Устройство</a></li>
+    <li class="cat-item"><a href="#aksessuary">Аксессуары</a></li>
+  </ul>
+</div>
+
+<section id="zapchasti">
+  <h2>🚗 Автозапчасти</h2>
+  <!-- карточки по теме -->
+
+  <section class="product-row">
+    <img src="aliexpess-images/Screenshot_8.jpg" alt="Автоматическое зарядное устройство 12 В 6 А" width="200" />
+    <div class="product-right-text">
+      <h3>🔋 12 В 6 А автоматическое зарядное устройство</h3>
+      <p>Цифровое импульсное устройство от NarzrIe Global Supplier Store — для зарядки и восстановления автомобильных аккумуляторов. Поддержка интеллектуального режима, ремонт, защита от перегрева и короткого замыкания.</p>
+      <ul>
+        <li>💰 Цена: <strong>₽ 1 550</strong></li>
+        <li>🌍 Происхождение: Китай</li>
+        <li>🛍️ Рейтинг: 4.8 из 5 (224 покупателя)</li>
+      </ul>
+      <a class="link-button neon" href="https://aliexpress.ru/item/1005005196094407.html?spm=a2g2w.detail.rcmdprod.27.405b439etnZOuO&mixer_rcmd_bucket_id=4ce5b523a825d63d&pdp_trigger_item_id=0_33005568146&ru_algo_pv_id=5866bd-61b690-2979c9-ef1f4f-1760947200&scenario=aerSimilarItemPdpRcmd&sku_id=12000051029087579&traffic_source=recommendation&type_rcmd=core" target="_blank">🔗 Перейти к товару</a>
+    </div>
+  </section>
+
+</section>
+
+<section id="remont">
+  <h2>🔧 Ремонт</h2>
+  <!-- карточки по теме -->
+   <section class="product-row">
+  <img src="aliexpess-images/Screenshot_2.jpg" alt="ZTEN Комбинированный инструмент для ремонта" width="200" />
   <div class="product-right-text">
-    <h3>💾 MIJIA MicroSD карта памяти 128/256/512 ГБ</h3>
-    <p>Высокоскоростная карта памяти от MIJIA — для телефонов, камер, ноутбуков и игровых устройств. Поддержка Full HD, формат Micro TF SD, адаптер в комплекте.</p>
+    <h3>🧰 ZTEN Комбинированный инструмент для ремонта (98 предметов)</h3>
+    <p>Электрический набор от ZTEN — для ремонта автомобилей и бытовых задач. Включает 98 инструментов, подходит для индивидуального использования и мастерских. Аккумулятор в комплекте.</p>
     <ul>
-      <li>📦 Доставка в Ереван — 110.65 AMD</li>
-      <li>💰 Цена: <strong>779.92 AMD</strong> (скидка 54%)</li>
+      <li>🔧 Применение: ремонт автомобилей</li>
+      <li>💰 Цена: уточняется</li>
       <li>🌍 Происхождение: Китай</li>
-      <li>🛍️ Рейтинг: 4.0 из 5 (167 отзывов)</li>
+      <li>🔋 Аккумулятор: входит в комплект</li>
+      <li>📦 Комплектация: 98 предметов</li>
     </ul>
-    <a class="link-button neon" href="https://aliexpress.ru/item/1005009420642797.html?spm=a2g2w.favourites.mywishlist.4.6e054aa6VdMDvG&sku_id=12000049041477338" target="_blank">🔗 Перейти к товару</a>
+    <a class="link-button neon" href="https://aliexpress.ru/item/1005009333344145.html?sku_id=12000048784513078" target="_blank">🔗 Перейти к товару</a>
   </div>
 </section>
 
 <section class="product-row">
-  <img src="aliexpess-images/Screenshot_5.jpg" alt="Очки с защитой от синего света" width="200" />
+  <img src="aliexpess-images/пушка.jpg" alt="Тепловая пушка Yarboly 220В" width="200" />
   <div class="product-right-text">
-    <h3>🕶️ Квадратные очки с защитой от синего света</h3>
-    <p>Стильные очки от RMM Official Store — защита глаз при работе за компьютером, чтении и в дороге. Универсальная форма, лёгкая оправа, антибликовое покрытие.</p>
+    <h3>🔥 Тепловая пушка Yarboly 220В (модель 858)</h3>
+    <p>Компактная тепловая пушка от Yarboly — для DIY-ремонта, пайки, термоусадки и технического нагрева. С регулировкой температуры, вес всего 0.3 кг. Подходит для домашнего использования и мастерских.</p>
     <ul>
-      <li>💰 Цена: <strong>102 ₽</strong></li>
+      <li>💰 Цена: уточняется</li>
       <li>🌍 Происхождение: Китай</li>
-      <li>🛍️ Рейтинг: 4.4 из 5 (1 394 покупателя)</li>
+      <li>🛍️ Рейтинг: 4.8 из 5 (270 отзывов)</li>
+      <li>🔧 Назначение: DIY, ремонт, пайка</li>
+      <li>⚙️ Вес: 0.3 кг</li>
     </ul>
-    <a class="link-button neon" href="https://aliexpress.ru/item/1005003081605909.html?spm=a2g2w.promotions_1186.3.1.7276501dO5rA7f&mixer_rcmd_bucket_id=UnknownMixerAbId&ru_algo_pv_id=71873a-d599d3-ed7a85-9725ba-1760943600&scenario=aerMediakitSearchFilters&spmC=pcp_main_shelf&spmD=3&traffic_source=recommendation&type_rcmd=core&sku_id=12000023967987676" target="_blank">🔗 Перейти к товару</a>
+    <a class="link-button neon" href="https://aliexpress.ru/item/32885680105.html?sku_id=66656003535" target="_blank">🔗 Перейти к товару</a>
+  </div>
+</section>
+
+
+<section id="santehnika">
+  <h2>🚿 Сантехника</h2>
+  <!-- карточки по теме -->
+   <section class="product-row">
+  <img src="aliexpess-images/свет кран.jpg" alt="MOONBIFFY Аэратор для крана 1080°" width="200" />
+  <div class="product-right-text">
+    <h3>🚿 MOONBIFFY Аэратор для крана 1080°</h3>
+    <p>Поворотный аэратор от MOONBIFFY — регулирует направление струи, подходит для кухонных и ванных кранов. Два режима подачи воды, вращение на 1080°, материал — пластик. Удобство, экономия и гибкость в одном устройстве.</p>
+    <ul>
+      <li>💰 Цена: уточняется</li>
+      <li>🌍 Происхождение: Китай</li>
+      <li>🛍️ Рейтинг: 4.4 из 5 (176 отзывов)</li>
+      <li>🔄 Угол поворота: 1080°</li>
+      <li>🧩 Материал: пластик</li>
+    </ul>
+    <a class="link-button neon" href="https://aliexpress.ru/item/1005007518931213.html?sku_id=12000041104055554" target="_blank">🔗 Перейти к товару</a>
   </div>
 </section>
 
 <section class="product-row">
-  <img src="aliexpess-images/6.jpg" alt="Raspberry Pi 5 модуль" width="200" />
+<iframe width="300" height="200" src="https://gv-vod-cdn.aliexpress-media.com/9f8e1de30350cb41/VLA7yZiJD9StGuhkbiz/bWvglMPsNQHPzpNNkSt_309691396391_mp4_264_hd.mp4?auth_key=1761553038-0-0-f0e029b29a7a25f758d40d951a5a646f" allowfullscreen></iframe>
+  <img src="aliexpess-images/цвет кран.jpg" alt="Zhang Ji светодиодный термочувствительный смеситель" width="200" />
   <div class="product-right-text">
-    <h3>🧠 Raspberry Pi 5 4ГБ/8ГБ модуль</h3>
-    <p>Компактный и мощный модуль от Shenzhen Hongtai Shengye Technology Store — для DIY-проектов, автоматизации, медиа-центров и обучения. Поддержка Linux, GPIO, USB 3.0, HDMI.</p>
+    <h3>🌈 Zhang Ji светодиодный термочувствительный смеситель</h3>
+    <p>Аэратор от Zhang Ji — меняет цвет в зависимости от температуры воды. Светодиодная подсветка превращает поток в визуальный ритуал. Подходит для кухонных и ванных кранов. Материал — пластик.</p>
     <ul>
-      <li>💰 Цена: <strong>₽ 1 089</strong></li>
+      <li>💰 Цена: уточняется</li>
       <li>🌍 Происхождение: Китай</li>
-      <li>🛍️ Рейтинг: 4.0 из 5 (112 покупателя)</li>
+      <li>🛍️ Рейтинг: 4.7 из 5 (10 084 отзывов)</li>
+      <li>🌡️ Реакция: термочувствительная LED-подсветка</li>
+      <li>🧩 Материал: пластик</li>
     </ul>
-    <a class="link-button neon" href="https://aliexpress.ru/item/1005006312854739.html?spm=a2g2w.favourites.mywishlist.188.7d734aa6GPjLsU&sku_id=12000036721727036" target="_blank">🔗 Перейти к товару</a>
+    <a class="link-button neon" href="https://aliexpress.ru/item/32907062314.html?sku_id=65823819136" target="_blank">🔗 Перейти к товару</a>
+  </div>
+</section>
+
+
+<section id="kuhnya">
+  <h2>🍳 Кухня</h2>
+  <!-- карточки по теме -->
+   <section class="product-row">
+<iframe width="300" height="200" src="https://gv-vod-cdn.aliexpress-media.com/vod-4e6a43/a0a17309039871efa40e5114c1ca0102/cddcdade7e0541529c99ffa0edfa8c04-c1659d6ee28749f97e58bd5edb5815f0-sd.mp4?auth_key=1761552626-0-0-b9c273f7a4e94967f901ad1bd5c865d4" allowfullscreen></iframe>
+  <img src="aliexpess-images/овощорезка.jpg" alt="Многофункциональная овощерезка 14/16 в 1" width="200" />
+  <div class="product-right-text">
+    <h3>🍽️ Многофункциональная овощерезка 14/16 в 1</h3>
+    <p>Компактная овощерезка — для нарезки, шинковки, толчения и подготовки ингредиентов. Подходит для фруктов, овощей, картофеля. Лезвия из нержавеющей стали, корпус из пластика. Экологичный, удобный, ускоряет кухонные ритуалы.</p>
+    <ul>
+      <li>💰 Цена: уточняется</li>
+      <li>🌍 Происхождение: Китай</li>
+      <li>🛍️ Рейтинг: 4.2 из 5 (183 отзыва)</li>
+      <li>🔧 Модель: YS-9082</li>
+      <li>🧩 Материал: пластик + нержавеющая сталь</li>
+    </ul>
+    <a class="link-button neon" href="https://aliexpress.ru/item/1005006902446158.html?sku_id=12000038663350892" target="_blank">🔗 Перейти к товару</a>
   </div>
 </section>
 
 <section class="product-row">
-  <img src="aliexpess-images/Screenshot_7.jpg" alt="Температурное кольцо boboman" width="200" />
+  <img src="aliexpess-images/салфетки.jpg" alt="Нетканые салфетки для уборки 50 шт" width="200" />
   <div class="product-right-text">
-    <h3>💍 Температурное кольцо из титановой стали boboman</h3>
-    <p>Минималистичное кольцо от shouman Store — меняет цвет в зависимости от температуры тела. Стильный аксессуар, сочетающий эстетику и технологию. Подходит для повседневного ношения и подарков.</p>
+    <h3>🧼 Нетканые салфетки для уборки (50 шт)</h3>
+    <p>Практичные салфетки — для кухни, ванной, мебели и техники. Один рулон содержит 50 разноцветных листов размером 20×20 см. Подходят для сухой и влажной уборки, не оставляют ворсинок, экологичны и удобны в использовании.</p>
     <ul>
-      <li>💰 Цена: <strong>₽ 52</strong></li>
+      <li>💰 Цена: уточняется</li>
       <li>🌍 Происхождение: Китай</li>
-      <li>🛍️ Рейтинг: 4.3 из 5 (69 611 покупателя)</li>
+      <li>🛍️ Рейтинг: 3.6 из 5 (79 отзывов)</li>
+      <li>📦 Формат: 50 шт в рулоне</li>
+      <li>🧵 Материал: нетканая ткань</li>
     </ul>
-    <a class="link-button neon" href="https://aliexpress.ru/item/32986713470.html?spm=a2g2w.favourites.mywishlist.215.4e094aa6cXj9xn&sku_id=12000025205383220" target="_blank">🔗 Перейти к товару</a>
-  </div>
-</section>
-
-<section class="product-row">
-  <img src="aliexpess-images/Screenshot_8.jpg" alt="Автоматическое зарядное устройство 12 В 6 А" width="200" />
-  <div class="product-right-text">
-    <h3>🔋 12 В 6 А автоматическое зарядное устройство</h3>
-    <p>Цифровое импульсное устройство от NarzrIe Global Supplier Store — для зарядки и восстановления автомобильных аккумуляторов. Поддержка интеллектуального режима, ремонт, защита от перегрева и короткого замыкания.</p>
-    <ul>
-      <li>💰 Цена: <strong>₽ 1 550</strong></li>
-      <li>🌍 Происхождение: Китай</li>
-      <li>🛍️ Рейтинг: 4.8 из 5 (224 покупателя)</li>
-    </ul>
-    <a class="link-button neon" href="https://aliexpress.ru/item/1005005196094407.html?spm=a2g2w.detail.rcmdprod.27.405b439etnZOuO&mixer_rcmd_bucket_id=4ce5b523a825d63d&pdp_trigger_item_id=0_33005568146&ru_algo_pv_id=5866bd-61b690-2979c9-ef1f4f-1760947200&scenario=aerSimilarItemPdpRcmd&sku_id=12000051029087579&traffic_source=recommendation&type_rcmd=core" target="_blank">🔗 Перейти к товару</a>
+    <a class="link-button neon" href="https://aliexpress.ru/item/1005007533835044.html?sku_id=12000041188118652&spm=a2g2w.productlist.search_results.11.1dc9625fceTiKE" target="_blank">🔗 Перейти к товару</a>
   </div>
 </section>
 
 
+<section id="elektronika">
+  <h2>📱 Электроника</h2>
+  <!-- карточки по теме -->
 
+  <section class="product-row">
+    <img src="aliexpess-images/Screenshot_13.jpg" alt="MIJIA MicroSD карта памяти" width="200" />
+    <div class="product-right-text">
+      <h3>💾 MIJIA MicroSD карта памяти 128/256/512 ГБ</h3>
+      <p>Высокоскоростная карта памяти от MIJIA — для телефонов, камер, ноутбуков и игровых устройств. Поддержка Full HD, формат Micro TF SD, адаптер в комплекте.</p>
+      <ul>
+        <li>📦 Доставка в Ереван — 110.65 AMD</li>
+        <li>💰 Цена: <strong>779.92 AMD</strong> (скидка 54%)</li>
+        <li>🌍 Происхождение: Китай</li>
+        <li>🛍️ Рейтинг: 4.0 из 5 (167 отзывов)</li>
+      </ul>
+      <a class="link-button neon" href="https://aliexpress.ru/item/1005009420642797.html?spm=a2g2w.favourites.mywishlist.4.6e054aa6VdMDvG&sku_id=12000049041477338" target="_blank">🔗 Перейти к товару</a>
+    </div>
+  </section>
 
 </section>
+
+<section id="ustroistvo">
+  <h2>⚙️ Устройство</h2>
+  <!-- карточки по теме -->
+  <section class="product-row">
+    <img src="aliexpess-images/6.jpg" alt="Raspberry Pi 5 модуль" width="200" />
+    <div class="product-right-text">
+      <h3>🧠 Raspberry Pi 5 4ГБ/8ГБ модуль</h3>
+      <p>Компактный и мощный модуль от Shenzhen Hongtai Shengye Technology Store — для DIY-проектов, автоматизации, медиа-центров и обучения. Поддержка Linux, GPIO, USB 3.0, HDMI.</p>
+      <ul>
+        <li>💰 Цена: <strong>₽ 1 089</strong></li>
+        <li>🌍 Происхождение: Китай</li>
+        <li>🛍️ Рейтинг: 4.0 из 5 (112 покупателя)</li>
+      </ul>
+      <a class="link-button neon" href="https://aliexpress.ru/item/1005006312854739.html?spm=a2g2w.favourites.mywishlist.188.7d734aa6GPjLsU&sku_id=12000036721727036" target="_blank">🔗 Перейти к товару</a>
+    </div>
+  </section>
+</section>
+
+<section id="aksessuary">
+  <h2>⚙️ Аксессуары</h2>
+  <!-- карточки по теме -->
+  <section class="product-row">
+    <img src="aliexpess-images/Screenshot_5.jpg" alt="Очки с защитой от синего света" width="200" />
+    <div class="product-right-text">
+      <h3>🕶️ Квадратные очки с защитой от синего света</h3>
+      <p>Стильные очки от RMM Official Store — защита глаз при работе за компьютером, чтении и в дороге. Универсальная форма, лёгкая оправа, антибликовое покрытие.</p>
+      <ul>
+        <li>💰 Цена: <strong>102 ₽</strong></li>
+        <li>🌍 Происхождение: Китай</li>
+        <li>🛍️ Рейтинг: 4.4 из 5 (1 394 покупателя)</li>
+      </ul>
+      <a class="link-button neon" href="https://aliexpress.ru/item/1005003081605909.html?spm=a2g2w.promotions_1186.3.1.7276501dO5rA7f&mixer_rcmd_bucket_id=UnknownMixerAbId&ru_algo_pv_id=71873a-d599d3-ed7a85-9725ba-1760943600&scenario=aerMediakitSearchFilters&spmC=pcp_main_shelf&spmD=3&traffic_source=recommendation&type_rcmd=core&sku_id=12000023967987676" target="_blank">🔗 Перейти к товару</a>
+    </div>
+  </section>
+
+   <section class="product-row">
+<iframe width="300" height="200" src="https://gv-vod-cdn.aliexpress-media.com/9f8e1de30350cb41/1eJsGGCc93PKY29yBI9/FTmfoYZYkkzjurffEm5_288984256456_sd_hq.mp4?auth_key=1761552309-0-0-44259748bdb02054aa2cd3ee525a037b" allowfullscreen></iframe>
+    <img src="aliexpess-images/Screenshot_7.jpg" alt="Температурное кольцо boboman" width="200" />
+    <div class="product-right-text">
+      <h3>💍 Температурное кольцо из титановой стали boboman</h3>
+      <p>Минималистичное кольцо от shouman Store — меняет цвет в зависимости от температуры тела. Стильный аксессуар, сочетающий эстетику и технологию. Подходит для повседневного ношения и подарков.</p>
+      <ul>
+        <li>💰 Цена: <strong>₽ 52</strong></li>
+        <li>🌍 Происхождение: Китай</li>
+        <li>🛍️ Рейтинг: 4.3 из 5 (69 611 покупателя)</li>
+      </ul>
+      <a class="link-button neon" href="https://aliexpress.ru/item/32986713470.html?spm=a2g2w.favourites.mywishlist.215.4e094aa6cXj9xn&sku_id=12000025205383220" target="_blank">🔗 Перейти к товару</a>
+    </div>
+  </section>
+
+</section>
+
+
 
   <section class="contact-footer">
 
@@ -331,7 +563,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  id="scrollTopBtn" title="Наверх">🔼</button>
 
 <footer>
-  <p>ePN</p>
+  <p>@samvosik kontent</p>
 </footer>
 
 
@@ -351,6 +583,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   };
 </script>
 
+<script>
+  function searchCategory() {
+    const query = document.getElementById("categorySearch").value.toLowerCase();
+    const categories = document.querySelectorAll("#categories-ritual ul li");
+
+    categories.forEach(cat => {
+      const text = cat.innerText.toLowerCase();
+      if (text.includes(query)) {
+        cat.style.backgroundColor = "#0ff";
+        cat.style.boxShadow = "0 0 6px #0ff";
+      } else {
+        cat.style.backgroundColor = "";
+        cat.style.boxShadow = "";
+      }
+    });
+  }
+</script>
 
 
 
