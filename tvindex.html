@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Телеканалы</title>
+  <style>
+    /* === Основные стили === */
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #000;
+      color: #0f0;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* === Заголовок === */
+    .donate-title {
+      font-size: 2em;
+      background: linear-gradient(90deg, #0ff, #f0f, #0f0);
+      background-size: 200% auto;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      animation: glow 3s linear infinite;
+      text-shadow: 0 0 10px #0ff;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    @keyframes glow {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    /* === QR === */
+    .qr-wrapper {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 12px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      animation: neonPulse 2s infinite alternate;
+    }
+    .qr-wrapper:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+    .qr-wrapper img {
+      width: 160px;
+      height: 160px;
+      border-radius: 10px;
+    }
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+      100% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff; }
+    }
+
+    /* === Поиск === */
+    #channelSearch {
+      width: 90%;
+      max-width: 500px;
+      padding: 12px;
+      margin: 20px auto;
+      display: block;
+      background: #111;
+      color: #0f0;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: monospace;
+    }
+
+    /* === Каналы === */
+    details {
+      margin: 15px auto;
+      max-width: 600px;
+      background: #111;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    summary {
+      padding: 12px;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: left;
+    }
+    .channel-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: #111;
+      border-bottom: 1px solid #0ff30;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .channel-item:hover {
+      background: #0ff20;
+      box-shadow: 0 0 10px #0ff;
+    }
+    .channel-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 6px #0ff;
+    }
+
+    /* === Плеер === */
+    #playerModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #tvPlayer {
+      width: 90%;
+      max-width: 800px;
+      border: 3px solid #0ff;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #0ff;
+    }
+    .access-indicator {
+      color: #0f0;
+      font-weight: bold;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    /* === Кнопки === */
+    button {
+      padding: 10px 20px;
+      background: #0ff;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #0c0;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    /* === Терминал === */
+    #terminal {
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      border: 1px solid #0f0;
+      border-radius: 6px;
+      max-width: 600px;
+      margin: 20px auto;
+      font-size: 14px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* === Футер === */
+    .contact-footer {
+      margin-top: 40px;
+      padding: 30px;
+      background: #111;
+      border-top: 2px solid #0ff;
+    }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      max-width: 300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(0,255,255,0.05);
+      border: 1px solid #0ff;
+      border-radius: 6px;
+    }
+    .contact-list img {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #0ff;
+    }
+    .contact-list a, .contact-list span {
+      color: #0f0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .contact-list span {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* === Модальное окно формы === */
+    #callbackModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 93%; height: 93%;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+    #callbackModal > div {
+  animation: modalFadeIn 0.4s ease-out;
+}
+.color-cycle {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  animation: colorShift 2s infinite;
+}
+@keyframes colorShift {
+  0%   { color: #0f0; }
+  33%  { color: #f00; }
+  66%  { color: #00f; }
+  100% { color: #0f0; }
+}
+
+    /* === Кнопка вверх === */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 1.4em;
+      cursor: pointer;
+      z-index: 100;
+    }
+    #scrollTopBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Заголовок -->
+  <h1 class="donate-title">Если не жалко — скинь в QR, чтобы я мог снова тебя держать в комфорте.</h1>
+
+  <!-- QR -->
+  <div class="qr-wrapper">
+    <img src="qr-code.png" alt="QR Для Подключения">
+  </div>
+
+  <!-- Поиск -->
+  <input type="text" id="channelSearch" placeholder="Поиск канала..." oninput="filterChannels()">
+
+
+
+
+
+
+  <!-- Список каналов -->
+  <div id="channelContainer">
+    <details>
+      <summary>Общественные</summary>
+      <div class="channel-item" onclick="openPlayer('http://tvip.btk.teleos.ru:8081/chid142/index.m3u8')">
+        <img src="https://iptvx.one/picons/ntv.png" alt="НТВ">
+        <span>НТВ HD</span>
+	  </div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://bloomberg.com/media-manifest/streams/us.m3u8')">
+  <img src="icons/bloomberg.png" alt="Bloomberg TV US">
+  <span>Bloomberg TV (US)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8')">
+  <img src="icons/uplynk.png" alt="Uplynk Stream">
+  <span>Uplynk Stream (без названия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.televizor-24-tochka.ru/live/6.m3u8')">
+  <img src="icons/televizor24.png" alt="Televizor-24">
+  <span>Televizor-24 (Канал 6)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.televizor-24-tochka.ru/live/8.m3u8')">
+  <img src="icons/televizor24.png" alt="Televizor-24">
+  <span>Televizor-24 (Канал 8)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.televizor-24-tochka.ru/live/18.m3u8')">
+  <img src="icons/televizor24.png" alt="Televizor-24">
+  <span>Televizor-24 (Канал 18)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.televizor-24-tochka.ru/live/19.m3u8')">
+  <img src="icons/televizor24.png" alt="Televizor-24">
+  <span>Televizor-24 (Канал 19)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tvchannelstream1.tvzvezda.ru/cdn/tvzvezda/playlist.m3u8')">
+  <img src="icons/tvzvezda.png" alt="ТВ Звезда">
+  <span>ТВ Звезда</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.mediacdn.ru/sr1/arhis24/playlist_hdhigh.m3u8')">
+  <img src="icons/arhis24.png" alt="Архыз 24">
+  <span>Архыз 24</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.astrakhan.ru/astrakhan24/playlist.m3u8')">
+  <img src="icons/astrakhan24.png" alt="Астрахань 24">
+  <span>Астрахань 24</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://serv24.vintera.tv:8081/vetta/vetta_office/playlist.m3u8')">
+  <img src="icons/vetta.png" alt="Ветта">
+  <span>Ветта (Пермь)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://vgtrkregion-reg.cdnvideo.ru/vgtrk/volgograd/russia1-hd/index.m3u8')">
+  <img src="icons/russia1-volgograd.png" alt="Россия 1 Волгоград">
+  <span>Россия 1 (Волгоград)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-vestinn.cdnvideo.ru/vestinn/nn24-khl/playlist.m3u8')">
+  <img src="icons/nn24-khl.png" alt="НН24 КХЛ">
+  <span>НН24 — КХЛ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tvtogliatti24.ru/hls/live1080/index.m3u8')">
+  <img src="icons/togliatti24.png" alt="Тольятти 24">
+  <span>Тольятти 24</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-saha.cdnvideo.ru/saha2/yak24rtmp_live.smil/playlist.m3u8')">
+  <img src="icons/yakutia24.png" alt="Якутия 24">
+  <span>Якутия 24</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.mediacdn.ru/sr1/sever/playlist.m3u8')">
+  <img src="icons/sever.png" alt="Север ТВ">
+  <span>Север ТВ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-vgtrksmotrim.cdnvideo.ru/vgtrksmotrim/smotrim-live-01.smil/playlist.m3u8')">
+  <img src="icons/smotrim.png" alt="Смотрим.ру">
+  <span>Смотрим.ру (Центральный эфир)</span>
+</div>  
+	  <div class="channel-item" onclick="openPlayer('https://ext.cdn.nashnet.tv/228.0.0.141/index.m3u8')">
+  <img src="https://iptvx.one/picons/nashnet141.png" alt="NashNet 141">
+  <span>NashNet 141 (локальный)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ext.cdn.nashnet.tv/228.0.0.141/index.m3u8')">
+  <img src="icons/nashnet141.png" alt="Multicast 228.0.0.141">
+  <span>NashNet 228.0.0.141</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdnua05.hls.tv/934/hls/8743361621b245838bee193c9ec28322/4856/stream.m3u8')">
+  <img src="icons/hls934.png" alt="HLS 934">
+  <span>HLS Channel 934</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdnua05.hls.tv/919/hls/8743361621b245838bee193c9ec28322/4835/stream.m3u8')">
+  <img src="icons/hls919.png" alt="HLS Channel 919">
+  <span>HLS Channel 919</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdnua05.hls.tv/624/hls/f62d71219200da4130d13b21d23fb23c/4896/stream.m3u8')">
+  <img src="icons/hls624.png" alt="HLS Channel 624">
+  <span>HLS Channel 624</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.m2.tv/hls3/stream.m3u8')">
+  <img src="icons/m2tv.png" alt="M2 TV">
+  <span>M2 TV (Армения)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdnua05.hls.tv/946/hls/8743361621b245838bee193c9ec28322/3999/stream.m3u8')">
+  <img src="icons/hls946.png" alt="HLS Channel 946">
+  <span>HLS Channel 946</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ext.cdn.nashnet.tv/228.0.0.41/index.m3u8')">
+  <img src="icons/nashnet41.png" alt="Multicast 228.0.0.41">
+  <span>NashNet 228.0.0.41</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdnua05.hls.tv/653/hls/f62d71219200da4130d13b21d23fb23c/4833/stream.m3u8')">
+  <img src="icons/hls653.png" alt="HLS Channel 653">
+  <span>HLS Channel 653</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ext.cdn.nashnet.tv/228.0.0.71/index.m3u8')">
+  <img src="icons/nashnet71.png" alt="Multicast 228.0.0.71">
+  <span>NashNet 228.0.0.71</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://95.67.106.242/mobile-app/main/freedom/master.m3u8')">
+  <img src="icons/freedom.png" alt="Freedom TV">
+  <span>Freedom TV (прямая трансляция)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://streamvideol1.luxnet.ua/news24/smil:news24.stream.smil/playlist.m3u8')">
+  <img src="icons/news24.png" alt="News 24 Ukraine">
+  <span>News 24 (Украина)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdn10.live-tv.od.ua:8081/sk1zt/sk1zt-abr/playlist.m3u8')">
+  <img src="icons/sk1zt.png" alt="SK1ZT TV">
+  <span>SK1ZT TV (Одесса)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.1tv.od.ua/stream1/channel1/playlist.m3u8')">
+  <img src="icons/1tv-odessa.png" alt="1TV Одесса">
+  <span>1TV Одесса (Первый Городской)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ext.cdn.nashnet.tv/228.0.0.15/index.m3u8')">
+  <img src="icons/nashnet15.png" alt="Multicast 228.0.0.15">
+  <span>NashNet 228.0.0.15</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdn10.live-tv.od.ua:8081/itvrv/abr/playlist.m3u8')">
+  <img src="icons/itvrv.png" alt="ITV Rivne">
+  <span>ITV Rivne (Украина)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hls.cdn.ua/tva.ua_live/livestream/chunklist_.m3u8')">
+  <img src="icons/tva.png" alt="ТВА Черновцы">
+  <span>ТВА (Черновцы)</span>
+</div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://qvcuk-live.akamaized.net/hls/live/2097112/qvc/3/3.m3u8')">
+  <img src="https://iptvx.one/picons/qvcuk.png" alt="QVC UK">
+  <span>QVC UK (Великобритания)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn-shop-lc-01.akamaized.net/Content/HLS_HLS/Live/channel(TJCOTT)/index.m3u8')">
+  <img src="https://iptvx.one/picons/tjc.png" alt="TJC Outlet">
+  <span>TJC Outlet (Великобритания)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-gbnews.simplestreamcdn.com/live5/gbnews/bitrate1.isml/manifest.m3u8')">
+  <img src="https://iptvx.one/picons/gbnews.png" alt="GB News">
+  <span>GB News (Великобритания)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://bloomberg.com/media-manifest/streams/eu.m3u8')">
+  <img src="https://iptvx.one/picons/bloomberg.png" alt="Bloomberg Europe">
+  <span>Bloomberg Europe</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://qvcuk-live.akamaized.net/hls/live/2097112/qby/3/3.m3u8')">
+  <img src="https://iptvx.one/picons/qvcbeauty.png" alt="QVC Beauty UK">
+  <span>QVC Beauty (UK)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://qvcuk-live.akamaized.net/hls/live/2097112/qex/3/3.m3u8')">
+  <img src="https://iptvx.one/picons/qvcextra.png" alt="QVC Extra UK">
+  <span>QVC Extra (UK)</span>
+</div>
+
+
+	  
+	  <div class="channel-item" onclick="openPlayer('https://streaming.astrakhan.ru/astrakhan24/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/astrakhan24.png" alt="Астрахань 24">
+  <span>Астрахань 24 (Россия)</span>
+</div>
+	  
+      <div class="channel-item" onclick="openPlayer('https://vgtrkregion-reg.cdnvideo.ru/vgtrk/0/kultura-hd/index.m3u8')">
+        <img src="https://iptvx.one/picons/kultura.png" alt="Культура">
+        <span>Культура HD</span>
+      </div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://vgtrkregion-reg.cdnvideo.ru/vgtrk/0/russia24-sd/index.m3u8')">
+  <img src="https://iptvx.one/picons/russia24.png" alt="Россия 24">
+  <span>Россия 24</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://edge50.dc.beltelecom.by/ngtrk/_definst_/smil:informacionnyy.smil/chunklist_w868240704_b5160000_sleng.m3u8')">
+  <img src="https://iptvx.one/picons/inform.png" alt="Информационный">
+  <span>Информационный</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://qcpdqumitwf.a.trbcdn.net/livemastersrt/pr4mw_lvie-vmesterf-srt.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/vmesterf.png" alt="Вместе РФ">
+  <span>Вместе РФ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://vgtrkregion-reg.cdnvideo.ru/vgtrk/0/russia1-hd/index.m3u8')">
+  <img src="https://iptvx.one/picons/russia1.png" alt="Россия 1 HD">
+  <span>Россия 1 HD</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://serv25.vintera.tv/1pnk/prnk/chunks.m3u8')">
+  <img src="https://iptvx.one/picons/pranktv.png" alt="ПРАНК ТВ">
+  <span>ПРАНК ТВ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://edge53.dc.beltelecom.by/ont/_definst_/ont/chunklist_w741300442.m3u8')">
+  <img src="https://iptvx.one/picons/ont.png" alt="ОНТ">
+  <span>ОНТ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://s55766.cdn.ngenix.net/s55766-media-origin/rline_high/tracks-v1a1/mono.m3u8')">
+  <img src="https://iptvx.one/picons/rline.png" alt="Россия Лайф">
+  <span>Россия Лайф</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn4.skygo.mn/live/disk1/Vremya/HLSv3-FTA/Vremya.m3u8')">
+  <img src="https://iptvx.one/picons/vremya.png" alt="Время">
+  <span>Время</span>
+</div>
+
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_TV3/variant.m3u8')">
+  <img src="https://iptvx.one/picons/tv3.png" alt="ТВ-3">
+  <span>ТВ-3</span>
+</div>
+
+	  
+	  <div class="channel-item" onclick="openPlayer('https://livetv.mylifeisgood.net.ru/channels/strwc.m3u8')">
+  <img src="icons/tv.png" alt="STRWC">
+  <span>STRWC</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hls-shansontv.cdnvideo.ru/shansontv/shansontv-sd.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/shanson.png" alt="Шансон ТВ">
+  <span>Шансон ТВ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hls-03-video.webcaramba.com/rutv/live_480/index.m3u8')">
+  <img src="https://iptvx.one/picons/russia1.png" alt="Россия 1">
+  <span>Россия 1</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_TNT4/variant.m3u8')">
+  <img src="https://iptvx.one/picons/tnt4.png" alt="ТНТ4">
+  <span>ТНТ4</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_TNT/variant.m3u8')">
+  <img src="https://iptvx.one/picons/tnt.png" alt="ТНТ">
+  <span>ТНТ</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_SUPER/variant.m3u8')">
+  <img src="https://iptvx.one/picons/super.png" alt="Супер">
+  <span>Супер</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_STS/variant.m3u8')">
+  <img src="https://iptvx.one/picons/sts.png" alt="СТС">
+  <span>СТС</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn.nexttvnet.ru/hlsl/provide/61394/ChinaTV2/china-tv_1920x1080/index.m3u8')">
+  <img src="https://iptvx.one/picons/china-tv.png" alt="China TV 2">
+  <span>China TV 2</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://zabava-htlive.cdn.ngenix.net/hls/CH_DOMASHNIY/variant.m3u8')">
+  <img src="https://iptvx.one/picons/domashniy.png" alt="Домашний">
+  <span>Домашний</span>
+</div>
+
+	  
+    </details>
+	
+
+    <details>
+      <summary>Фильмы и сериалы</summary>
+      <div class="channel-item" onclick="openPlayer('https://edge50.dc.beltelecom.by/ngtrk/_definst_/smil:belarus3.smil/chunklist_w1684528521_b5160000_sleng.m3u8')">
+        <img src="https://iptvx.one/picons/film-tv.png" alt="Кино">
+        <span>Кино ТВ</span>
+      </div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://cgentertainment-cgtv-1-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/cgtv.png" alt="CGTV">
+  <span>CGTV (Creative Genius TV)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://gto2000-sportoutdoortv-1-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/sportoutdoor.png" alt="SportOutdoorTV">
+  <span>SportOutdoorTV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://televisa-televisa-1-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/televisa.png" alt="Televisa">
+  <span>Televisa (Samsung TV Plus)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://jukin-peopleareawesome-2-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/peopleareawesome.png" alt="People Are Awesome">
+  <span>People Are Awesome (Samsung TV Plus)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://the-pet-collective-international-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/petcollective.png" alt="The Pet Collective">
+  <span>The Pet Collective (Samsung TV Plus)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://failarmy-international-it.samsung.wurl.tv/playlist.m3u8')">
+  <img src="icons/failarmy.png" alt="FailArmy">
+  <span>FailArmy (Samsung TV Plus)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream9.xdevel.com/video0s976916-1685/stream/playlist_dvr.m3u8')">
+  <img src="icons/xdevel.png" alt="Xdevel Stream">
+  <span>Xdevel Stream (DVR)</span>
+</div>
+
+
+	  
+    </details>
+
+    <details>
+      <summary>Музыка</summary>
+      <div class="channel-item" onclick="openPlayer('https://ngtrk.dc.beltelecom.by/ngtrk/_definst_/smil:belarus5/playlist.m3u8')">
+        <img src="https://iptvx.one/picons/music-tv.png" alt="Музыка">
+        <span>Музыка ТВ</span>
+      </div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://oxygenmusic.hu:2443/hls/oxygenmusic.m3u8')">
+  <img src="icons/oxygen-music.png" alt="Oxygen Music TV Hungary">
+  <span>Oxygen Music TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://m1b2.worldcast.tv/dancetelevisionone/2/dancetelevisionone.m3u8')">
+  <img src="icons/dance-tv.png" alt="Dance Television">
+  <span>Dance Television (Global)</span>
+</div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://ocko-live.ssl.cdn.cra.cz/channels/ocko/playlist.m3u8')">
+  <img src="icons/ocko.png" alt="Óčko TV">
+  <span>Óčko (Czech Republic)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ocko-live.ssl.cdn.cra.cz/channels/ocko_gold/playlist.m3u8')">
+  <img src="icons/ocko_gold.png" alt="Óčko Gold">
+  <span>Óčko Gold (Czech Republic)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ocko-live.ssl.cdn.cra.cz/channels/ocko_expres/playlist.m3u8')">
+  <img src="icons/ocko_expres.png" alt="Óčko Expres">
+  <span>Óčko Expres (Czech Republic)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.mediawork.cz/retrotv/smil:retrotv2.smil/playlist.m3u8')">
+  <img src="icons/retrotv.png" alt="Retro TV">
+  <span>Retro TV (Czech Republic)</span>
+</div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://lightning-now70s-samsungnz.amagi.tv/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/now70s.png" alt="Now 70s">
+  <span>Now 70s (Новая Зеландия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://lightning-now80s-samsunguk.amagi.tv/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/now80s.png" alt="Now 80s">
+  <span>Now 80s (UK)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://lightning-now90s-samsungnz.amagi.tv/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/now90s.png" alt="Now 90s">
+  <span>Now 90s (Новая Зеландия)</span>
+</div>
+
+	  
+	  <div class="channel-item" onclick="openPlayer('https://lightning-now90s-samsungnz.amagi.tv/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/now90s.png" alt="Now 90s">
+  <span>Now 90s (Новая Зеландия)</span>
+</div>
+	  
+	  <div class="channel-item" onclick="openPlayer('http://178.212.71.253:8000/play/134/index.m3u8')">
+  <img src="https://iptvx.one/picons/unknown134.png" alt="Channel 134">
+  <span>Channel 134 (локальный)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://91.194.191.241:8081/chid475/tracks-v1a1/mono.m3u8')">
+  <img src="https://iptvx.one/picons/channel475.png" alt="Channel 475">
+  <span>Channel 475 (локальный)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://91.194.191.241:8081/chid98/tracks-v1a1/mono.m3u8')">
+  <img src="https://iptvx.one/picons/channel98.png" alt="Channel 98">
+  <span>Channel 98 (локальный)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://stream.mediawork.cz/retrotv/retrotvHQ1/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/retrotv.png" alt="Retro TV">
+  <span>Retro TV (Чехия)</span>
+</div>
+
+
+	  
+	  <div class="channel-item" onclick="openPlayer('https://edge50.dc.beltelecom.by/ngtrk/smil:belarus2.smil/chunklist_b5160000_sleng.m3u8')">
+  <img src="https://iptvx.one/picons/belarus2.png" alt="Беларусь 2">
+  <span>Беларусь 2</span>
+</div>
+
+	  
+    </details>
+
+    <details>
+      <summary>Детские</summary>
+      <div class="channel-item" onclick="openPlayer('https://streaming101.goodstream.cyou/live/43-req_offset_28000000-req_window_0-1k_v5.m3u8')">
+        <img src="https://iptvx.one/picons/kids-tv.png" alt="Детский">
+        <span>Детский канал</span>
+      </div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://d1pmpe0hs35ka5.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-39hsskpppgf72/K2_IT.m3u8')">
+  <img src="icons/k2-it.png" alt="K2 TV Italia">
+  <span>K2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d6m7lubks416z.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-zmbstsedxme9s/Frisbee_IT.m3u8')">
+  <img src="icons/frisbee-it.png" alt="Frisbee TV Italia">
+  <span>Frisbee (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://495c5a85d9074f29acffeaea9e0215eb.msvdn.net/super/super_main/super_main_hbbtv/playlist.m3u8')">
+  <img src="icons/super-it.png" alt="Super! TV Italia">
+  <span>Super! (Italy)</span>
+</div>
+	  
+	  <div class="channel-item" onclick="openPlayer('https://tv.mediacdn.ru/live/solntse/playlist_3000k.m3u8')">
+  <img src="https://iptvx.one/picons/solntse.png" alt="Солнце">
+  <span>Солнце</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f05e059699ae.streamlock.net/WEB_Smilik/ngrp:Smilik.stream-adaptive/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/smilik.png" alt="Smilik">
+  <span>Smilik</span>
+</div>  
+    </details>
+  </div>
+  
+   <details>
+      <summary>Международний</summary>
+	  <div class="channel-item" onclick="openPlayer('https://unlimited1-us.dps.live/perfiltv/perfiltv.smil/perfiltv/livestream2/chunks.m3u8')">
+  <img src="https://iptvx.one/picons/perfiltv.png" alt="Perfil TV">
+  <span>Perfil TV</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.polar.cz/vctv/vctvlive-1/playlist.m3u8')">
+  <img src="icons/vctv.png" alt="VCTV Czech">
+  <span>VCTV (Czech Republic)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdnapi.kaltura.com/p/2158211/sp/327418300/playManifest/entryId/1_24gfa7qq/protocol/https/format/applehttp/a.m3u8')">
+  <img src="icons/kaltura.png" alt="Kaltura Stream">
+  <span>Kaltura — Live Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://khkbh.dk:8080/hls/livestream/index.m3u8')">
+  <img src="icons/denmark-stream.png" alt="Livestream DK">
+  <span>Livestream (Denmark)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5b622f07944df.streamlock.net/aghapy.tv/aghapy.smil/playlist.m3u8')">
+  <img src="icons/aghapy.png" alt="Aghapy TV">
+  <span>Aghapy TV (Coptic Christian)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://playlist.fasttvcdn.com/pl/ykvm3f2fhokwxqsurp9xcg/alghad-plus/playlist.m3u8')">
+  <img src="icons/alghadplus.png" alt="Alghad Plus">
+  <span>Alghad Plus (Arabic News)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn3.wowza.com/5/OE5HREpIcEkySlNT/alhayat-live/ngrp:livestream_all/playlist.m3u8')">
+  <img src="icons/alhayat.png" alt="Alhayat TV">
+  <span>Alhayat TV (Arabic Christian)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn.bestream.io:19360/elfaro1/elfaro1.m3u8')">
+  <img src="icons/elfaro.png" alt="El Faro TV">
+  <span>El Faro TV (Spanish Christian)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5d658d7e9f562.streamlock.net/koogi.tv/koogi.smil/playlist.m3u8')">
+  <img src="icons/koogi.png" alt="Koogi TV">
+  <span>Koogi TV (Coptic Christian)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://sb.err.ee/live/etv.m3u8')">
+  <img src="icons/etv.png" alt="ETV Estonia">
+  <span>ETV (Estonia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://vod.tv7.fi/tv7-ee/_definst_/smil:tv7-ee.smil/playlist.m3u8')">
+  <img src="icons/tv7-ee.png" alt="TV7 Eesti">
+  <span>TV7 Eesti (Estonia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://lifetv.bitflip.ee/live/stream2.m3u8')">
+  <img src="icons/lifetv.png" alt="LifeTV Estonia">
+  <span>LifeTV (Estonia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://lifetv.bitflip.ee/live/stream1.m3u8')">
+  <img src="icons/lifetv1.png" alt="LifeTV Stream 1">
+  <span>LifeTV — Stream 1 (Estonia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://play.kringvarp.fo/redirect/tingvarp/_definst_/smil:tingvarp.smil?type=m3u8')">
+  <img src="icons/tingvarp.png" alt="Tingvarpið">
+  <span>Tingvarpið (Faroe Islands)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://vod.tv7.fi/tv7-se/_definst_/smil:tv7-se.smil/playlist.m3u8')">
+  <img src="icons/tv7-se.png" alt="TV7 Sverige">
+  <span>TV7 Sverige (Sweden)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.streaming.a2d.tv/asset/20025962.isml/.m3u8')">
+  <img src="icons/a2d.png" alt="A2D Stream">
+  <span>A2D Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://virta2.nopolanews.fi:8443/live/smil:Stream1.smil/playlist.m3u8')">
+  <img src="icons/nopola.png" alt="Nopola Stream">
+  <span>Nopola Stream 1 (Finland)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streaming.nartv.fi/live/ngrp:NAR_TV.stream_all/playlist.m3u8')">
+  <img src="icons/nartv.png" alt="NAR TV">
+  <span>NAR TV (Finland)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streamer.radiotaajuus.fi/memfs/47f113bf-04ea-493b-a9d4-52945fd9db31.m3u8')">
+  <img src="icons/radiotaajuus.png" alt="Radiotaajuus Stream">
+  <span>Radiotaajuus Stream (Finland)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8')">
+  <img src="icons/tv5monde.png" alt="TV5MONDE">
+  <span>TV5MONDE (Global Francophone)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ott.tv5monde.com/Content/HLS/Live/channel(europe)/index.m3u8')">
+  <img src="icons/tv5monde-europe.png" alt="TV5MONDE Europe">
+  <span>TV5MONDE Europe (FR)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8')">
+  <img src="icons/rtfrance.png" alt="RT France">
+  <span>RT France (FR)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tv.cdn.xsg.ge/gpb-1tv/index.m3u8')">
+  <img src="icons/gpb1tv.png" alt="GPB 1TV Georgia">
+  <span>GPB 1TV (Georgia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8')">
+  <img src="icons/gpb2tv.png" alt="GPB 2TV Georgia">
+  <span>GPB 2TV (Georgia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tv.cdn.xsg.ge/imedihd/index.m3u8')">
+  <img src="icons/imedi.png" alt="Imedi TV">
+  <span>Imedi TV (Georgia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8')">
+  <img src="icons/daserste.png" alt="Das Erste">
+  <span>Das Erste (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://sdn-global-live-streaming-packager-cache.3qsdn.com/64733/64733_264_live.m3u8')">
+  <img src="icons/3qsdn.png" alt="3Q SDN Live">
+  <span>3Q SDN Live Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://sdn-global-live-streaming-packager-cache.3qsdn.com/26658/26658_264_live.m3u8')">
+  <img src="icons/3qsdn-26658.png" alt="3Q SDN Stream 26658">
+  <span>3Q SDN Stream 26658</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8')">
+  <img src="icons/kika.png" alt="KiKA Germany">
+  <span>KiKA (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8')">
+  <img src="icons/tagesschau24.png" alt="Tagesschau24">
+  <span>Tagesschau24 (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8')">
+  <img src="icons/br-nord.png" alt="BR Fernsehen Nord">
+  <span>BR Fernsehen Nord (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hrhls.akamaized.net/hls/live/2024525/hrhls/master.m3u8')">
+  <img src="icons/hr-fernsehen.png" alt="hr-fernsehen">
+  <span>hr-fernsehen (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_hh/master.m3u8')">
+  <img src="icons/ndr-hh.png" alt="NDR Hamburg">
+  <span>NDR Hamburg (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://srfs.akamaized.net/hls/live/689649/srfsgeo/index.m3u8')">
+  <img src="icons/srf1.png" alt="SRF 1 Switzerland">
+  <span>SRF 1 (Switzerland)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://wdrfs247.akamaized.net/hls/live/681509/wdr_msl4_fs247/index.m3u8')">
+  <img src="icons/wdr.png" alt="WDR Fernsehen">
+  <span>WDR Fernsehen (Germany)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://livestar.siliconweb.com/starvod/star4/star4newhd.m3u8')">
+  <img src="icons/star4hd.png" alt="Star4 HD">
+  <span>Star4 HD (Global)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://livestar.siliconweb.com/starvod/star_int/star_inthd.m3u8')">
+  <img src="icons/star_int_hd.png" alt="Star International HD">
+  <span>Star International HD</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://alphatvlive2.siliconweb.com/alphatvlive/live_abr/playlist.m3u8')">
+  <img src="icons/alpha-tv.png" alt="Alpha TV Greece">
+  <span>Alpha TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://skai-live.siliconweb.com/media/cambria4/index.m3u8')">
+  <img src="icons/skai.png" alt="Skai TV Greece">
+  <span>Skai TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://liveopen.siliconweb.com/openTvLive/liveopen/playlist.m3u8')">
+  <img src="icons/open-tv.png" alt="Open TV Greece">
+  <span>Open TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://c98db5952cb54b358365984178fb898a.msvdn.net/live/S99841657/NU0xOarAMJ5X/playlist.m3u8')">
+  <img src="icons/msvdn-stream.png" alt="MSVDN Live Stream">
+  <span>MSVDN Stream S99841657</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://kontralive.siliconweb.com/live/kontratv/playlist.m3u8')">
+  <img src="icons/kontra.png" alt="Kontra Channel Greece">
+  <span>Kontra Channel (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://actionlive.siliconweb.com/actionabr/actiontv/playlist.m3u8')">
+  <img src="icons/action24.png" alt="Action 24 Greece">
+  <span>Action 24 (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://onechannel.siliconweb.com/one/live_abr/playlist_dvr.m3u8')">
+  <img src="icons/one-channel.png" alt="One Channel Greece">
+  <span>One Channel (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://atticatv.siliconweb.com/atticatv/atticaliveabr/playlist.m3u8')">
+  <img src="icons/attica-tv.png" alt="Attica TV Greece">
+  <span>Attica TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn5.smart-tv-data.com/bluesky/bluesky-live/playlist.m3u8')">
+  <img src="icons/bluesky.png" alt="BlueSky TV Greece">
+  <span>BlueSky TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://eu1.streams.gr:8081/centertv/index.m3u8')">
+  <img src="icons/center-tv.png" alt="Center TV Greece">
+  <span>Center TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rtmp.win:3650/live/diontvlive.m3u8')">
+  <img src="icons/dion-tv.png" alt="Dion TV Greece">
+  <span>Dion TV (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.neatv.gr:8888/hls/neatv_high/index.m3u8')">
+  <img src="icons/nea-tv.png" alt="Nea TV Greece">
+  <span>Nea TV (Crete, Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream-188125.castr.net/631af9c016e5eace19ff9a5b/live_048998706a2311ee83b33fe7fbad252d/index.fmp4.m3u8')">
+  <img src="icons/castr-stream.png" alt="Castr Live Stream">
+  <span>Castr Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://panel.gwebstream.eu:19360/tv100skg/tv100skg.m3u8')">
+  <img src="icons/tv100.png" alt="TV 100 Thessaloniki">
+  <span>TV 100 (Thessaloniki, Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ertflix.akamaized.net/ertlive/ertnews/hls8test/index.m3u8')">
+  <img src="icons/ert-news.png" alt="ERT News Greece">
+  <span>ERT News (Greece)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rthktv32-live.akamaized.net/hls/live/2036819/RTHKTV32/master.m3u8')">
+  <img src="icons/rthk32.png" alt="RTHK TV 32 Hong Kong">
+  <span>RTHK TV 32 (Hong Kong)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.apostoltv.hu/live/playlist.m3u8')">
+  <img src="icons/apostol-tv.png" alt="Apostol TV Hungary">
+  <span>Apostol TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.y5.hu/stream/stream_bekescsaba/stream.m3u8')">
+  <img src="icons/bekescsaba-tv.png" alt="Békéscsaba TV Hungary">
+  <span>Békéscsaba TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront63.lexanetwork.com:1344/relay01/livestream004.sdp/playlist.m3u8')">
+  <img src="icons/lexa-stream.png" alt="Lexa Network Stream">
+  <span>Lexa Stream 004 (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://eurobioinvest.hu:444/live/ktv.m3u8')">
+  <img src="icons/ktv-hungary.png" alt="KTV Hungary">
+  <span>KTV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront41.lexanetwork.com:1344/xrelay/loverseny2.sdp/playlist.m3u8')">
+  <img src="icons/loverseny2.png" alt="Lexa Stream Loverseny2">
+  <span>Loverseny Stream (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront44.lexanetwork.com:1344/freerelay/zegtv.sdp/playlist.m3u8')">
+  <img src="icons/zeg-tv.png" alt="Zeg TV Hungary">
+  <span>Zeg TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront41.lexanetwork.com:1344/relay01/livestream002.sdp/playlist.m3u8')">
+  <img src="icons/livestream002.png" alt="Lexa Stream 002">
+  <span>Lexa Stream 002 (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront44.lexanetwork.com:1344/relay01/broadcast002.sdp/playlist.m3u8')">
+  <img src="icons/broadcast002.png" alt="Lexa Broadcast 002">
+  <span>Lexa Broadcast 002 (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.streaming4u.hu/BerenteTV/index.m3u8')">
+  <img src="icons/berente-tv.png" alt="Berente TV Hungary">
+  <span>Berente TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront44.lexanetwork.com:1344/freerelay/bpetv.sdp/playlist.m3u8')">
+  <img src="icons/bpetv.png" alt="BPE TV Hungary">
+  <span>BPE TV (Hungary)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cloudfront44.lexanetwork.com:1344/relay03/livestream003.sdp/playlist.m3u8')">
+  <img src="icons/livestream003.png" alt="Lexa Livestream 003">
+  <span>Lexa Livestream 003 (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ruv-web-live.akamaized.net/streymi/ruverl/ruverl.m3u8')">
+  <img src="icons/ruv-erlent.png" alt="RÚV Erlent Iceland">
+  <span>RÚV Erlent (Iceland)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ndtvindiaelemarchana.akamaized.net/hls/live/2003679/ndtvindia/master.m3u8')">
+  <img src="icons/ndtv-india.png" alt="NDTV India">
+  <span>NDTV India (India)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/chunklist.m3u8')">
+  <img src="icons/cnbc-indonesia.png" alt="CNBC Indonesia">
+  <span>CNBC Indonesia (Business)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn.catiacast.video/abr/8d2ffb0aba244e8d9101a9488a7daa05/playlist.m3u8')">
+  <img src="icons/catiacast-stream.png" alt="Catiacast Stream">
+  <span>Catiacast Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5d94523502c2d.streamlock.net/alsharqiyalive/mystream/playlist.m3u8')">
+  <img src="icons/alsharqiya.png" alt="Al Sharqiya TV Iraq">
+  <span>Al Sharqiya TV (Iraq)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5d94523502c2d.streamlock.net/home/mystream/playlist.m3u8')">
+  <img src="icons/home-stream.png" alt="Home Stream">
+  <span>Home Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ghaasiflu.online/Dijlah/tracks-v1a1/playlist.m3u8')">
+  <img src="icons/dijlah-tv.png" alt="Dijlah TV Iraq">
+  <span>Dijlah TV (Iraq)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8')">
+  <img src="icons/zagros-tv.png" alt="Zagros TV Kurdistan">
+  <span>Zagros TV (Kurdistan)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d33zah5htxvoxb.cloudfront.net/el/live/oirtv/hls.m3u8')">
+  <img src="icons/oirtv.png" alt="OIR TV Stream">
+  <span>OIR TV (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8')">
+  <img src="icons/kan11.png" alt="Kan 11 Israel">
+  <span>Kan 11 (Israel)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8')">
+  <img src="icons/cloudfront-stream.png" alt="Cloudfront Live Stream">
+  <span>Cloudfront Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://makan.media.kan.org.il/hls/live/2024680/2024680/master.m3u8')">
+  <img src="icons/makan33.png" alt="Makan 33 Israel">
+  <span>Makan 33 (Israel)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://kan23.media.kan.org.il/hls/live/2024691/2024691/master.m3u8')">
+  <img src="icons/kan23.png" alt="Kan 23 Israel">
+  <span>Kan 23 (Israel)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d31mw7o1gs0dap.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-y5pbi2sq9r609/NOVE_IT.m3u8')">
+  <img src="icons/nove-it.png" alt="NOVE Italy">
+  <span>NOVE (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hls-live-tv2000.akamaized.net/hls/live/2028510/tv2000/master.m3u8')">
+  <img src="icons/tv2000.png" alt="TV2000 Italy">
+  <span>TV2000 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://viamotionhsi.netplus.ch/live/eds/la7d/browser-HLS8/la7d.m3u8')">
+  <img src="icons/la7d.png" alt="La7d Italy">
+  <span>La7d (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d3562mgijzx0zq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-kizqtzpvvl3i8/Realtime_IT.m3u8')">
+  <img src="icons/realtime-it.png" alt="Realtime Italy">
+  <span>Realtime (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://qrg.akamaized.net/hls/live/2017383/lsqvc1it/master.m3u8')">
+  <img src="icons/qvc-italia.png" alt="QVC Italia">
+  <span>QVC Italia (Shopping)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dk3okdd5036kz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-o4pw0nc02sthz/Foodnetwork_IT.m3u8')">
+  <img src="icons/foodnetwork-it.png" alt="Food Network Italia">
+  <span>Food Network (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist.m3u8')">
+  <img src="icons/msvdn-stream.png" alt="MSVDN Live Stream">
+  <span>MSVDN Stream (Live)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d24aqelmrau4kx.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-l1oas691aj7p2/WBTV_IT.m3u8')">
+  <img src="icons/wbtv-it.png" alt="Warner TV Italia">
+  <span>Warner TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d9fqo6nfqlv2h.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ulukbrgm1n3yb/Giallo_IT.m3u8')">
+  <img src="icons/giallo-it.png" alt="Giallo TV Italia">
+  <span>Giallo (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d2j2nqgg7bzth.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-02k1gv1j0ufwn/DMAX_IT.m3u8')">
+  <img src="icons/dmax-it.png" alt="DMAX Italia">
+  <span>DMAX (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d1tidto9vz737l.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-joaw4f4kh2en1/HGTV_IT.m3u8')">
+  <img src="icons/hgtv-it.png" alt="HGTV Italia">
+  <span>HGTV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d205m6k582pec4.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-asg5puyzdtnqu/Motortrend_IT.m3u8')">
+  <img src="icons/motortrend-it.png" alt="MotorTrend Italia">
+  <span>MotorTrend (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/aa3673f1-e178-44a9-a947-ef41db73211a/manifest.m3u8')">
+  <img src="icons/supertennix.png" alt="SuperTennix Italia">
+  <span>SuperTennix (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live02-seg.msr.cdn.mediaset.net/live/ch-ec/ec-clr.isml/index.m3u8')">
+  <img src="icons/mediaset-extra.png" alt="Mediaset Extra">
+  <span>Mediaset Extra (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live02-seg.msr.cdn.mediaset.net/live/ch-er/er-clr.isml/index.m3u8')">
+  <img src="icons/italia2.png" alt="Mediaset Italia 2">
+  <span>Italia 2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S85984808/sMO0tz9Sr2Rk/playlist.m3u8')">
+  <img src="icons/radioradio-tv.png" alt="Radio Radio TV">
+  <span>Radio Radio TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8')">
+  <img src="icons/radioitalia-tv.png" alt="Radio Italia TV">
+  <span>Radio Italia TV</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist.m3u8')">
+  <img src="icons/canale-italia.png" alt="Canale Italia">
+  <span>Canale Italia</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ilsole24ore-radiovisual.akamaized.net/hls/live/2035302/persidera/master.m3u8')">
+  <img src="icons/ilsole24ore-tv.png" alt="Radio Visual – Il Sole 24 Ore">
+  <span>Il Sole 24 Ore TV</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist.m3u8')">
+  <img src="icons/canale-italia-83.png" alt="Canale Italia 83">
+  <span>Canale Italia 83</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.rdstv.radio/index.m3u8')">
+  <img src="icons/rds-tv.png" alt="RDS TV Italia">
+  <span>RDS TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist.m3u8')">
+  <img src="icons/canale-italia-84.png" alt="Canale Italia 84">
+  <span>Canale Italia 84</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.prod-01.milano.nxmedge.net/argocdn/bikechannel/video.m3u8')">
+  <img src="icons/bikechannel-it.png" alt="Bike Channel Italia">
+  <span>Bike Channel (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live02-seg.msr.cdn.mediaset.net/live/ch-bb/bb-clr.isml/index.m3u8')">
+  <img src="icons/boing-it.png" alt="Boing Italia">
+  <span>Boing (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live02-seg.msr.cdn.mediaset.net/live/ch-ew/ew-clr.isml/index.m3u8')">
+  <img src="icons/twentyseven-it.png" alt="Twentyseven Italia">
+  <span>Twentyseven (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://senato-live.morescreens.com/SENATO_1_001/playlist.m3u8')">
+  <img src="icons/senato-tv.png" alt="Senato TV Italia">
+  <span>Senato TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream6-rai-it.akamaized.net/live/uninettuno/playlist.m3u8')">
+  <img src="icons/uninettuno-tv.png" alt="UniNettuno University TV">
+  <span>UniNettuno TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5db313b643fd8.streamlock.net/111/111/playlist.m3u8')">
+  <img src="icons/111-tv.png" alt="111 TV Italia">
+  <span>111 TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5929b138b139d.streamlock.net/12TVParma/livestream/playlist.m3u8')">
+  <img src="icons/12tv-parma.png" alt="12 TV Parma">
+  <span>12 TV Parma (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://streamsrv2.nets-sr.com:19360/4youtv/4youtv.m3u8')">
+  <img src="icons/4you-tv.png" alt="4You TV Italia">
+  <span>4You TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f204aff97bee.streamlock.net/AltoAdigeTV/livestream/playlist.m3u8')">
+  <img src="icons/altoadige-tv.png" alt="Alto Adige TV">
+  <span>Alto Adige TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://media2021.rtvweb.com/antenna3massa/a3/playlist.m3u8')">
+  <img src="icons/antenna3-massa.png" alt="Antenna 3 Massa">
+  <span>Antenna 3 Massa (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/antennatreveneto/antennatreveneto.stream/playlist.m3u8')">
+  <img src="icons/antenna-tre-veneto.png" alt="Antenna Tre Veneto">
+  <span>Antenna Tre Veneto (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://video2.azotosolutions.com:1936/supertvoristano/supertvoristano/playlist.m3u8')">
+  <img src="icons/supertv-oristano.png" alt="Super TV Oristano">
+  <span>Super TV Oristano (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/auroraarte/auroraarte/playlist.m3u8')">
+  <img src="icons/aurora-arte.png" alt="Aurora Arte TV">
+  <span>Aurora Arte TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/azzurratv/azzurratv/playlist.m3u8')">
+  <img src="icons/azzurra-tv.png" alt="Azzurra TV Italia">
+  <span>Azzurra TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://db142859fd5541b09de25d6507f1f2d3.msvdn.net/live/S17501676/oIxAsgEEA46M/playlist.m3u8?DVR')">
+  <img src="icons/canale-italia-11.png" alt="Canale Italia 11">
+  <span>Canale Italia 11</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f22d76e220e1.streamlock.net/canale6/canale6/playlist.m3u8')">
+  <img src="icons/canale6.png" alt="Canale 6 Italia">
+  <span>Canale 6 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://09bd1346f7a44cc9ac230cc1cb22ca4f.msvdn.net/live/S39249178/EnTK3KeeN1Eg/playlist.m3u8')">
+  <img src="icons/canale-italia-6.png" alt="Canale Italia 6">
+  <span>Canale Italia 6</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://srvx1.selftv.video/cafe/live/playlist.m3u8')">
+  <img src="icons/cafe-tv24.png" alt="Café TV 24">
+  <span>Café TV 24 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://nrvideo1.newradio.it:1936/desxcerbht/desxcerbht/playlist.m3u8')">
+  <img src="icons/desxcerbht-tv.png" alt="Desxcerbht TV">
+  <span>Desxcerbht TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/canale2/canale2/playlist.m3u8')">
+  <img src="icons/canale2.png" alt="Canale 2 Italia">
+  <span>Canale 2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://0ff9dd7fe9b64bc08a5fc4ed525454c3.msvdn.net/live/S38994111/B7j0ql4XaZtE/playlist.m3u8')">
+  <img src="icons/canale-italia-7.png" alt="Canale Italia 7">
+  <span>Canale Italia 7</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://wms.shared.streamshow.it:80/canale7/canale7/playlist.m3u8')">
+  <img src="icons/canale7.png" alt="Canale 7 Italia">
+  <span>Canale 7 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/canale8/canale8/playlist.m3u8')">
+  <img src="icons/canale8.png" alt="Canale 8 Italia">
+  <span>Canale 8 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://samson.streamerr.co:8081/carinatv/index.m3u8')">
+  <img src="icons/carina-tv.png" alt="Carina TV Italia">
+  <span>Carina TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://router.xdevel.com/video0s975911-633/stream/playlist_dvr.m3u8')">
+  <img src="icons/video33.png" alt="Video 33 Italia">
+  <span>Video 33 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://sportitaliaamd.akamaized.net/live/Cittaceleste/hls/A990687F506536598442FC5CD12C97CB78873FBA/index.m3u8')">
+  <img src="icons/cittaceleste-tv.png" alt="Cittaceleste TV">
+  <span>Cittaceleste TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://company.fluid.stream/CompanyTV/smil:Company_ALL.smil/playlist.m3u8')">
+  <img src="icons/company-tv.png" alt="Company TV Italia">
+  <span>Company TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://router.xdevel.com/video1s975363-1596/stream/playlist.m3u8')">
+  <img src="icons/telecolor.png" alt="Telecolor Italia">
+  <span>Telecolor (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://hbbtv-server.zivoli.it:8080/hls/deltatv/deltatv/index.m3u8')">
+  <img src="icons/delta-tv.png" alt="Delta TV Italia">
+  <span>Delta TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.ipstream.it/etvumbria/etvumbria.stream/playlist.m3u8')">
+  <img src="icons/etv-umbria.png" alt="eTV Umbria">
+  <span>eTV Umbria (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f22d76e220e1.streamlock.net/eurotv/eurotv/playlist.m3u8')">
+  <img src="icons/euro-tv.png" alt="Euro TV Italia">
+  <span>Euro TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rst2.saiuzwebnetwork.it:8081/extratvlive/index.m3u8')">
+  <img src="icons/extra-tv.png" alt="Extra TV Italia">
+  <span>Extra TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://bbtv.intvstream.net:3988/hybrid/play.m3u8')">
+  <img src="icons/bbtv.png" alt="BBTV Bergamo">
+  <span>BBTV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://diretta.arcapuglia.it:8080/live/fanotv/index.m3u8')">
+  <img src="icons/fano-tv.png" alt="Fano TV Italia">
+  <span>Fano TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://webstream.multistream.it/memfs/a3195c96-f884-4c74-924f-2648814fc0b5.m3u8')">
+  <img src="icons/telemilano.png" alt="TeleMilano Italia">
+  <span>TeleMilano (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://6zklxkbbdw9b-hls-live.mariatvcdn.it/msmotor/2f759512164fc6fe4acbed6a5648993a.sdp/playlist.m3u8')">
+  <img src="icons/msmotor-tv.png" alt="MS Motor TV">
+  <span>MS Motor TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59d7d6f47d7fc.streamlock.net/italia2/italia2/playlist.m3u8')">
+  <img src="icons/italia2.png" alt="Italia 2 Italia">
+  <span>Italia 2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f22d76e220e1.streamlock.net/iuniortv/iuniortv/playlist.m3u8')">
+  <img src="icons/iunior-tv.png" alt="Iunior TV Italia">
+  <span>Iunior TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tsw.streamingwebtv24.it:1936/eslife1/eslife1/playlist.m3u8')">
+  <img src="icons/eslife1.png" alt="ES Life 1 Italia">
+  <span>ES Life 1 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://f5842579ff984c1c98d63b8d789673eb.msvdn.net/live/S27391994/HVvPMzy/playlist.m3u8')">
+  <img src="icons/mschannel.png" alt="MS Channel Italia">
+  <span>MS Channel (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://f5842579ff984c1c98d63b8d789673eb.msvdn.net/live/S47282891/JWjL3xqPf4bX/playlist.m3u8')">
+  <img src="icons/msmotor-tv2.png" alt="MS Motor TV 2">
+  <span>MS Motor TV 2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://customer-yzibk50951uq418a.cloudflarestream.com/a58893dee4b9922a75e41b4ec4243f84/manifest/video.m3u8')">
+  <img src="icons/cloudflare-stream.png" alt="Cloudflare Stream Channel">
+  <span>Cloudflare Stream (Custom)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://stucazz.com:8888/hls/cronache.m3u8')">
+  <img src="icons/cronache-tv.png" alt="Cronache TV Italia">
+  <span>Cronache TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f22d76e220e1.streamlock.net/servizio01/servizio01/playlist.m3u8')">
+  <img src="icons/servizio01.png" alt="Servizio 01 Italia">
+  <span>Servizio 01 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://nuovatv.net:8443/tv/stream.m3u8')">
+  <img src="icons/nuova-tv.png" alt="Nuova TV Italia">
+  <span>Nuova TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://nuovatv.net:8443/tv2/stream.m3u8')">
+  <img src="icons/nuova-tv2.png" alt="Nuova TV 2 Italia">
+  <span>Nuova TV 2 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.nuvola.tv:8181/memfs/4aaa6328-1879-4ebf-b18a-498146d0c61c.m3u8')">
+  <img src="icons/nuvola-tv.png" alt="Nuvola TV Italia">
+  <span>Nuvola TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5f22d76e220e1.streamlock.net/primafree/primafree/playlist.m3u8')">
+  <img src="icons/primafree.png" alt="Prima Free Italia">
+  <span>Prima Free (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://router.xdevel.com/video0s975758-473/stream/playlist.m3u8')">
+  <img src="icons/studio95tv.png" alt="Radio Studio 95 TV">
+  <span>Studio 95 TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://str48.fluid.stream/RadioIbizaTV/livestream/playlist.m3u8')">
+  <img src="icons/radioibiza-tv.png" alt="Radio Ibiza TV">
+  <span>Radio Ibiza TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S62628868/uhdWBlkC1AoO/playlist.m3u8')">
+  <img src="icons/msmotor-uhd.png" alt="MS Motor TV UHD">
+  <span>MS Motor TV UHD (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream7.zivoli.it/radiosatv/radiosatv/playlist.m3u8')">
+  <img src="icons/radiosatv.png" alt="Radio Sa TV Italia">
+  <span>Radio Sa TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn10.streamshow.it/cloud-reggiotv/reggiotv/playlist.m3u8')">
+  <img src="icons/reggiotv.png" alt="Reggio TV Italia">
+  <span>Reggio TV (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://5db313b643fd8.streamlock.net/SUPERSIXLombardia/SUPERSIXLombardia/playlist.m3u8')">
+  <img src="icons/supersix-lombardia.png" alt="Super Six Lombardia">
+  <span>Super Six Lombardia (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://57068da1deb21.streamlock.net/teletv8/teletv8/playlist.m3u8')">
+  <img src="icons/teletv8.png" alt="Tele TV8 Italia">
+  <span>Tele TV8 (Italy)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn-live1.qvc.jp/iPhone/1501/1501.m3u8')">
+  <img src="icons/qvc-japan.png" alt="QVC Japan">
+  <span>QVC Japan</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ebsonair.ebs.co.kr/ebs1familypc/familypc1m/playlist.m3u8')">
+  <img src="icons/ebs1-family.png" alt="EBS 1 Family Korea">
+  <span>EBS 1 Family (Korea)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ebsonair.ebs.co.kr/ebs2familypc/familypc1m/playlist.m3u8')">
+  <img src="icons/ebs2-family.png" alt="EBS 2 Family Korea">
+  <span>EBS 2 Family (Korea)</span>
+</div>
+
+
+
+<div class="channel-item" onclick="openPlayer('https://unlimited1-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8')">
+  <img src="icons/ucvtv2.png" alt="UCV TV 2">
+  <span>UCV TV 2 (Chile)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://redirector.rudo.video/hls-video/10b92cafdf3646cbc1e727f3dc76863621a327fd/t13/t13.smil/playlist.m3u8')">
+  <img src="icons/t13.png" alt="T13 Chile">
+  <span>T13 (Chile)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://origin.dpsgo.com/ssai/event/GI-9cp_bT8KcerLpZwkuhw/master.m3u8')">
+  <img src="icons/dpsgo.png" alt="DPSGO Stream">
+  <span>DPSGO — SSAI Event</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://origin.dpsgo.com/ssai/event/g7_JOM0ORki9SR5RKHe-Kw/master.m3u8')">
+  <img src="icons/dpsgo.png" alt="DPSGO SSAI">
+  <span>DPSGO — SSAI Event</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://origin.dpsgo.com/ssai/event/f4TrySe8SoiGF8Lu3EIq1g/master.m3u8')">
+  <img src="icons/dpsgo.png" alt="DPSGO SSAI">
+  <span>DPSGO — SSAI Event</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://redirector.rudo.video/hls-video/c54ac2799874375c81c1672abb700870537c5223/ucl/ucl.smil/playlist.m3u8')">
+  <img src="icons/ucl.png" alt="UCL Stream">
+  <span>UCL — Лига чемпионов</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://mdstrm.com/live-stream-playlist/5653641561b4eba30a7e4929.m3u8')">
+  <img src="icons/mdstrm.png" alt="MDSTRM Stream">
+  <span>MDSTRM — Live Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://video20.klm99.com:3993/live/canal1crlive.m3u8')">
+  <img src="icons/canal1cr.png" alt="Canal 1 CR">
+  <span>Canal 1 (Costa Rica)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://mdstrm.com/live-stream-playlist/5a7b1e63a8da282c34d65445.m3u8')">
+  <img src="icons/mdstrm.png" alt="MDSTRM Stream">
+  <span>MDSTRM — Live Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://k3.usastreams.com/CableLatino/88stereo/playlist.m3u8')">
+  <img src="icons/88stereo.png" alt="88 Stereo">
+  <span>88 Stereo (Costa Rica)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.agatin.hr:3727/live/tvnovalive.m3u8')">
+  <img src="icons/tvnovahr.png" alt="TV Nova HR">
+  <span>TV Nova (Croatia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tvjadran.stream.agatin.hr:3412/live/tvjadranlive.m3u8')">
+  <img src="icons/tvjadran.png" alt="TV Jadran">
+  <span>TV Jadran (Croatia)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.luci.xyz/hls/LTV.m3u8')">
+  <img src="icons/ltv.png" alt="LTV Stream">
+  <span>LTV — Live Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://l3.cloudskep.com/cybcsat/abr/playlist.m3u8')">
+  <img src="icons/cybc.png" alt="CYBC Sat">
+  <span>CYBC Sat (Cyprus)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://strhlslb01.streamakaci.tv/str_tchad_tchad/str_tchad_multi/playlist.m3u8')">
+  <img src="icons/tchadtv.png" alt="Tchad TV">
+  <span>Tchad TV (Чад)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8')">
+  <img src="icons/dw.png" alt="DW English">
+  <span>DW English (Deutsche Welle)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live-hls-web-aje.getaj.net/AJE/index.m3u8')">
+  <img src="icons/aljazeera.png" alt="Al Jazeera English">
+  <span>Al Jazeera English (AJE)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8')">
+  <img src="icons/google-dai.png" alt="Google DAI Stream">
+  <span>Google DAI Stream (Sid4xiTQ...)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://content.uplynk.com/channel/4bb4901b934c4e029fd4c1abfc766c37.m3u8')">
+  <img src="icons/uplynk.png" alt="Uplynk Stream">
+  <span>Uplynk Channel (ID: 4bb4901b...)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.corusdigitaldev.com/groupd/live/49a91e7f-1023-430f-8d66-561055f3d0f7/live.isml/.m3u8')">
+  <img src="icons/corus.png" alt="Corus Channel">
+  <span>Corus Channel (Canada)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')">
+  <img src="icons/rt.png" alt="RT News">
+  <span>RT News (English)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_0_3564000.m3u8')">
+  <img src="icons/cnn.png" alt="CNN International">
+  <span>CNN International (CNNgo)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ythls.armelin.one/channel/UC0vn8ISa4LKMunLbzaXLnOQ.m3u8')">
+  <img src="icons/france24.png" alt="France 24 English">
+  <span>France 24 (English)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ythls.armelin.one/channel/UChd1DEecCRlxaa0-hvPACCw.m3u8')">
+  <img src="icons/skynews.png" alt="Sky News">
+  <span>Sky News (UK)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://sabconetanw.cdn.mangomolo.com/news/smil:news.stream.smil/chunklist_b250000_t64MjQwcA==.m3u8')">
+  <img src="icons/sabcnews.png" alt="SABC News">
+  <span>SABC News (South Africa)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://bloomberg.com/media-manifest/streams/phoenix-us.m3u8')">
+  <img src="icons/bloomberg.png" alt="Bloomberg TV US">
+  <span>Bloomberg TV (US)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://bloomberg.com/media-manifest/streams/us.m3u8')">
+  <img src="icons/bloomberg.png" alt="Bloomberg TV US">
+  <span>Bloomberg TV (US)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d1ewctnvcwvvvu.cloudfront.net/playlist.m3u8')">
+  <img src="icons/cloudfront.png" alt="CloudFront Stream">
+  <span>CloudFront Stream (без названия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/master.m3u8')">
+  <img src="icons/cnbc-id.png" alt="CNBC Indonesia">
+  <span>CNBC Indonesia</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d9quh89lh7dtw.cloudfront.net/public-output/index.m3u8')">
+  <img src="icons/cloudfront.png" alt="CloudFront Stream">
+  <span>CloudFront Stream (без названия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://amogonetworx-moconomy-2-us.tcl.wurl.tv/playlist.m3u8')">
+  <img src="icons/moconomy.png" alt="Moconomy TV">
+  <span>Moconomy (Business & Tech)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00684-accuweather-accuweather-plex/playlist.m3u8')">
+  <img src="icons/accuweather.png" alt="AccuWeather">
+  <span>AccuWeather (Plex)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://distro001-gb-hls1-prd.delivery.skycdp.com/easel_cdn/ngrp:weather_loop.stream_all/playlist.m3u8')">
+  <img src="icons/weather-loop.png" alt="Weather Loop">
+  <span>Weather Loop (SkyCDP)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://unlimited1-us.dps.live/nettv/nettv.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/nettv.png" alt="NetTV">
+  <span>NetTV</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ms01.w24.at/W24/smil:liveevent.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/w24.png" alt="W24">
+  <span>W24 (Австрия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://ms01.w24.at/R9/smil:liveeventR9.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/r9.png" alt="R9">
+  <span>R9 (Австрия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://59959724487e3.streamlock.net/stream/live/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/streamlock.png" alt="Streamlock Channel">
+  <span>Streamlock Channel</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://prd-hometv-live-open.spectar.tv/ERO_1_083/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/ero.png" alt="ERO Channel">
+  <span>ERO 1 (Spectar)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rtvbn.tv:8080/live/index.m3u8')">
+  <img src="https://iptvx.one/picons/rtvbn.png" alt="RTV BN">
+  <span>RTV BN (Босния)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://restreamer2.tnt.ba/hls/stream.m3u8')">
+  <img src="https://iptvx.one/picons/tntba.png" alt="TNT.ba Stream">
+  <span>TNT.ba Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://stream.rtvze.ba/live/123/123.m3u8')">
+  <img src="https://iptvx.one/picons/rtvzenica.png" alt="RTV Zenica">
+  <span>RTV Zenica (Босния)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://player-tvcultura.stream.uol.com.br/live/tvcultura.m3u8')">
+  <img src="https://iptvx.one/picons/tvcultura.png" alt="TV Cultura">
+  <span>TV Cultura (Бразилия)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tv.city.bg/play/tshls/citytv/index.m3u8')">
+  <img src="https://iptvx.one/picons/citytv.png" alt="City TV">
+  <span>City TV (Болгария)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://tv1.cloudcdn.bg/temp/livestream.m3u8')">
+  <img src="https://iptvx.one/picons/tv1bulgaria.png" alt="TV1 Bulgaria">
+  <span>TV1 (Болгария)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://d7z3qjdsxbwoq.cloudfront.net/groupa/live/f9809cea-1e07-47cd-a94d-2ddd3e1351db/live.isml/.m3u8')">
+  <img src="https://iptvx.one/picons/groupa.png" alt="Group A Stream">
+  <span>Group A Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rcavlive.akamaized.net/hls/live/704025/xcanrdi/master.m3u8')">
+  <img src="https://iptvx.one/picons/rcav.png" alt="RCAV Live">
+  <span>RCAV Live (Канада)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://rcavlive.akamaized.net/hls/live/696615/xcancbft/master.m3u8')">
+  <img src="https://iptvx.one/picons/rcavcbf.png" alt="RCAV CBF">
+  <span>RCAV CBF (Канада)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://hls.savoir.media/live/stream.m3u8')">
+  <img src="https://iptvx.one/picons/savoir.png" alt="Savoir Média">
+  <span>Savoir Média (Канада)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://amdici.akamaized.net/hls/live/873426/ICI-Live-Stream/master.m3u8')">
+  <img src="https://iptvx.one/picons/icitele.png" alt="ICI Télé">
+  <span>ICI Télé (Канада)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('http://cdn3.toronto360.tv:8081/toronto360/hd/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/toronto360.png" alt="Toronto 360 TV">
+  <span>Toronto 360 TV (Канада)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://strhlslb01.streamakaci.tv/str_tchad_tchad/str_tchad_multi/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/teletchad.png" alt="Télé Tchad">
+  <span>Télé Tchad (Чад)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://mdstrm.com/live-stream-playlist/5653641561b4eba30a7e4929.m3u8')">
+  <img src="https://iptvx.one/picons/canal22.png" alt="Canal 22 Internacional">
+  <span>Canal 22 (Мексика)</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://redirector.rudo.video/hls-video/c54ac2799874375c81c1672abb700870537c5223/ucl/ucl.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/ucl.png" alt="UEFA Champions League">
+  <span>UCL Stream</span>
+</div>
+
+<div class="channel-item" onclick="openPlayer('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8')">
+  <img src="https://iptvx.one/picons/pinguinotv.png" alt="Pinguino TV">
+  <span>Pinguino TV (Италия)</span>
+</div>
+
+
+
+	  
+    </details>
+  
+
+  <!-- Терминал -->
+  <div id="terminal"></div>
+
+  <!-- Плеер (модальное окно) -->
+  <div id="playerModal">
+    <video id="tvPlayer" controls autoplay></video>
+    <div class="access-indicator">Вещание началось</div>
+    <button onclick="nextChannel()">Следующий</button>
+    <button onclick="closePlayer()">Закрыть</button>
+  </div>
+
+  <!-- Футер -->
+  <section class="contact-footer">
+    <h2 class="icon-only-title" id="matrixTrigger" title="Связь">Связь</h2>
+
+    <!-- Форма обратной связи -->
+    <div id="callbackModal">
+      <div>
+        <span style="position:absolute; top:8px; right:12px; color:#0f0; font-size:20px; cursor:pointer;" onclick="closeCallbackForm()">×</span>
+        <p style="color:#0f0; font-weight:bold; margin:0 0 15px;">Оставь номер — перезвоню!</p>
+        <form action="https://formspree.io/f/meopzkyl" method="POST" target="_blank">
+          <input type="tel" name="phone" placeholder="+374 __ __ __ __" required style="padding:10px; background:#222; color:#0f0; border:1px solid #0f0; border-radius:6px; width:100%; margin:5px 0; font-family:monospace;">
+          <input type="text" name="name" placeholder="Имя" style="padding:10px; background:#222; color:#0f0; border:1px solid #0f0; border-radius:6px; width:100%; margin:5px 0; font-family:monospace;">
+          <textarea name="message" placeholder="Сообщение" rows="2" style="padding:10px; background:#222; color:#0f0; border:1px solid #0f0; border-radius:6px; width:100%; margin:5px 0; resize:none; font-family:monospace;"></textarea>
+          <button type="submit" style="width:100%; padding:12px; background:#0f0; color:#000; border:none; border-radius:6px; font-weight:bold; margin-top:10px;">Отправить</button>
+          <input type="hidden" name="_next" value="thanks.html">
+        </form>
+        <p style="font-size:11px;color#0f0; margin-top:15px;">Номер увидит только автор.</p>
+      </div>
+    </div>
+
+    <ul class="contact-list">
+      <li>
+        <img src="icons/phone.png" alt="phone">
+        <span onclick="openCallbackForm()">Перезвонить мне</span>
+      </li>
+      <li><img src="icons/viber.png" alt="Viber"><span>Через форму</span></li>
+      <li><img src="icons/WhatsApp.png" alt="WhatsApp"><span>Через форму</span></li>
+      <li><img src="icons/Telegram.png" alt="Telegram"><span>Через форму</span></li>
+      <li><img src="icons/Instagram.png" alt="Instagram"><a href="https://instagram.com/samvel43" target="_blank">@samvel43</a></li>
+      <li><img src="icons/Facebook.png" alt="Facebook"><a href="https://facebook.com/samvel.vardanyan.96" target="_blank">samvel.vardanyan.96</a></li>
+      <li><img src="icons/OK.ru.png" alt="OK.ru"><a href="https://ok.ru/profile/268819542131" target="_blank">Samvel Vardanian</a></li>
+    </ul>
+  </section>
+
+  <!-- Кнопка вверх -->
+  <button id="scrollTopBtn" title="Наверх">Up</button>
+  
+  <footer>
+  <p>@samvosik@kontent2025</p>
+</footer>
+  
+
+  <!-- Скрипты -->
+  <script>
+    // Лог в терминал
+    function logEvent(action, status) {
+      const terminal = document.getElementById('terminal');
+      const line = document.createElement('div');
+      line.textContent = `[${new Date().toLocaleTimeString()}] ${action}: ${status}`;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    // Форма
+    function openCallbackForm() {
+      document.getElementById('callbackModal').style.display = 'flex';
+      logEvent('form', 'opened');
+    }
+    function closeCallbackForm() {
+      document.getElementById('callbackModal').style.display = 'none';
+      logEvent('form', 'closed');
+    }
+
+    // Плеер
+	
+	// === ПЛЕЕР: ЕДИНЫЙ МАССИВ + АВТОСБОРКА + СИНХРОНИЗАЦИЯ ===
+
+let channels = [];     // Будет заполнен при загрузке
+let current = 0;       // Текущий индекс
+
+// Открытие плеера
+function openPlayer(url) {
+  const player = document.getElementById('tvPlayer');
+  const modal = document.getElementById('playerModal');
+
+  // Синхронизируем current
+  const index = channels.indexOf(url);
+  if (index !== -1) current = index;
+
+  player.src = url;
+  player.play().catch(() => console.log("Автовоспроизведение заблокировано"));
+  modal.style.display = 'flex';
+
+  logEvent('player', `opened: ${url}`);
+}
+
+// Закрытие плеера
+function closePlayer() {
+  const player = document.getElementById('tvPlayer');
+  const modal = document.getElementById('playerModal');
+
+  player.pause();
+  modal.style.display = 'none';
+  logEvent('player', 'closed');
+}
+
+// Следующий канал (циклически)
+function nextChannel() {
+  if (channels.length === 0) return;
+
+  current = (current + 1) % channels.length;
+  const player = document.getElementById('tvPlayer');
+
+  player.src = channels[current];
+  player.play().catch(() => {});
+
+  logEvent('channel', `switched → ${current + 1}/${channels.length}: ${channels[current]}`);
+}
+
+// === АВТОМАТИЧЕСКИЙ СБОР ВСЕХ КАНАЛОВ ПРИ ЗАГРУЗКЕ ===
+window.addEventListener('DOMContentLoaded', () => {
+  logEvent('system', 'page loaded');
+
+  // Собираем все URL из onclick="openPlayer('...')"
+  channels = Array.from(document.querySelectorAll('.channel-item'))
+    .map(item => {
+      const onclick = item.getAttribute('onclick');
+      const match = onclick ? onclick.match(/openPlayer\(['"](.*?)['"]\)/) : null;
+      return match ? match[1] : null;
+    })
+    .filter(Boolean); // Убираем null
+
+  logEvent('channels', `loaded ${channels.length} streams`);
+});
+
+
+    // Поиск
+    function filterChannels() {
+      const query = document.getElementById('channelSearch').value.toLowerCase();
+      document.querySelectorAll('.channel-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? 'flex' : 'none';
+      });
+    }
+
+    // Кнопка вверх
+    document.getElementById('scrollTopBtn').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Инициализация
+    window.onload = () => {
+      logEvent('system', 'page loaded');
+    };
+  </script>
+  
+
+  
+  
+  
+  
+  
+  
+</body>
+</html>
