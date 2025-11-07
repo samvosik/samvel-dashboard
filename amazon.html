@@ -266,7 +266,56 @@ h2 {
   cursor: pointer;
   box-shadow: 0 0 6px #0ff;
 }
+/* ваша кнопка */
+.neon-theme-btn {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
+}
+.neon-theme-btn {
+  font-size: 35px; /* вместо 24px, подбирай своё значение */
+}
+.terminal-log {
+  font-family: monospace;
+  background: #000;
+  color: #0f0;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #0f0;
+  margin-top: 10px;
+}  
+.neon-hub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+}
 
+.neon-link {
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  background: black;
+  font-family: monospace;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  transition: all 0.3s ease;
+}
+
+.neon-link:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+  transform: scale(1.05);
+}
+ {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
   </style>
   
 </head>
@@ -282,6 +331,19 @@ h2 {
 <p style="color: #fff; font-size: 1em; margin-top: 6px;">Одежда, игрушки, стиль и выгода — всё в одном месте</p>
 </header>
 
+
+<div class="neon-hub">
+  <a href="index.html" class="neon-link">🏠 Главная</a>
+  <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
+  <a href="discounts.html" class="neon-link">💰 Скидки</a>
+  <a href="ascii-mode.html" class="neon-link">📟 Гадание на игровых картах</a>
+  <a href="Games.html" class="neon-link">🎮 Games (Разработка)</a>
+  <a href="Exchange.html" class="neon-link">🌐 Exchange (Разработка)</a>
+  <a href="amazon.html" class="neon-link">🛍️ Amazon Витрина</a>
+  <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
+  <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
+  <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
+</div>
  
   
  <div id="referral-text" style="max-width: 800px; margin: 0 auto 30px; font-size: 1.1em; line-height: 1.6;">
