@@ -10,7 +10,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
   <style>
-  /* ваша кнопка */
+  
+  .logPanel {
+  background: #000;
+  color: #0ff;
+  font-family: monospace;
+  padding: 20px;
+  margin: 30px auto;
+  border: 1px dashed #0ff;
+  max-width: 800px;
+  box-shadow: 0 0 20px #0ff;
+  overflow-y: auto;
+  max-height: 400px;
+  position: relative;
+}
+
+.logTitle {
+  margin-bottom: 10px;
+  color: #0ff;
+  font-size: 18px;
+}
+
+.logContent p {
+  margin: 0;
+  padding: 4px 0;
+}
+.scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0ff;
+  color: #000;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff inset;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.scroll-top-btn:hover {
+  background: #00ffaa;
+  box-shadow: 0 0 15px #00ffaa, 0 0 30px #0ff inset;
+  transform: scale(1.05);
+}
+ 
+ .ticker-neon {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+  border-top: 1px solid #0ff;
+  border-bottom: 1px solid #0ff;
+  position: relative;
+}
+
+.ticker-track {
+  width: max-content;
+}
+
+#ticker-bottom-text {
+  display: inline-block;
+  white-space: nowrap;
+  color: #0ff;
+  padding: 10px;
+  font-size: 1.2em;
+  font-family: monospace;
+  animation: scroll-left 45s linear infinite;
+  transition: text-shadow 0.3s ease;
+}
+
+#ticker-bottom-text:hover {
+  animation-play-state: paused;
+  text-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+}
+
+@keyframes scroll-left {
+  0%   { transform: translateX(41%); }
+  100% { transform: translateX(-100%); }
+} 
+a.neon-link {
+  color: #0ff;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 0 2px #0ff;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+a.neon-link:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+}
+   /* ваша кнопка */
 .neon-theme-btn {
   height: 50px;
   line-height: 50px;
@@ -60,97 +153,6 @@
       text-align: center;
       padding: 50px;
     }
-    /* === MOBILE ADAPTATION === */
-@media (max-width: 768px) {
-  .neon-hub {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-  }
-  .logPanel {
-  background: #000;
-  color: #0ff;
-  font-family: monospace;
-  padding: 20px;
-  margin: 30px auto;
-  border: 1px dashed #0ff;
-  max-width: 800px;
-  box-shadow: 0 0 20px #0ff;
-  overflow-y: auto;
-  max-height: 400px;
-  position: relative;
-}
-
-.logTitle {
-  margin-bottom: 10px;
-  color: #0ff;
-  font-size: 18px;
-}
-
-.logContent p {
-  margin: 0;
-  padding: 4px 0;
-}
-
-.scrollTopBtn {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  background: #0ff;
-  color: #000;
-  border: none;
-  padding: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-  
- .ticker-neon {
-  width: 100%;
-  overflow: hidden;
-  background: #000;
-  border-top: 1px solid #0ff;
-  border-bottom: 1px solid #0ff;
-  position: relative;
-}
-
-.ticker-track {
-  width: max-content;
-}
-
-#ticker-bottom-text {
-  display: inline-block;
-  white-space: nowrap;
-  color: #0ff;
-  padding: 10px;
-  font-size: 1.2em;
-  font-family: monospace;
-  animation: scroll-left 45s linear infinite;
-  transition: text-shadow 0.3s ease;
-}
-
-#ticker-bottom-text:hover {
-  animation-play-state: paused;
-  text-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
-}
-
-@keyframes scroll-left {
-  0%   { transform: translateX(41%); }
-  100% { transform: translateX(-100%); }
-} 
-a.neon-link {
-  color: #0ff;
-  font-weight: bold;
-  text-decoration: none;
-  text-shadow: 0 0 2px #0ff;
-  transition: color 0.3s, text-shadow 0.3s;
-}
-
-a.neon-link:hover {
-  color: #fff;
-  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
-}
-
     /* 💠 Базовые стили */
 body {
   font-family: sans-serif;
@@ -159,133 +161,6 @@ body {
   background: #fdfdfd;
   color: #333;
   background: linear-gradient(#8B008B, #8B008B, #8B008B);
-}
-/* 🎧 Аудиоплеер футера */
-#nextStation {
-  font-size: 1.2em;
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 6px;
-  padding: 8px 12px;
-  background: transparent;
-  box-shadow: 0 0 6px #0ff;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  display: block;
-  width: 51px;
-  text-align: center;
-}
-.footer-player {
-  position: absolute; /* позиционирование внутри родителя */
-  bottom: 30px;       /* поднятие на 3 см */
-  right: 5px;
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  background: rgba(0, 0, 0, 0.0);
-  padding: 1px;
-  border-radius: 1px;
-  box-shadow: 0 0 1px #0008;
-  z-index: 999;
-}
-
-#playToggle {
-  font-size: 1.4em;
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 6px;
-  padding: 6px 12px;
-  background: 0000;
-  box-shadow: 0 0 6px #0ff;
-  transition: all 0.3s ease;
-}
-#playToggle:hover {
-  background: #0ff;
-  color: #111;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
-}
-.radio-controls button {
-  font-size: 1.4em;
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 6px;
-  padding: 6px 12px;
-  background: transparent;
-  box-shadow: 0 0 6px #0ff;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  margin:  0.1px;
-}
-
-.radio-controls button:hover {
-  background: 0000;
-  color: 0000;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
-}
-
-.player-visuals {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* ← чтобы станция и эквалайзер были по центру */
-  gap: 6px;
-}
-.equalizer span {
-  display: inline-block;
-  width: 4px;
-  height: 20px;
-  margin: 0 2px;
-  background: #0ff;
-  box-shadow: 0 0 6px #0ff;
-  animation: bounce 1s infinite ease-in-out;
-}
-.station-info {
-  font-size: 0.85em;
-  color: #0ff;
-  border: 2px solid #0ff;
-  border-radius: 6px;
-  padding: 6px 12px;
-  background: transparent;
-  box-shadow: 0 0 6px #0ff;
-  text-shadow: 0 0 6px #0ff;
-  transition: all 0.3s ease;
-}
-@keyframes bounce {
-  0%   { height: 8px; opacity: 0.7; }
-  50%  { height: 24px; opacity: 1; }
-  100% { height: 8px; opacity: 0.7; }
-}
-.equalizer span:nth-child(1) { animation-delay: 0s; }
-.equalizer span:nth-child(2) { animation-delay: 0.2s; }
-.equalizer span:nth-child(3) { animation-delay: 0.4s; }
-.equalizer span:nth-child(4) { animation-delay: 0.6s; }
-
-  /* стили только для этого терминала */
-}
-.dark .terminal,
-.dark .theme .neon-terminal-wrapper .terminal {
-  background: #000;
-  color: #0ff;
-  box-shadow: 0 0 20px #00ffff55;
-}
-   
-.terminal {
-  background: #111;
-  padding: 0.10px 0.10px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #00ffee;
-  max-width: 28vw;      /* ← вместо фиксированных пикселей */
-  width: 100%;
-  margin: 50 auto;
-  white-space: pre-wrap;
-  line-height: 1.6;
-  font-size: 11.98px;
-  text-shadow: 0 0 4px #00ffee;
-  min-height: 20px;
-  position: relative;
-  color: #00ffee;
-  box-sizing: border-box;
-  max-height: 515px;
-  
 }
     .cursor {
       display: inline-block;
@@ -306,7 +181,6 @@ body {
   font-family: monospace;
   border-top: 20px solid #111;
 }
-
 .footer-content {
   display: flex;
   justify-content: space-between;
@@ -339,15 +213,19 @@ body {
   box-shadow: 0 0 8px #0ff;
 }
 .contact-list {
+  display: flex;
+  flex-direction: row; /* 🔹 Горизонтально */
+  flex-wrap: wrap;     /* 🔹 Перенос при нехватке места */
+  gap: 12px;            /* 🔹 Отступы между иконками */
+  justify-content: center;
   background: #000;
   border-radius: 10px;
   list-style: none;
   padding: 20px;
-  margin: 0;
-  max-width: 25px;
+  margin: 0 auto;
   box-shadow: 0 0 8px #0ff;
+  max-width: 100%; /* 🔹 Убираем ограничение */
 }
-
 .contact-list li {
   display: flex;
   align-items: center;
@@ -559,6 +437,22 @@ code {
   nav {
     flex-direction: column;
   }
+@media (max-width: 768px) {
+  .neon-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 15px;
+    justify-items: center;
+  }
+
+  .neon-link {
+    font-size: 0.95em;
+    padding: 10px 12px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
   nav button {
     margin: 5px 0;
@@ -626,10 +520,16 @@ code {
 
 <header>
 
- <h1 class="neon-header">💰 Система скидок</h1>
- 
- 
- <div class="neon-hub">
+
+<canvas id="cmatrix"style=" width: 101%;
+  height: 130px;
+  display: block;
+  max-width: 1350px;
+  margin: 0 auto;"></canvas>
+
+<h3 class="neon-header">🔗 Порталы</h3>
+
+<div class="neon-hub">
   <a href="index.html" class="neon-link">🏠 Главная</a>
   <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
   <a href="discounts.html" class="neon-link">💰 Скидки</a>
@@ -641,8 +541,9 @@ code {
   <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
   <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
 </div>
- 
- 
+
+
+ <h1 class="neon-header">💰 Система скидок</h1>
 <p class="neon-header" style="font-size: 1.7em; font-weight: normal;">
 Скидка предоставляется после активации персонального кода, доступного при пожертвовании 1000 драм. Код необходимо предъявить сотрудникам партнёрских точек обслуживания. ⚙️ QR-активация<br>
 Сканируйте → Активируйте → Получите код → Предъявите → Получите скидку.</p>
@@ -804,13 +705,7 @@ code {
 </section>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 
-<canvas id="cmatrix"style=" width: 100%;
-  height: 130px;
-  display: block;
-  max-width: 1350px;
-  margin: 0 auto;"></canvas>
 
-<hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
 <p style="background-color: #000; color: #0ff; font-size: 1.7em; font-family: monospace; padding: 10px; border-radius: 8px;">
   <strong>🆓 Бесплатно</strong> для частных лиц и владельцев (без ID: транзакций)  
   <br>🔐 После модерации ваш объект появится в списке в течение суток.
@@ -890,40 +785,13 @@ code {
   <li><a href="https://ok.ru/profile/268819542131" target="_blank"><img src="icons/OK.ru.png" alt="OK.ru" title="Открыть Одноклассники" /></a></li>
 </ul>
   
-  <div class="footer-player">  
-   <div class="equalizer">
-    <span></span><span></span><span></span><span></span>
-  </div>
     
-  <div class="footer-content">  
                      
-    <audio id="radioAudio"></audio>   
-              
-      <div class="radio-controls">      
-      
-      <div class="player-visuals">     
-                  
-        <button id="playToggle">▶️</button>        
-        
-        <button id="nextStation">⏭️</button>        
-        
-        <button id="prevStation">⏮️</button>              
-  
-  <div class="station-info">
-    <span id="stationLabel">1 / 7</span>
-  </div>
-</div>   
-      
-  </div>
-       <div id="terminal-wrapper">
-        <div class="terminal" id="terminal"></div>
-      </div>
-    </div>
-  </div>   
+     
 
 </footer>
 <hr style="border: 0; border-top: 1px dashed #0ff; margin: 10px 0;">
-<div id="logPanel" style="background:#000; color:#0ff; font-family:monospace; margin-top:20px; border-top:1px dashed #0ff;">
+
 
 <canvas id="cmatrix-1"style=" width: 100%;
   height: 130px;
@@ -931,14 +799,9 @@ code {
   max-width: 1350px;
   margin: 0 auto;"></canvas>
   
-  <div class="logPanel">
-  <h3 class="logTitle">📡 Активность системы</h3>
-  <div class="logContent" id="logContent">
-    <!-- Здесь будут появляться логи -->
-    <p>[12:10:01] 🔍 Система запущена...</p>
-  </div>
-  <button class="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">🔼 Наверх</button>
-</div>
+ 
+ <button onclick="scrollToTop()" class="scroll-top-btn">⬆️ Наверх</button>
+
 
   
 <script>
@@ -969,11 +832,12 @@ function redirectToPayment() {
 </script>
  
   
-  <script>
-  document.getElementById('scrollTopBtn').addEventListener('click', function() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+ <script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 </script>
+
 
 <script>
   function toggleForm() {
@@ -1037,170 +901,6 @@ function redirectToPayment() {
     }
   }
   </script>
-
-<script>
-  const stations = [
-    {
-     name: 'Lo-Fi HipHop',
-      url: 'https://ep256.hostingradio.ru:8052/europaplus256.mp3'
-    },
-    {
-     name: 'Lo-Fi HipHop',
-      url: 'https://chanson.hostingradio.ru:8041/chanson128.mp3'
-    },
-    {
-      name: 'Jazz Radio',
-      url: 'https://jazz-wr08.ice.infomaniak.ch/jazz-wr08-128.mp3'
-    },
-    {
-      name: 'Jazz Radio',
-      url: 'https://stream.nightride.fm/nightride.mp3'
-    },
-    {
-      name: 'Deep House Radio',
-      url: 'https://listen.181fm.com/181-eagle_128k.mp3'
-    },
-    {
-      name: 'Lounge FM Chill',
-      url: 'https://relay3.radiotoolkit.com/rcmdeep'
-    },
-    {
-      name: 'Lo-Fi HipHop',
-      url: 'https://edge11.streamonkey.net/nostalgie-live?aggregator=shorty'
-    }
-  ];
-
-  let currentStation = 0;
-
-const audio = document.getElementById('radioAudio');
-const playBtn = document.getElementById('playToggle');
-const nextBtn = document.getElementById('nextStation');
-const prevBtn = document.getElementById('prevStation');
-const bars = document.querySelectorAll('.equalizer span');
-const label = document.getElementById('stationLabel');
-
-// 👉 Показываем только "1 / 7"
-function updateLabel(index) {
-  if (label) {
-    label.textContent = `${index + 1} / ${stations.length}`;
-  }
-}
-
-function playStation(index) {
-  audio.src = stations[index].url;
-  audio.play().then(() => {
-    playBtn.textContent = '⏸️';
-    bars.forEach(bar => bar.style.animationPlayState = 'running');
-    updateLabel(index);
-  }).catch(() => {
-    // Если автостарт запрещён — не меняем кнопку
-    playBtn.textContent = '▶️';
-    bars.forEach(bar => bar.style.animationPlayState = 'paused');
-    updateLabel(index);
-  });
-}
-
-// ▶️/⏸️ кнопка
-playBtn.addEventListener('click', () => {
-  if (audio.paused) {
-    audio.play().then(() => {
-      playBtn.textContent = '⏸️';
-      bars.forEach(bar => bar.style.animationPlayState = 'running');
-    }).catch(() => {});
-  } else {
-    audio.pause();
-    playBtn.textContent = '▶️';
-    bars.forEach(bar => bar.style.animationPlayState = 'paused');
-  }
-});
-
-// ⏭️ кнопка
-nextBtn.addEventListener('click', () => {
-  currentStation = (currentStation + 1) % stations.length;
-  playStation(currentStation);
-});
-
-// ⏮️ кнопка
-prevBtn.addEventListener('click', () => {
-  currentStation = (currentStation - 1 + stations.length) % stations.length;
-  playStation(currentStation);
-});
-
-// 🚀 При загрузке: только устанавливаем первую станцию (без запуска)
-window.addEventListener('DOMContentLoaded', () => {
-  audio.src = stations[currentStation].url;
-  playBtn.textContent = '▶️';
-  bars.forEach(bar => bar.style.animationPlayState = 'paused');
-  updateLabel(currentStation);
-});
-
-</script>
-
-<script>
-  window.onload = function () {
-    const terminalWrapper = document.getElementById("terminal-wrapper");
-
-    const text = `
-💬 Спасибо, что посетили. 
-💬 Thank you for visiting. 
-💬 Շնորհակալություն այցելելու համար։ 
-`;
-
-    const typingSpeed = 35;
-
-    function typeText() {
-      const terminal = document.getElementById("terminal");
-      terminal.innerHTML = '';
-      let index = 0;
-
-      function loop() {
-        if (index <= text.length) {
-          terminal.innerHTML = text.slice(0, index++) + '<span class="cursor"></span>';
-          setTimeout(loop, typingSpeed);
-        }
-      }
-
-      loop();
-    }
-
-    function restartTerminal() {
-      const oldTerminal = document.getElementById("terminal");
-      if (oldTerminal) oldTerminal.remove();
-
-      const newTerminal = document.createElement("div");
-      newTerminal.className = "terminal";
-      newTerminal.id = "terminal";
-      terminalWrapper.appendChild(newTerminal);
-
-      typeText();
-    }
-
-    terminalWrapper.addEventListener("click", restartTerminal);
-    typeText();
-  };
-  // Автоинициализация первой станции при загрузке страницы
-window.addEventListener('DOMContentLoaded', () => {
-  playStation(currentStation);
-});
-
-(function detectUTM() {
-  const params = new URLSearchParams(window.location.search);
-  const campaign = params.get('utm_campaign');
-  const source = params.get('utm_source');
-  const medium = params.get('utm_medium');
-  const terminal = document.getElementById("terminal");
-
-  if ((campaign || source || medium) && terminal) {
-    const msg = `📦 UTM Detected:
-  → campaign: ${campaign || '—'}
-  → source:   ${source || '—'}
-  → medium:   ${medium || '—'}`;
-    
-    terminal.innerHTML += `\n\n${msg}`;
-  }
-})();
-
-</script>
 
 <script>
 function matrixRain(canvasId) {

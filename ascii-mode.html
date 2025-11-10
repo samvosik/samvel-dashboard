@@ -245,6 +245,24 @@
     gap: 10px;
     padding: 10px;
   }
+  @media (max-width: 768px) {
+  .neon-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 15px;
+    justify-items: center;
+  }
+
+  .neon-link {
+    font-size: 0.95em;
+    padding: 10px 12px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
   </style>
 </head>
 <body>
