@@ -160,7 +160,7 @@ body {
   padding: 0;
   background: #fdfdfd;
   color: #333;
-  background: linear-gradient(#8B008B, #8B008B, #8B008B);
+  background: linear-gradient(black, black, black);
 }
     .cursor {
       display: inline-block;
@@ -270,7 +270,7 @@ body {
 
 /* 🧠 Шапка */
 header {
-  background: #8B008B;
+  background: black;
   color: white;
   padding: 20px;
   text-align: center;
@@ -433,45 +433,31 @@ code {
 }
 
 /* 📱 Адаптив */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-  }
-@media (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .neon-hub {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    padding: 15px;
-    justify-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
   }
 
   .neon-link {
-    font-size: 0.95em;
-    padding: 10px 12px;
-    text-align: center;
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  nav button {
-    margin: 5px 0;
-    width: 90%;
-  }
-
-  .profile img,
-  .discount img {
-    width: 100% !important;
-    max-width: none;
-    float: none;
-    margin: 0 0 10px 0;
-  }
-
-  .profile,
-  .discount {
-    padding: 10px;
+    text-align: center;
     font-size: 1em;
+    padding: 10px 0;
   }
+
+  .product-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .product-row img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
   /* 📲 QR-доступ */
 
     .background {

@@ -238,30 +238,31 @@
       padding: 50px;
     }
     /* === MOBILE ADAPTATION === */
-@media (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .neon-hub {
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    align-items: stretch;
     padding: 10px;
-  }
-  @media (max-width: 768px) {
-  .neon-hub {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    padding: 15px;
-    justify-items: center;
   }
 
   .neon-link {
-    font-size: 0.95em;
-    padding: 10px 12px;
-    text-align: center;
     width: 100%;
-    box-sizing: border-box;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px 0;
+  }
+
+  .product-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .product-row img {
+    max-width: 100%;
+    height: auto;
   }
 }
+
 
   </style>
 </head>
