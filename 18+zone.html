@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>M3U8 Player</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+
+
+
+
+<style>
+ /* === Основные стили === */
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #000;
+      color: #0f0;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* === Заголовок === */
+    .donate-title {
+      font-size: 2em;
+      background: linear-gradient(90deg, #0ff, #f0f, #0f0);
+      background-size: 200% auto;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      animation: glow 3s linear infinite;
+      text-shadow: 0 0 10px #0ff;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    @keyframes glow {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    /* === QR === */
+    .qr-wrapper {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 12px;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      animation: neonPulse 2s infinite alternate;
+    }
+    .qr-wrapper:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+    .qr-wrapper img {
+      width: 160px;
+      height: 160px;
+      border-radius: 10px;
+    }
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+      100% { box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff; }
+    }
+
+    /* === Поиск === */
+    #channelSearch {
+      width: 90%;
+      max-width: 500px;
+      padding: 12px;
+      margin: 20px auto;
+      display: block;
+      background: #111;
+      color: #0f0;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: monospace;
+    }
+
+    /* === Каналы === */
+    details {
+      margin: 15px auto;
+      max-width: 600px;
+      background: #111;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    summary {
+      padding: 12px;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: left;
+    }
+    .channel-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: #111;
+      border-bottom: 1px solid #0ff30;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .channel-item:hover {
+      background: #0ff20;
+      box-shadow: 0 0 10px #0ff;
+    }
+    .channel-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 6px #0ff;
+    }
+
+    /* === Плеер === */
+    #playerModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #tvPlayer {
+      width: 90%;
+      max-width: 800px;
+      border: 3px solid #0ff;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #0ff;
+    }
+    .access-indicator {
+      color: #0f0;
+      font-weight: bold;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    /* === Кнопки === */
+    button {
+      padding: 10px 20px;
+      background: #0ff;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #0c0;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    /* === Терминал === */
+    #terminal {
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      border: 1px solid #0f0;
+      border-radius: 6px;
+      max-width: 600px;
+      margin: 20px auto;
+      font-size: 14px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* === Футер === */
+    .contact-footer {
+      margin-top: 40px;
+      padding: 30px;
+      background: #111;
+      border-top: 2px solid #0ff;
+    }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      max-width: 300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(0,255,255,0.05);
+      border: 1px solid #0ff;
+      border-radius: 6px;
+    }
+    .contact-list img {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #0ff;
+    }
+    .contact-list a, .contact-list span {
+      color: #0f0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .contact-list span {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* === Модальное окно формы === */
+    #callbackModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 93%; height: 93%;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+    #callbackModal > div {
+  animation: modalFadeIn 0.4s ease-out;
+}
+.color-cycle {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  animation: colorShift 2s infinite;
+}
+@keyframes colorShift {
+  0%   { color: #0f0; }
+  33%  { color: #f00; }
+  66%  { color: #00f; }
+  100% { color: #0f0; }
+}
+
+    /* === Кнопка вверх === */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 1.4em;
+      cursor: pointer;
+      z-index: 100;
+    }
+    #scrollTopBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px #0ff;
+    }
+    /* === Кнопка в неон-стиле === */
+.neon-link,
+.neon-theme-btn {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 16px;
+  padding: 8px 12px;
+  max-width: 180px;
+  color: #00ffff;
+  background: black;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* === Hover === */
+.neon-link:hover,
+.neon-theme-btn:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+  transform: scale(1.05);
+}
+
+/* === Мобильная адаптация === */
+@media screen and (max-width: 600px) {
+  .neon-link,
+  .neon-theme-btn {
+    font-size: 14px;
+    padding: 6px 10px;
+    max-width: 100%;
+    white-space: normal;
+    display: block;
+    margin: 6px auto;
+  }
+
+  .product-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .product-row img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+</style>
+
+<body>
+
+
+ <h1 class="donate-title">Если не жалко — скинь в QR, чтобы я мог снова тебя держать в комфорте.</h1>
+ 
+  <div class="qr-wrapper">
+    <img src="qr-code.png" alt="QR Для Подключения">
+  </div>
+ 
+
+<div class="neon-hub">
+  <a href="index.html" class="neon-link">🏠 Главная</a>
+  <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
+  <a href="discounts.html" class="neon-link">💰 Скидки</a>
+  <a href="ascii-mode.html" class="neon-link">📟 Гадание на игровых картах</a>
+  <a href="Games.html" class="neon-link">🎮 Games (Разработка)</a>
+  <a href="Exchange.html" class="neon-link">🌐 Exchange (Разработка)</a>
+  <a href="amazon.html" class="neon-link">🛍️ Amazon Витрина</a>
+  <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
+  <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
+  <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
+</div>
+
+
+
+
+
+  <!-- Видео -->
+  <video id="video" controls autoplay width="640" height="360"></video>
+
+  <!-- Меню каналов -->
+  <div>
+    <button onclick="playStream('https://cdn.redtraffic.net/milf.m3u8')">1</button>
+    <button onclick="playStream('https://cdn.redtraffic.net/anal.m3u8')">2</button>
+    <button onclick="playStream('https://cdn.redtraffic.net/bigtits.m3u8')">3</button>
+    <button onclick="playStream('https://cdn.redtraffic.net/lesbian.m3u8')">4</button>
+    <button onclick="playStream('https://cdn.redtraffic.net/ebony.m3u8')">5</button>
+    <button onclick="playStream('https://cdn.redtraffic.net/asian.m3u8')">6</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/latina.m3u8')">7</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/blowjob.m3u8')">8</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/interracial.m3u8')">9</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/gangbang.m3u8')">10</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/fetish.m3u8')">11</button>
+	<button onclick="playStream('https://cdn.redtraffic.net/teen.m3u8')">12</button>
+  </div>
+
+  <script>
+    var video = document.getElementById('video');
+    var hls;
+
+    function playStream(url) {
+      if (Hls.isSupported()) {
+        if (hls) {
+          hls.destroy(); // очищаем предыдущий поток
+        }
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url; // для Safari
+      }
+    }
+
+    // Автостарт первого канала
+    playStream("https://cdn.redtraffic.net/milf.m3u8");
+  </script>
+</body>
+</html>
+
+
+
+
+
+ 
+</body>
+</html>
