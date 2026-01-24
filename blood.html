@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Свежесть крови — калькулятор</title>
+<style>
+body {
+  margin: 0;
+  font-family: monospace;
+  background: #000;
+  color: #0f0;
+  text-align: center;
+  font-size: 1.10rem;
+  padding: 50px;
+}
+
+h1 { margin-bottom: 8px; }
+
+.note {
+  font-size: 1.10rem;
+  color: #e7fff4;
+  margin-bottom: 12px;
+}
+
+.group {
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid #0f0;
+  padding: 16px;
+  border-radius: 6px;
+  margin: 12px auto;
+  text-align: center;
+}
+
+label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+
+input[type="date"], input[type="time"] {
+  width: 90%;
+  background: #e7fff4;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  padding: 8px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+button, a {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 10px auto;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #2f6fed;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button:hover, a:hover { background: #255be0; }
+
+/* Анимация появления */
+#extraForm {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#extraForm.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Цвета для результата */
+.boy { color: #2f6fed; font-weight: bold; }
+.girl { color: #e83e8c; font-weight: bold; }
+.unknown { color: #aaa; font-weight: bold; }
+
+/* Медиазапросы для мобильных */
+@media (max-width: 480px) {
+  body {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+  h1 {
+    font-size: 1.2rem;
+  }
+  .note {
+    font-size: 0.85rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>Калькулятор свежести крови</h1>
+<p class="note">Мужчина обновляет кровь каждые 4 года, женщина — каждые 3. Сравниваем последние даты обновления.</p>
+
+<div class="group">
+  <strong>Отец</strong>
+  <label>Дата рождения
+    <input type="date" id="fatherDate" />
+  </label>
+  <strong>Мать</strong>
+  <label>Дата рождения
+    <input type="date" id="motherDate" />
+  </label>
+</div>
+
+<div class="group" id="extraForm">
+  <strong>Совпадение дат — уточните время рождения</strong>
+  <label>Время рождения отца
+    <input type="time" id="fatherTime" value="00:00" />
+  </label>
+  <label>Время рождения матери
+    <input type="time" id="motherTime" value="00:00" />
+  </label>
+</div>
+
+<button id="calcBtn">Рассчитать</button>
+<a href="/">Назад</a>
+
+<div id="summary" class="note">Заполните даты и нажмите «Рассчитать».</div>
+
+<script>
+function safeDate(y,m,d){const dt=new Date(y,m,d);return(m===1&&d===29&&dt.getMonth()!==1)?new Date(y,1,28):dt;}
+function lastRefreshBefore(b,r,c){let y=b.getFullYear(),last=safeDate(y,b.getMonth(),b.getDate());while(true){const ny=y+c,cd=safeDate(ny,b.getMonth(),b.getDate());if(cd<=r){last=cd;y=ny;}else break;}return last;}
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  const fdStr=document.getElementById('fatherDate').value,mdStr=document.getElementById('motherDate').value;
+  if(!fdStr||!mdStr){document.getElementById('summary').textContent='Укажите даты рождения обоих родителей.';return;}
+  const fd=new Date(fdStr),md=new Date(mdStr),today=new Date();
+  const fatherLast=lastRefreshBefore(fd,today,4),motherLast=lastRefreshBefore(md,today,3);
+  let result;
+  if(fatherLast>motherLast) result="Мальчик";
+  else if(motherLast>fatherLast) result="Девочка";
+  else {
+    document.getElementById('extraForm').classList.add('show');
+    const [fh,fm]=document.getElementById('fatherTime').value.split(':').map(Number);
+    const [mh,mm]=document.getElementById('motherTime').value.split(':').map(Number);
+    const fMin=fh*60+fm,mMin=mh*60+mm;
+    if(fMin>mMin) result="Мальчик";
+    else if(mMin>fMin) result="Девочка";
+    else result="Неопределённо";
+  }
+  document.getElementById('summary').innerHTML=`
+    Результат: <span class="${result==="Мальчик"?"boy":result==="Девочка"?"girl":"unknown"}">${result}</span><br/>
+    Последнее обновление отца: ${fatherLast.toLocaleDateString()}<br/>
+    Последнее обновление матери: ${motherLast.toLocaleDateString()}<br/>
+    Момент расчёта: ${today.toLocaleDateString()}<br/>
+    <em>По последнему обновлению крови родителя: если свежее у отца — мальчик, если у матери — девочка.</em>
+  `;
+});
+</script>
+
+</body>
+</html>
