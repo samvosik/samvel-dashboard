@@ -1,17 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<link rel="icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
-  <title>M3U8 Player</title>
+  <title>M3U8 Player (Protected)</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-</head>
-
-
-
-
-<style>
- /* === Основные стили === */
+  <style>
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #000;
+      color: #0f0;
+      text-align: center;
+      padding: 20px;
+    }
+    #login {
+      margin-top: 100px;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #0ff;
+      background: #111;
+      color: #0f0;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0ff;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #0c0;
+      box-shadow: 0 0 15px #0ff;
+    }
+    #protected {
+      display: none;
+    }
+	
+	
+	
+	
+	 /* === Основные стили === */
     body {
       margin: 0;
       font-family: monospace;
@@ -312,20 +347,34 @@
     height: auto;
   }
 }
-</style>
-
+	
+	
+  </style>
+</head>
 <body>
 
+<div id="login">
+  <h2>Введите пароль</h2>
+  <p style="color:#aaa; font-size:0.9rem; margin-bottom:12px;">
+    🔑 Пароль — уязвим, пользуйтесь на здоровье кто сможет,<br/>
+    а кто нет — свяжитесь по контактам 😉
+  </p>
+  <input type="password" id="pwd" placeholder="Пароль">
+  <button onclick="checkPwd()">Войти</button>
+  <p id="msg"></p>
+</div>
 
- <h1 class="donate-title">Если не жалко — скинь в QR, чтобы я мог снова тебя держать в комфорте.</h1>
- 
+
+
+<div id="protected">
+  <!-- Весь твой контент страницы (QR, ссылки, видео, кнопки каналов) -->
+  <h1 class="donate-title">Если не жалко — скинь в QR, чтобы я мог снова тебя держать в комфорте.</h1>
   <div class="qr-wrapper">
     <img src="qr-code.png" alt="QR Для Подключения">
   </div>
- 
 
-<div class="neon-hub">
-  <a href="index.html" class="neon-link">🏠 Главная</a>
+  <div class="neon-hub">
+     <a href="index.html" class="neon-link">🏠 Главная</a>
   <a href="blood.html" class="neon-link">💖 Мальчик или девочка</a>
   <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
   <a href="discounts.html" class="neon-link">💰 Скидки</a>
@@ -336,18 +385,11 @@
   <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
   <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
   <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
-</div>
+  </div>
 
-
-
-
-
-  <!-- Видео -->
   <video id="video" controls autoplay width="640" height="360"></video>
-
-  <!-- Меню каналов -->
   <div>
-    <button onclick="playStream('https://cdn.redtraffic.net/milf.m3u8')">1</button>
+    <button onc   <button onclick="playStream('https://cdn.redtraffic.net/milf.m3u8')">1</button>
     <button onclick="playStream('https://cdn.redtraffic.net/anal.m3u8')">2</button>
     <button onclick="playStream('https://cdn.redtraffic.net/bigtits.m3u8')">3</button>
     <button onclick="playStream('https://cdn.redtraffic.net/lesbian.m3u8')">4</button>
@@ -360,34 +402,36 @@
 	<button onclick="playStream('https://cdn.redtraffic.net/fetish.m3u8')">11</button>
 	<button onclick="playStream('https://cdn.redtraffic.net/teen.m3u8')">12</button>
   </div>
+</div>
 
-  <script>
-    var video = document.getElementById('video');
-    var hls;
+<script>
+  
+  const encodedPwd = "cGlwbzEx";
 
-    function playStream(url) {
-      if (Hls.isSupported()) {
-        if (hls) {
-          hls.destroy(); // очищаем предыдущий поток
-        }
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url; // для Safari
-      }
+  function checkPwd(){
+    const pass = document.getElementById('pwd').value;
+    const decoded = atob(encodedPwd);
+    if(pass === decoded){
+      document.getElementById('login').style.display="none";
+      document.getElementById('protected').style.display="block";
+    } else {
+      document.getElementById('msg').textContent="Неверный пароль!";
     }
+  }
 
-    // Автостарт первого канала
-    playStream("https://cdn.redtraffic.net/milf.m3u8");
-  </script>
-</body>
-</html>
+  var video = document.getElementById('video');
+  var hls;
+  function playStream(url) {
+    if (Hls.isSupported()) {
+      if (hls) { hls.destroy(); }
+      hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = url;
+    }
+  }
+</script>
 
-
-
-
-
- 
 </body>
 </html>
