@@ -1,100 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" href="favicon.png" type="image/png">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Свежесть крови — калькулятор</title>
 <style>
-body {
-  margin: 0;
-  font-family: monospace;
-  background: #000;
-  color: #0f0;
-  text-align: center;
-  font-size: 1.10rem;
-  padding: 50px;
-}
-
-h1 { margin-bottom: 8px; }
-
-.note {
-  font-size: 1.10rem;
-  color: #e7fff4;
-  margin-bottom: 12px;
-}
-
-.group {
-  width: 100%;
-  max-width: 320px;
-  border: 1px solid #0f0;
-  padding: 16px;
-  border-radius: 6px;
-  margin: 12px auto;
-  text-align: center;
-}
-
-label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
-
-input[type="date"], input[type="time"] {
-  width: 90%;
-  background: #e7fff4;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  padding: 8px;
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-button, a {
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  margin: 10px auto;
-  padding: 12px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  background: #2f6fed;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-button:hover, a:hover { background: #255be0; }
-
-/* Анимация появления */
-#extraForm {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-#extraForm.show {
-  display: block;
-  opacity: 1;
-}
-
-/* Цвета для результата */
-.boy { color: #2f6fed; font-weight: bold; }
-.girl { color: #e83e8c; font-weight: bold; }
-.unknown { color: #aaa; font-weight: bold; }
-
-/* Медиазапросы для мобильных */
-@media (max-width: 480px) {
   body {
-    font-size: 0.9rem;
-    padding: 10px;
+    margin: 0;
+    font-family: monospace;
+    background: #000;
+    color: #0f0;
+    text-align: center;
+    padding: 20px;
   }
-  h1 {
+  #login { margin-top: 100px; }
+  input[type="password"] {
+    padding: 16px;
     font-size: 1.2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #0ff;
+    background: #111;
+    color: #0f0;
   }
-  .note {
-    font-size: 0.85rem;
+  button {
+    padding: 16px 32px;
+    background: #0ff;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
   }
-}
+  button:hover {
+    background: #0c0;
+    box-shadow: 0 0 15px #0ff;
+  }
+  #protected { display: none; }
 
-    /* === Кнопка в неон-стиле === */
+  /* Эффект ошибки */
+  input.error {
+    border-color: red;
+    animation: shake 0.3s;
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .note { font-size: 1.10rem; color: #e7fff4; margin-bottom: 12px; }
+  .group {
+    width: 100%; max-width: 320px;
+    border: 1px solid #0f0;
+    padding: 16px; border-radius: 6px;
+    margin: 12px auto; text-align: center;
+  }
+  label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+  input[type="date"], input[type="time"] {
+    width: 90%; background: #e7fff4;
+    border: none; border-radius: 4px;
+    outline: none; padding: 8px;
+    font-size: 1rem; margin-bottom: 10px;
+  }
+  .boy { color: #2f6fed; font-weight: bold; }
+  .girl { color: #e83e8c; font-weight: bold; }
+  .unknown { color: #aaa; font-weight: bold; }
+  
+      /* === Кнопка в неон-стиле === */
 .neon-link,
 .neon-theme-btn {
   display: inline-block;
@@ -115,15 +92,16 @@ button:hover, a:hover { background: #255be0; }
   box-sizing: border-box;
   text-align: center;
 }
-
+  
 </style>
 </head>
 <body>
 
 
-<div class="neon-hub">
-  <a href="index.html" class="neon-link">🏠 Главная</a>
-  <a href="blood.html" class="neon-link">💖 Мальчик или девочка</a>
+
+  <div class="neon-hub">
+     <a href="index.html" class="neon-link">🏠 Главная</a>
+  <a href="blood.html" class="neon-link">🧢 М. или 🎀 д.</a>
   <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
   <a href="discounts.html" class="neon-link">💰 Скидки</a>
   <a href="ascii-mode.html" class="neon-link">📟 Гадание на игровых картах</a>
@@ -133,39 +111,73 @@ button:hover, a:hover { background: #255be0; }
   <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
   <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
   <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
+  </div>
+
+
+<!-- Блок входа -->
+<div id="login">
+  <h2 style="font-size:3.50rem;">Введите пароль</h2>
+  <p style="color:#e7fff4; font-size:1.10rem;">
+    🔑 Вы можете не идти на эхо и заплатить много, чтобы узнать пол вашего будущего малыша.<br/>
+    Пожертвуйте 1000 драм тут и узнайте результат с точностью 99,9%.
+  </p>
+  <p style="color:#e7fff4; font-size:1.25rem;">
+    <input type="password" id="pwd" placeholder="Пароль">
+    Что бы узнать пароль свяжитесь по контактам
+  </p>
+  <button onclick="checkPwd()">Войти</button>
+  <button onclick="location.href='index.html'">Назад к контактам</button>
+  <p id="msg"></p>
 </div>
 
+<!-- Калькулятор -->
+<div id="protected">
+  <h1>Калькулятор свежести крови</h1>
+  <p class="note">Мужчина обновляет кровь каждые 4 года, женщина — каждые 3.</p>
 
-<h1>Калькулятор свежести крови</h1>
-<p class="note">Мужчина обновляет кровь каждые 4 года, женщина — каждые 3. Сравниваем последние даты обновления.</p>
+  <div class="group">
+    <strong>Отец</strong>
+    <label>Дата рождения
+      <input type="date" id="fatherDate" />
+    </label>
+    <strong>Мать</strong>
+    <label>Дата рождения
+      <input type="date" id="motherDate" />
+    </label>
+  </div>
 
-<div class="group">
-  <strong>Отец</strong>
-  <label>Дата рождения
-    <input type="date" id="fatherDate" />
-  </label>
-  <strong>Мать</strong>
-  <label>Дата рождения
-    <input type="date" id="motherDate" />
-  </label>
+  <div class="group" id="extraForm" style="display:none;">
+    <strong>Совпадение дат — уточните время рождения</strong>
+    <label>Время рождения отца
+      <input type="time" id="fatherTime" value="00:00" />
+    </label>
+    <label>Время рождения матери
+      <input type="time" id="motherTime" value="00:00" />
+    </label>
+  </div>
+
+  <button id="calcBtn">Рассчитать</button>
+  <div id="summary" class="note">Заполните даты и нажмите «Рассчитать».</div>
 </div>
-
-<div class="group" id="extraForm">
-  <strong>Совпадение дат — уточните время рождения</strong>
-  <label>Время рождения отца
-    <input type="time" id="fatherTime" value="00:00" />
-  </label>
-  <label>Время рождения матери
-    <input type="time" id="motherTime" value="00:00" />
-  </label>
-</div>
-
-<button id="calcBtn">Рассчитать</button>
-
-
-<div id="summary" class="note">Заполните даты и нажмите «Рассчитать».</div>
 
 <script>
+const encodedPwd = "Z3VzaGFrMjY="; 
+
+function checkPwd(){
+  const passField = document.getElementById('pwd');
+  const pass = passField.value.trim();
+  const decoded = atob(encodedPwd);
+  if(pass === decoded){
+    document.getElementById('login').style.display="none";
+    document.getElementById('protected').style.display="block";
+  } else {
+    document.getElementById('msg').textContent="Неверный пароль!";
+    passField.classList.add("error");
+    setTimeout(()=>passField.classList.remove("error"),400);
+  }
+}
+
+// калькулятор
 function safeDate(y,m,d){const dt=new Date(y,m,d);return(m===1&&d===29&&dt.getMonth()!==1)?new Date(y,1,28):dt;}
 function lastRefreshBefore(b,r,c){let y=b.getFullYear(),last=safeDate(y,b.getMonth(),b.getDate());while(true){const ny=y+c,cd=safeDate(ny,b.getMonth(),b.getDate());if(cd<=r){last=cd;y=ny;}else break;}return last;}
 document.getElementById('calcBtn').addEventListener('click',()=>{
@@ -177,7 +189,7 @@ document.getElementById('calcBtn').addEventListener('click',()=>{
   if(fatherLast>motherLast) result="Мальчик";
   else if(motherLast>fatherLast) result="Девочка";
   else {
-    document.getElementById('extraForm').classList.add('show');
+    document.getElementById('extraForm').style.display="block";
     const [fh,fm]=document.getElementById('fatherTime').value.split(':').map(Number);
     const [mh,mm]=document.getElementById('motherTime').value.split(':').map(Number);
     const fMin=fh*60+fm,mMin=mh*60+mm;
@@ -194,6 +206,5 @@ document.getElementById('calcBtn').addEventListener('click',()=>{
   `;
 });
 </script>
-
 </body>
 </html>
