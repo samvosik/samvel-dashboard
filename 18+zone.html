@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
   <title>M3U8 Player (Protected)</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -18,22 +17,25 @@
       margin-top: 100px;
     }
     input[type="password"] {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 6px;
+      padding: 16px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+	  width: 90%;
+	  max-width: 400px;
       border: 1px solid #0ff;
       background: #111;
       color: #0f0;
     }
+	
     button {
-      padding: 10px 20px;
+      padding: 16px 32px;
       background: #0ff;
       color: #000;
       border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      margin: 5px;
+      margin-top: 15px;
     }
     button:hover {
       background: #0c0;
@@ -46,7 +48,9 @@
 	
 	
 	
-	 /* === Основные стили === */
+	
+	
+		 /* === Основные стили === */
     body {
       margin: 0;
       font-family: monospace;
@@ -348,14 +352,13 @@
   }
 }
 	
-	
   </style>
 </head>
 <body>
 
 <div id="login">
-  <h2>Введите пароль</h2>
-  <p style="color:#aaa; font-size:0.9rem; margin-bottom:12px;">
+  <h2 style=" font-size:3.5rem;">Введите пароль</h2>
+  <p style="color:#e7fff4; font-size:2.0rem;">
     🔑 Пароль — уязвим, пользуйтесь на здоровье кто сможет,<br/>
     а кто нет — свяжитесь по контактам 😉
   </p>
@@ -364,16 +367,15 @@
   <p id="msg"></p>
 </div>
 
-
-
 <div id="protected">
   <!-- Весь твой контент страницы (QR, ссылки, видео, кнопки каналов) -->
   <h1 class="donate-title">Если не жалко — скинь в QR, чтобы я мог снова тебя держать в комфорте.</h1>
   <div class="qr-wrapper">
     <img src="qr-code.png" alt="QR Для Подключения">
   </div>
-
-  <div class="neon-hub">
+  
+  
+    <div class="neon-hub">
      <a href="index.html" class="neon-link">🏠 Главная</a>
   <a href="blood.html" class="neon-link">💖 Мальчик или девочка</a>
   <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
@@ -386,27 +388,41 @@
   <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
   <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
   </div>
+  
 
   <video id="video" controls autoplay width="640" height="360"></video>
   <div>
-    <button onc   <button onclick="playStream('https://cdn.redtraffic.net/milf.m3u8')">1</button>
-    <button onclick="playStream('https://cdn.redtraffic.net/anal.m3u8')">2</button>
-    <button onclick="playStream('https://cdn.redtraffic.net/bigtits.m3u8')">3</button>
-    <button onclick="playStream('https://cdn.redtraffic.net/lesbian.m3u8')">4</button>
-    <button onclick="playStream('https://cdn.redtraffic.net/ebony.m3u8')">5</button>
-    <button onclick="playStream('https://cdn.redtraffic.net/asian.m3u8')">6</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/latina.m3u8')">7</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/blowjob.m3u8')">8</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/interracial.m3u8')">9</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/gangbang.m3u8')">10</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/fetish.m3u8')">11</button>
-	<button onclick="playStream('https://cdn.redtraffic.net/teen.m3u8')">12</button>
+    <button onclick="playStream(1)">Канал 1</button>
+    <button onclick="playStream(2)">Канал 2</button>
+    <button onclick="playStream(3)">Канал 3</button>
+	<button onclick="playStream(4)">Канал 4</button>
+	<button onclick="playStream(5)">Канал 5</button>
+	<button onclick="playStream(6)">Канал 6</button>
+	<button onclick="playStream(7)">Канал 7</button>
+	<button onclick="playStream(8)">Канал 8</button>
+	<button onclick="playStream(9)">Канал 9</button>
+	<button onclick="playStream(10)">Канал 10</button>
+	<button onclick="playStream(11)">Канал 11</button>
   </div>
 </div>
 
 <script>
-  
+ 
   const encodedPwd = "cGlwbzEx";
+
+  const streams = {
+    1:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvbWlsZi5tM3U4", // milf.m3u8
+    2:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvYW5hbC5tM3U4", // anal.m3u8
+    3:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvYmlndGl0cy5tM3U4", // bigtits.m3u8
+	4:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvbGVzYmlhbi5tM3U4", // lesbian
+	5:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvZWJvbnkubTN1OA==", // ebony
+	6:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvYXNpYW4ubTN1OA==", // asian
+	7:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvbGF0aW5hLm0zdTg=", // latina
+	8:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvYmxvd2pvYi5tM3U4", // blowjob
+	9:  "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvaW50ZXJyYWNpYWwubTN1OA==", // interracial
+	10: "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvZ2FuZ2JhbmcubTN1OA==", // gangbang
+	11: "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvZmV0aXNoLm0zdTg=" // fetish
+  };
 
   function checkPwd(){
     const pass = document.getElementById('pwd').value;
@@ -419,15 +435,14 @@
     }
   }
 
-  var video = document.getElementById('video');
-  var hls;
-  function playStream(url) {
+  function playStream(id) {
+    const url = atob(streams[id]); 
+    const video = document.getElementById('video');
     if (Hls.isSupported()) {
-      if (hls) { hls.destroy(); }
-      hls = new Hls();
+      const hls = new Hls();
       hls.loadSource(url);
       hls.attachMedia(video);
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    } else {
       video.src = url;
     }
   }
