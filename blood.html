@@ -93,7 +93,52 @@
   box-sizing: border-box;
   text-align: center;
 }
-  
+  .video-help {
+  max-width: 400px;
+  margin: 20px auto;
+  color: #0ff;
+  font-family: monospace;
+  text-align: center;
+}
+
+
+
+/* Анимация свечения */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+    color: #0ff;
+  }
+  100% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+}
+
+/* Применение к кнопке */
+button {
+  padding: 16px 32px;
+  background: #000;
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  animation: neonPulse 2s infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+
+
 </style>
 </head>
 <body>
@@ -115,6 +160,12 @@
   </div>
 
 
+
+<a href="https://youtu.be/UhtZzr5816Y" target="_blank">
+  <button style="padding:10px 20px; font-size:16px;">▶ Смотреть на YouTube Как пользоваться калькулятором</button>
+</a>
+
+
 <!-- Блок входа -->
 <div id="login">
   <h2 style="font-size:3.50rem;">Введите пароль</h2>
@@ -122,9 +173,9 @@
     🔑 Вы можете не идти на эхо и заплатить много, чтобы узнать пол вашего будущего малыша.<br/>
     Пожертвуйте 1000 драм тут и узнайте результат с точностью 99,9%.
   </p>
-  <p style="color:#e7fff4; font-size:1.25rem;">
+  <p style="color:#FF0000; font-size:1.25rem;">
     <input type="password" id="pwd" placeholder="Пароль">
-    Что бы узнать пароль свяжитесь по контактам
+    📡 Что бы узнать пароль свяжитесь по контактам 📡
   </p>
   <button onclick="checkPwd()">Войти</button>
   <button onclick="location.href='index.html'">Назад к контактам</button>
@@ -173,6 +224,7 @@ function checkPwd(){
     document.getElementById('protected').style.display="block";
   } else {
     document.getElementById('msg').textContent="Неверный пароль!";
+	document.getElementById('msg').style.color = "red";
     passField.classList.add("error");
     setTimeout(()=>passField.classList.remove("error"),400);
   }
