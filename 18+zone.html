@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<link rel="icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
   <title>M3U8 Player (Protected)</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -352,6 +353,72 @@
   }
 }
 	
+	
+	/* Анимация свечения */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+    color: #0ff;
+  }
+  100% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+}
+
+/* Применение к кнопке */
+button {
+  padding: 16px 32px;
+  background: #000;
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  animation: neonPulse 2s infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+  /* Эффект ошибки */
+  input.error {
+    border-color: red;
+    animation: shake 0.3s;
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .note { font-size: 1.10rem; color: #e7fff4; margin-bottom: 12px; }
+  .group {
+    width: 100%; max-width: 320px;
+    border: 1px solid #0f0;
+    padding: 16px; border-radius: 6px;
+    margin: 12px auto; text-align: center;
+  }
+  label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+  input[type="date"], input[type="time"] {
+    width: 90%; background: #e7fff4;
+    border: none; border-radius: 4px;
+    outline: none; padding: 8px;
+    font-size: 1rem; margin-bottom: 10px;
+  }
+  .boy { color: #2f6fed; font-weight: bold; }
+  .girl { color: #e83e8c; font-weight: bold; }
+  .unknown { color: #aaa; font-weight: bold; }
+	
   </style>
 </head>
 <body>
@@ -360,7 +427,7 @@
   <h2 style=" font-size:3.5rem;">Введите пароль</h2>
   <p style="color:#e7fff4; font-size:2.0rem;">
     🔑 Пароль — уязвим, пользуйтесь на здоровье кто сможет,<br/>
-    а кто нет — свяжитесь по контактам 😉
+    а кто нет — 📡 свяжитесь по контактам 📡 😉
   </p>
   <input type="password" id="pwd" placeholder="Пароль">
   <button onclick="checkPwd()">Войти</button>
@@ -425,16 +492,20 @@
 	11: "aHR0cHM6Ly9jZG4ucmVkdHJhZmZpYy5uZXQvZmV0aXNoLm0zdTg=" // fetish
   };
 
-  function checkPwd(){
-    const pass = document.getElementById('pwd').value;
-    const decoded = atob(encodedPwd);
-    if(pass === decoded){
-      document.getElementById('login').style.display="none";
-      document.getElementById('protected').style.display="block";
-    } else {
-      document.getElementById('msg').textContent="Неверный пароль!";
-    }
+ function checkPwd(){
+  const passField = document.getElementById('pwd');
+  const pass = passField.value.trim();
+  const decoded = atob(encodedPwd);
+  if(pass === decoded){
+    document.getElementById('login').style.display="none";
+    document.getElementById('protected').style.display="block";
+  } else {
+    document.getElementById('msg').textContent="Неверный пароль!";
+	document.getElementById('msg').style.color = "red";
+    passField.classList.add("error");
+    setTimeout(()=>passField.classList.remove("error"),400);
   }
+}
 
   function playStream(id) {
     const url = atob(streams[id]); 
