@@ -137,6 +137,10 @@ button:hover {
   transform: scale(1.05);
 }
 
+.moment {
+  color: #0f0;       /* ярко-зелёный */
+  font-weight: bold; /* выделение */
+}
 
 
 </style>
@@ -144,8 +148,7 @@ button:hover {
 <body>
 
 
-
-  <div class="neon-hub">
+ <div class="neon-hub">
      <a href="index.html" class="neon-link">🏠 Главная</a>
   <a href="blood.html" class="neon-link">🧢 М. или 🎀 д.</a>
   <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
@@ -158,6 +161,7 @@ button:hover {
   <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
   <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
   </div>
+ 
 
 
 
@@ -184,8 +188,8 @@ button:hover {
 
 <!-- Калькулятор -->
 <div id="protected">
-  <h1>Калькулятор свежести крови</h1>
-  <p class="note">Мужчина обновляет кровь каждые 4 года, женщина — каждые 3.</p>
+  <h1>🧢 Ключ судьбы 🎀</h1>
+  <p class="note">У кого из родителей дата оказывается в переди родится соответствующий пол.</p>
 
   <div class="group">
     <strong>Отец</strong>
@@ -250,13 +254,14 @@ document.getElementById('calcBtn').addEventListener('click',()=>{
     else if(mMin>fMin) result="Девочка";
     else result="Неопределённо";
   }
-  document.getElementById('summary').innerHTML=`
-    Результат: <span class="${result==="Мальчик"?"boy":result==="Девочка"?"girl":"unknown"}">${result}</span><br/>
-    Последнее обновление отца: ${fatherLast.toLocaleDateString()}<br/>
-    Последнее обновление матери: ${motherLast.toLocaleDateString()}<br/>
-    Момент расчёта: ${today.toLocaleDateString()}<br/>
-    <em>По последнему обновлению крови родителя: если свежее у отца — мальчик, если у матери — девочка.</em>
-  `;
+ document.getElementById('summary').innerHTML=`
+  Результат: <span class="${result==="Мальчик"?"boy":result==="Девочка"?"girl":"unknown"}">${result}</span><br/>
+  Победа будет у отеца в этот день: ${fatherLast.toLocaleDateString()}<br/>
+  Победа будет у матери в этот день: ${motherLast.toLocaleDateString()}<br/>
+  <span class="moment">Момент расчёта (Сегодня - сейчас): ${today.toLocaleDateString()}</span><br/>
+  <em>В момент беременности победивший цикл определяет пол ребёнка: если впереди у отца — 🧢мальчик🧢, если у матери — 🎀девочка🎀.</em>
+`;
+
 });
 </script>
 </body>
