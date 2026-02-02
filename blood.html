@@ -240,26 +240,25 @@ button:hover {
 
 
 <!-- Блок входа -->
+
 <div id="login">
   <h2 style="font-size:2.20rem;">Введите пароль</h2>
- 
-
-  
   <p style="color:#FF0000; font-size:1.25rem; font-weight:bold;">
-  ⚠️ Важно! Пароль действует 15 дней.
-</p>
-  
- <p>
+    ⚠️ Важно! Пароль действует 15 дней.
+  </p>
+  <p id="expireInfo" style="color:#0ff; font-size:1.1rem;"></p>
   <input type="password" id="pwd" placeholder="Пароль ">
-<p style="font-size:1.5rem;">
-  📡 Что бы узнать пароль свяжитесь по контактам 📡
-</p>
-
-
+  <p style="font-size:1.5rem;">
+    📡 Чтобы узнать пароль свяжитесь по контактам 📡
+  </p>
   <button onclick="checkPwd()">Войти</button>
   <button onclick="location.href='index.html'">Назад к контактам</button>
   <p id="msg"></p>
 </div>
+
+
+
+
 
 <!-- Калькулятор -->
 <div id="protected">
@@ -297,44 +296,87 @@ button:hover {
 
 <script>
 const encodedPwd = "bWVraWMyMTEwNzQ"; 
-const startDate = new Date("2026-02-01"); 
 const validDays = 15;
+let countdownInterval;
+
+function updateExpireInfo(){
+  let startDate = localStorage.getItem("startDate");
+  const expireInfo = document.getElementById('expireInfo');
+
+  if(startDate){
+    startDate = new Date(startDate);
+    const expireDate = new Date(startDate);
+    expireDate.setDate(expireDate.getDate() + validDays);
+
+    function updateCountdown(){
+      const now = new Date();
+      const diff = expireDate - now;
+
+      if(diff <= 0){
+        expireInfo.textContent = "⛔ Срок действия пароля истёк!";
+        expireInfo.style.color = "red";
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+
+      expireInfo.textContent = 
+        "Пароль активен до " + expireDate.toLocaleDateString() +
+        " ⏳ Осталось: " + days + " дн. " + hours + " ч. " + minutes + " мин.";
+
+      // подсветка красным если осталось <3 дней
+      if(days < 3){
+        expireInfo.style.color = "red";
+        expireInfo.style.fontWeight = "bold";
+      } else {
+        expireInfo.style.color = "#0ff";
+        expireInfo.style.fontWeight = "normal";
+      }
+    }
+
+    updateCountdown();
+    countdownInterval = setInterval(updateCountdown, 60000); // обновляем каждую минуту
+  } else {
+    expireInfo.textContent = 
+      "Пароль ещё не активирован (начнёт действовать при первом входе)";
+    expireInfo.style.color = "#0ff";
+  }
+}
 
 function checkPwd(){
   const passField = document.getElementById('pwd');
   const pass = passField.value.trim();
   const decoded = atob(encodedPwd);
 
-  const today = new Date();
-  const expireDate = new Date(startDate);
-  expireDate.setDate(expireDate.getDate() + validDays);
+  if(pass !== decoded){
+    document.getElementById('msg').textContent = "Неверный пароль!";
+    document.getElementById('msg').style.color = "red"; 
+    document.getElementById('msg').style.fontSize = "1.5rem";
+    passField.classList.add("error");
+    setTimeout(()=>passField.classList.remove("error"),300);
+    return;
+  }
 
-if(pass !== decoded){
-  document.getElementById('msg').textContent = "Неверный пароль!";
-  document.getElementById('msg').style.color = "red"; 
-  document.getElementById('msg').style.fontSize = "1.5rem";
-  passField.classList.add("error"); // добавляем анимацию
-  setTimeout(()=>passField.classList.remove("error"),300); // убираем через 0.3с
-  return;
-}
-
-if(today > expireDate){
-  document.getElementById('msg').textContent = "Срок действия пароля истёк!";
-  document.getElementById('msg').style.color = "red";
-  document.getElementById('msg').style.fontSize = "1.5rem";
-  passField.classList.add("error"); // тоже шатаем поле
-  setTimeout(()=>passField.classList.remove("error"),300);
-  return;
-}
-
-
+  let startDate = localStorage.getItem("startDate");
+  if(!startDate){
+    startDate = new Date();
+    localStorage.setItem("startDate", startDate);
+  }
 
   document.getElementById('login').style.display="none";
   document.getElementById('protected').style.display="block";
+  updateExpireInfo();
 }
 
-
+window.onload = updateExpireInfo;
 </script>
+
+
+
+
 
 
 
