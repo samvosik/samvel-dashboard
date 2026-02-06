@@ -200,6 +200,39 @@ button:hover {
 
 
 
+
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  table tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  table td {
+    text-align: left;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  table td::before {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  table td:nth-child(1)::before { content: "Год"; }
+  table td:nth-child(2)::before { content: "Победа у отца"; }
+  table td:nth-child(3)::before { content: "Победа у матери"; }
+  table td:nth-child(4)::before { content: "Кто впереди"; }
+}
+
+
 </style>
 </head>
 <body>
@@ -222,7 +255,7 @@ button:hover {
 
 
 
-<a href="https://youtu.be/sGa25fLU5yk" target="_blank">
+<a href="https://youtu.be/ORhld0iZn4c" target="_blank">
   <button style="padding:10px 20px; font-size:16px;">▶ Смотреть на YouTube Как пользоваться калькулятором</button>
 </a>
 
@@ -233,11 +266,36 @@ button:hover {
 </p>
 
 <p style="color:#e7fff4; font-size:1.10rem;">
-    🔑 Вы можете не идти на эхо и заплатить много, чтобы узнать пол вашего будущего малыша.<br/>
+    ⚠️ Вы можете не идти на эхо и заплатить много, чтобы узнать пол вашего будущего малыша.<br/>
     Пожертвуйте 1000 драм тут и узнайте результат с точностью 90,9%.<br/>
     ⚠️ Даже эхо иногда ошибается — наш метод тоже символический, но даёт интересный прогноз.
 </p>
 
+<p style="font-size:1.1rem;">
+    🔑 Хотите пароль бесплатно? Вот задание! <br/><br/>
+    ⚠️ Сделайте покупки со страницы: <br/><br/>
+    <a href="amazon.html" class="btn">🛍️ Amazon Витрина</a>
+    <a href="temu.html" class="btn">🛒 Temu Витрина</a>
+    <a href="AliExpress.html" class="btn">🧧 AliExpress Витрина</a> <br/><br/>
+    👉 Или зарегистрируйтесь через одну из ссылок на <a href="index.html" class="btn">🏠 Главной странице.</a> <br/><br/>
+    После пришлите по контактам скриншот покупки или регистрации. 
+    Администратор проверит и пришлет пароль.
+</p>
+
+<style>
+.btn {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background-color: #0f0;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.btn:hover {
+  background-color: #00ffff;
+}
+</style>
 
 <!-- Блок входа -->
 
@@ -252,7 +310,7 @@ button:hover {
     📡 Чтобы узнать пароль свяжитесь по контактам 📡
   </p>
   <button onclick="checkPwd()">Войти</button>
-  <button onclick="location.href='index.html'">Назад к контактам</button>
+  <button onclick="location.href='index.html#contact-footer'">Назад к контактам</button>
   <p id="msg"></p>
 </div>
 
@@ -262,7 +320,7 @@ button:hover {
 
 <!-- Калькулятор -->
 <div id="protected">
-  <h1>🧢 Ключ судьбы 🎀</h1>
+  <h1>🏆🧢 Ключ судьбы 🎀🏆</h1>
   <p class="note">
   У кого из родителей дата оказывается впереди — родится соответствующий пол.<br/>
   📅 Проверка возможна до 2040 года.
@@ -379,12 +437,21 @@ window.onload = updateExpireInfo;
 
 
 
-
-
 <script>
 // калькулятор
-function safeDate(y,m,d){const dt=new Date(y,m,d);return(m===1&&d===29&&dt.getMonth()!==1)?new Date(y,1,28):dt;}
-function lastRefreshBefore(b,r,c){let y=b.getFullYear(),last=safeDate(y,b.getMonth(),b.getDate());while(true){const ny=y+c,cd=safeDate(ny,b.getMonth(),b.getDate());if(cd<=r){last=cd;y=ny;}else break;}return last;}
+function safeDate(y,m,d){
+  const dt=new Date(y,m,d);
+  return (m===1&&d===29&&dt.getMonth()!==1)?new Date(y,1,28):dt;
+}
+
+function lastRefreshBefore(b,r,c){
+  let y=b.getFullYear(),last=safeDate(y,b.getMonth(),b.getDate());
+  while(true){
+    const ny=y+c, cd=safeDate(ny,b.getMonth(),b.getDate());
+    if(cd<=r){last=cd;y=ny;} else break;
+  }
+  return last;
+}
 
 // генерация всех побед до указанного года
 function allRefreshes(base, until, cycle){
@@ -393,35 +460,63 @@ function allRefreshes(base, until, cycle){
   while(true){
     const ny = y + cycle;
     const cd = safeDate(ny, base.getMonth(), base.getDate());
-    if(cd <= until){
-      dates.push(cd);
-      y = ny;
-    } else break;
+    if(cd <= until){dates.push(cd); y = ny;} else break;
   }
   return dates;
 }
 
-function buildTable(fatherDates, motherDates){
+// таблица
+function buildTable(fatherDates, motherDates, isTie=false){
+  if(isTie){
+    return `<table>
+      <tr><th>Год</th><th>Победа у отца</th><th>Победа у матери</th><th>Кто впереди</th></tr>
+      <tr><td colspan="4" class="none">❓ Совпадение — уточните часами</td></tr>
+    </table>`;
+  }
+
   const years = new Set([
     ...fatherDates.map(d=>d.getFullYear()),
     ...motherDates.map(d=>d.getFullYear())
   ]);
   const sortedYears = [...years].sort((a,b)=>a-b);
 
-  let html = "<table><tr><th>Год</th><th>Победа у отца</th><th>Победа у матери</th></tr>";
+  let html = "<table><tr><th>Год</th><th>Победа у отца</th><th>Победа у матери</th><th>Кто впереди</th></tr>";
   sortedYears.forEach(y=>{
     const f = fatherDates.find(d=>d.getFullYear()===y);
     const m = motherDates.find(d=>d.getFullYear()===y);
+
+    let winner = "–";
+    let winnerClass = "none";
+
+    if(f && !m){
+      winner = "🧢 Отец";
+      winnerClass = "father";
+    } else if(m && !f){
+      winner = "🎀 Мать";
+      winnerClass = "mother";
+    } else if(f && m){
+      if(f > m){
+        winner = "🧢 Отец";
+        winnerClass = "father";
+      } else if(m > f){
+        winner = "🎀 Мать";
+        winnerClass = "mother";
+      } else {
+        winner = "❓ Совпадение — уточните часами";
+        winnerClass = "none";
+      }
+    }
+
     html += `<tr>
       <td>${y}</td>
       <td class="${f?'father':'none'}">${f?f.toLocaleDateString()+" 🏆🧢":"–"}</td>
       <td class="${m?'mother':'none'}">${m?m.toLocaleDateString()+" 🏆🎀":"–"}</td>
+      <td class="${winnerClass}">${winner}</td>
     </tr>`;
   });
   html += "</table>";
   return html;
 }
-
 
 document.getElementById('calcBtn').addEventListener('click',()=>{
   const fdStr=document.getElementById('fatherDate').value,
@@ -430,51 +525,54 @@ document.getElementById('calcBtn').addEventListener('click',()=>{
     document.getElementById('summary').textContent='Укажите даты рождения обоих родителей.';
     return;
   }
+
   const fd=new Date(fdStr), md=new Date(mdStr), today=new Date();
+
   const fatherLast=lastRefreshBefore(fd,today,4),
         motherLast=lastRefreshBefore(md,today,3);
 
-  // список всех побед до 2040
   const fatherAll=allRefreshes(fd,new Date(2040,0,1),4);
   const motherAll=allRefreshes(md,new Date(2040,0,1),3);
 
-  let result;
-  if(fatherLast>motherLast) result="Мальчик";
-  else if(motherLast>fatherLast) result="Девочка";
-  else {
-  // показываем форму для ввода времени
-  document.getElementById('extraForm').style.display="block";
+  let result="❓ Совпадение — уточните часами";
+  let isTie=false;
+  let showFullTable=true;
 
-  const fatherTime = document.getElementById('fatherTime').value;
-  const motherTime = document.getElementById('motherTime').value;
+  if(fd.getTime() === md.getTime() || fatherLast.getTime() === motherLast.getTime()){
+    isTie=true;
+    showFullTable=false;
+    document.getElementById('extraForm').style.display="block";
 
-  if(fatherTime && motherTime){
-    const [fh,fm]=fatherTime.split(':').map(Number);
-    const [mh,mm]=motherTime.split(':').map(Number);
-    const fMin=fh*60+fm, mMin=mh*60+mm;
+    const fatherTime = document.getElementById('fatherTime').value;
+    const motherTime = document.getElementById('motherTime').value;
 
-    if(fMin>mMin) result="Мальчик";
-    else if(mMin>fMin) result="Девочка";
-    else result="Неопределённо";
+    if(fatherTime && motherTime){
+      const [fh,fm]=fatherTime.split(':').map(Number);
+      const [mh,mm]=motherTime.split(':').map(Number);
+      const fMin=fh*60+fm, mMin=mh*60+mm;
+
+      if(fMin>mMin) result="🏆🧢Мальчик🧢🏆";
+      else if(mMin>fMin) result="🏆🎀Девочка🎀🏆";
+      else result="❓ Совпадение — уточните часами";
+
+      showFullTable=true; // если время введено → показываем полную таблицу
+    }
   } else {
-    // если время не введено — пока неопределённо
-    result="Неопределённо";
+    if(fatherLast > motherLast) result="🏆🧢Мальчик🧢🏆";
+    else result="🏆🎀Девочка🎀🏆";
   }
-}
 
-
-document.getElementById('summary').innerHTML=`
-  Результат: <div class="result-box ${result==="Мальчик"?"boy":result==="Девочка"?"girl":"unknown"}">${result}</div><br/>
-  <strong>🧢Все победы отца🧢:</strong> ${fatherAll.map(d=>d.toLocaleDateString()+" 🏆🧢").join(", ")}<br/>
-  <strong>🎀Все победы матери🎀:</strong> ${motherAll.map(d=>d.toLocaleDateString()+" 🏆🎀").join(", ")}<br/>
-  ${buildTable(fatherAll,motherAll)}<br/>
-  <span class="moment">Момент расчёта (Сегодня - сейчас): ${today.toLocaleDateString()}</span><br/>
-  <em>В момент беременности победивший цикл определяет пол ребёнка: если впереди у отца — 🧢мальчик🧢, если у матери — 🎀девочка🎀.</em>
-`;
-
-
+  // вывод
+  document.getElementById('summary').innerHTML=`
+    Результат: <div class="result-box ${result.includes("Мальчик")?"boy":result.includes("Девочка")?"girl":"unknown"}">${result}</div><br/>
+    ${showFullTable ? buildTable(fatherAll,motherAll) : buildTable(fatherAll,motherAll,true)}<br/>
+    <span class="moment">Момент расчёта (Сегодня - сейчас): ${today.toLocaleDateString()}</span><br/>
+    <em>В момент беременности победивший цикл определяет пол ребёнка: если впереди у отца — 🧢мальчик🧢, если у матери — 🎀девочка🎀.</em>
+  `;
 });
 </script>
+
+
 
 
 
