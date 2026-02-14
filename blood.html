@@ -72,35 +72,57 @@
   .girl { color: #e83e8c; font-weight: bold; }
   .unknown { color: #aaa; font-weight: bold; }
   
-      /* === Кнопка в неон-стиле === */
-.neon-link,
+    
+	/* ваша кнопка */
 .neon-theme-btn {
-  display: inline-block;
-  font-family: monospace;
-  font-size: 16px;
-  padding: 8px 12px;
-  max-width: 180px;
-  color: #00ffff;
-  background: black;
-  border: 2px solid #00ffff;
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
-  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
 }
-  .video-help {
-  max-width: 400px;
-  margin: 20px auto;
-  color: #0ff;
+.neon-theme-btn {
+  font-size: 35px; /* вместо 24px, подбирай своё значение */
+}
+.terminal-log {
   font-family: monospace;
-  text-align: center;
+  background: #000;
+  color: #0f0;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #0f0;
+  margin-top: 10px;
+}  
+.neon-hub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
 }
 
+.neon-link {
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  background: black;
+  font-family: monospace;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  transition: all 0.3s ease;
+}
+
+.neon-link:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+  transform: scale(1.05);
+}
+ {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
 
 
 /* Анимация свечения */
