@@ -324,6 +324,9 @@ button:hover {
 <!-- Блок входа -->
 
 
+<div id="login">
+  <h2 style="font-size:2.20rem;">Введите пароль</h2>
+  
   <p id="expireInfo" style="color:#0ff; font-size:1.1rem;"></p>
   <input type="password" id="pwd" placeholder="Пароль ">
   <p style="font-size:1.5rem;">
@@ -333,7 +336,6 @@ button:hover {
   <button onclick="location.href='ref#contact-footer'">Назад к контактам</button>
   <p id="msg"></p>
 </div>
-
 
 
 
@@ -379,7 +381,7 @@ button:hover {
 
 
 <script>
-const encodedPwd = "bWVraWMyMTEwNzQ"; 
+const encodedPwd = "bWVraWMyMTEwNzQ"; // пароль = mekic211074
 
 function checkPwd(){
   const passField = document.getElementById('pwd');
@@ -389,7 +391,6 @@ function checkPwd(){
   if(pass !== decoded){
     document.getElementById('msg').textContent = "Неверный пароль!";
     document.getElementById('msg').style.color = "red"; 
-    document.getElementById('msg').style.fontSize = "1.5rem";
     passField.classList.add("error");
     setTimeout(()=>passField.classList.remove("error"),300);
     return;
@@ -399,10 +400,6 @@ function checkPwd(){
   document.getElementById('protected').style.display="block";
 }
 </script>
-
-
-
-
 
 
 
