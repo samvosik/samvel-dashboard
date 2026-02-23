@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="icon" href="/static/favicon.png" type="image/png">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Свежесть крови — калькулятор</title>
+<style>
+  body {
+    margin: 0;
+    font-family: monospace;
+    background: #000;
+    color: #0f0;
+    text-align: center;
+    padding: 20px;
+  }
+  #login { margin-top: 100px; }
+  input[type="password"] {
+    padding: 16px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #0ff;
+    background: #111;
+    color: #0f0;
+  }
+  button {
+    padding: 16px 32px;
+    background: #0ff;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  button:hover {
+    background: #0c0;
+    box-shadow: 0 0 15px #0ff;
+  }
+  #protected { display: none; }
+
+  /* Эффект ошибки */
+  input.error {
+    border-color: red;
+    animation: shake 0.3s;
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .note { font-size: 1.10rem; color: #e7fff4; margin-bottom: 12px; }
+  .group {
+    width: 100%; max-width: 320px;
+    border: 1px solid #0f0;
+    padding: 16px; border-radius: 6px;
+    margin: 12px auto; text-align: center;
+  }
+  label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+  input[type="date"], input[type="time"] {
+    width: 90%; background: #e7fff4;
+    border: none; border-radius: 4px;
+    outline: none; padding: 8px;
+    font-size: 1rem; margin-bottom: 10px;
+  }
+  .boy { color: #2f6fed; font-weight: bold; }
+  .girl { color: #e83e8c; font-weight: bold; }
+  .unknown { color: #aaa; font-weight: bold; }
+  
+	/* ваша кнопка */
+.neon-theme-btn {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px;
+}
+.neon-theme-btn {
+  font-size: 35px; /* вместо 24px, подбирай своё значение */
+}
+.terminal-log {
+  font-family: monospace;
+  background: #000;
+  color: #0f0;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #0f0;
+  margin-top: 10px;
+}  
+.neon-hub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.neon-link {
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  background: black;
+  font-family: monospace;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+  transition: all 0.3s ease;
+}
+.neon-link {
+  display: inline-block;     /* или flex */
+  min-width: 140px;          /* одинаковая минимальная ширина */
+  text-align: center;        /* выравнивание текста и эмодзи */
+  font-size: 1rem;           /* одинаковый размер шрифта */
+  padding: 12px 16px;        /* одинаковые отступы */
+}
+@media (max-width: 600px) {
+  .neon-link {
+    flex: 1 1 45%;           /* каждая кнопка занимает ~половину строки */
+    min-width: unset;        /* убираем фикс ширину */
+  }
+}
+
+
+.neon-link:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+  transform: scale(1.05);
+}
+ {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+
+
+/* Анимация свечения */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff inset;
+    color: #0ff;
+  }
+  100% {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+    color: #00ffff;
+  }
+}
+
+/* Применение к кнопке */
+button {
+  padding: 16px 32px;
+  background: #000;
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  animation: neonPulse 2s infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.moment {
+  color: #0f0;       /* ярко-зелёный */
+  font-weight: bold; /* выделение */
+}
+
+
+
+  table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #999;
+    padding: 6px 10px;
+    text-align: center;
+  }
+  th {
+    background: #444;
+    color: #fff;
+  }
+  td.father {
+    background: #cce5ff; /* голубой */
+    color: #003366;
+    font-weight: bold;
+  }
+  td.mother {
+    background: #ffe5ec; /* розовый */
+    color: #660033;
+    font-weight: bold;
+  }
+  td.none {
+    background: #f0f0f0; /* серый */
+    color: #666;
+  }
+
+
+  .result-box {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: 3px solid #ff66b2; /* розовая рамка */
+    border-radius: 10px;
+    background: #fff0f6;       /* нежный фон */
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #660033;
+  }
+  .boy { border-color:#3399ff; background:#e6f3ff; color:#003366; }
+  .girl { border-color:#ff66b2; background:#fff0f6; color:#660033; }
+  .unknown { border-color:#999; background:#f9f9f9; color:#333; }
+
+@keyframes pulseBorder {
+  0% { box-shadow: 0 0 5px #ff66b2; }
+  50% { box-shadow: 0 0 15px #ff66b2; }
+  100% { box-shadow: 0 0 5px #ff66b2; }
+}
+.result-box {
+  animation: pulseBorder 2s infinite;
+}
+
+
+
+
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  table tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  table td {
+    text-align: left;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  table td::before {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  table td:nth-child(1)::before { content: "Год"; }
+  table td:nth-child(2)::before { content: "Победа у отца"; }
+  table td:nth-child(3)::before { content: "Победа у матери"; }
+  table td:nth-child(4)::before { content: "Кто впереди"; }
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+<div class="neon-hub">
+  <a href="index.html" class="neon-link">🏠 Главная</a>
+  <a href="index_blood.html" class="neon-link">🏆🧢 М. или 🎀🏆 д.</a>
+  <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
+  <a href="discounts.html" class="neon-link">💰 Скидки</a>
+  <a href="ascii-mode.html" class="neon-link">📟 Гадание на игровых картах</a>
+  <a href="Games.html" class="neon-link">🎮 Games (Разработка)</a>
+  <a href="Exchange.html" class="neon-link">🌐 Exchange (Разработка)</a>
+  <a href="amazon.html" class="neon-link">🛍️ Amazon Витрина</a>
+  <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
+  <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
+  <a href="beu.html" class="neon-link">✨ BEU</a>
+  <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
+  <a href="https://yandex.ru/games/category/for_two_persons" target="_blank" class="neon-link">🎮 Игры для двоих</a>
+</div>
+
+
+
+<a href="https://youtu.be/akEoW-3QIA0" target="_blank">
+  <button style="padding:10px 20px; font-size:16px;">▶ Смотреть на YouTube Как пользоваться калькулятором</button>
+</a>
+
+<p style="color:#ff0; font-size:1.05rem;">
+⚠️ Внимание: метод основан на циклах дат и даёт результат с высокой точностью, 
+но возможны редкие ошибки (примерно 3 случая из 30–50). 
+Используйте как символический ключ судьбы, а не как медицинскую гарантию.
+</p>
+
+<p style="color:#e7fff4; font-size:1.10rem;">
+    ⚠️ Вы можете не идти на эхо и заплатить много, чтобы узнать пол вашего будущего малыша.<br/>
+    Пожертвуйте 1000 драм тут и узнайте результат с точностью 90,9%.<br/>
+    ⚠️ Даже эхо иногда ошибается — наш метод тоже символический, но даёт интересный прогноз.
+</p>
+
+<p style="font-size:1.1rem;">
+    🔑 Хотите пароль бесплатно? Вот задание! <br/><br/>
+    ⚠️ Сделайте покупки со страницы: <br/><br/>
+    <a href="amazon.html" class="btn">🛍️ Amazon Витрина</a>
+    <a href="temu.html" class="btn">🛒 Temu Витрина</a>
+    <a href="beu.html" class="btn">✨ BEU</a>
+    <a href="AliExpress.html" class="btn">🧧 AliExpress Витрина</a> <br/><br/>
+    👉 Или зарегистрируйтесь через одну из ссылок на 
+    <a href="index.html" class="btn">🏠 Главной странице.</a> <br/><br/>
+    После пришлите по контактам скриншот покупки или регистрации. 
+    Администратор проверит и пришлет пароль.
+</p>
+
+
+<style>
+.btn {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background-color: #0f0;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.btn:hover {
+  background-color: #00ffff;
+}
+</style>
+
+<!-- Блок входа -->
+
+
+  <p id="expireInfo" style="color:#0ff; font-size:1.1rem;"></p>
+  <input type="password" id="pwd" placeholder="Пароль ">
+  <p style="font-size:1.5rem;">
+    📡 Чтобы узнать пароль свяжитесь по контактам 📡
+  </p>
+  <button onclick="checkPwd()">Войти</button>
+  <button onclick="location.href='index.html#contact-footer'">Назад к контактам</button>
+  <p id="msg"></p>
+</div>
+
+
+
+
+
+<!-- Калькулятор -->
+<div id="protected">
+  <h1>🏆🧢 Ключ судьбы 🎀🏆</h1>
+  <p class="note">
+  У кого из родителей дата оказывается впереди — родится соответствующий пол.<br/>
+  📅 Проверка возможна до 2040 года.
+</p>
+
+
+  <div class="group">
+    <strong>Отец</strong>
+    <label>Дата рождения
+      <input type="date" id="fatherDate" />
+    </label>
+    <strong>Мать</strong>
+    <label>Дата рождения
+      <input type="date" id="motherDate" />
+    </label>
+  </div>
+
+  <div class="group" id="extraForm" style="display:none;">
+    <strong>Совпадение дат — уточните время рождения</strong>
+    <label>Время рождения отца
+      <input type="time" id="fatherTime" value="00:00" />
+    </label>
+    <label>Время рождения матери
+      <input type="time" id="motherTime" value="00:00" />
+    </label>
+  </div>
+
+  <button id="calcBtn">Рассчитать</button>
+  <div id="summary" class="note">Заполните даты и нажмите «Рассчитать».</div>
+</div>
+
+
+<footer>
+  <p>@samvosik kontent</p>
+</footer>
+
+
+<script>
+const encodedPwd = "bWVraWMyMTEwNzQ"; 
+
+function checkPwd(){
+  const passField = document.getElementById('pwd');
+  const pass = passField.value.trim();
+  const decoded = atob(encodedPwd);
+
+  if(pass !== decoded){
+    document.getElementById('msg').textContent = "Неверный пароль!";
+    document.getElementById('msg').style.color = "red"; 
+    document.getElementById('msg').style.fontSize = "1.5rem";
+    passField.classList.add("error");
+    setTimeout(()=>passField.classList.remove("error"),300);
+    return;
+  }
+
+  document.getElementById('login').style.display="none";
+  document.getElementById('protected').style.display="block";
+}
+</script>
+
+
+
+
+
+
+
+<script>
+// калькулятор
+function safeDate(y,m,d){
+  const dt=new Date(y,m,d);
+  return (m===1&&d===29&&dt.getMonth()!==1)?new Date(y,1,28):dt;
+}
+
+function lastRefreshBefore(b,r,c){
+  let y=b.getFullYear(),last=safeDate(y,b.getMonth(),b.getDate());
+  while(true){
+    const ny=y+c, cd=safeDate(ny,b.getMonth(),b.getDate());
+    if(cd<=r){last=cd;y=ny;} else break;
+  }
+  return last;
+}
+
+// генерация всех побед до указанного года
+function allRefreshes(base, until, cycle){
+  let dates = [];
+  let y = base.getFullYear();
+  while(true){
+    const ny = y + cycle;
+    const cd = safeDate(ny, base.getMonth(), base.getDate());
+    if(cd <= until){dates.push(cd); y = ny;} else break;
+  }
+  return dates;
+}
+
+// таблица
+function buildTable(fatherDates, motherDates, isTie=false){
+  if(isTie){
+    return `<table>
+      <tr><th>Год</th><th>Победа у отца</th><th>Победа у матери</th><th>Кто впереди</th></tr>
+      <tr><td colspan="4" class="none">❓ Совпадение — уточните часами</td></tr>
+    </table>`;
+  }
+
+  const years = new Set([
+    ...fatherDates.map(d=>d.getFullYear()),
+    ...motherDates.map(d=>d.getFullYear())
+  ]);
+  const sortedYears = [...years].sort((a,b)=>a-b);
+
+  let html = "<table><tr><th>Год</th><th>Победа у отца</th><th>Победа у матери</th><th>Кто впереди</th></tr>";
+  sortedYears.forEach(y=>{
+    const f = fatherDates.find(d=>d.getFullYear()===y);
+    const m = motherDates.find(d=>d.getFullYear()===y);
+
+    let winner = "–";
+    let winnerClass = "none";
+
+    if(f && !m){
+      winner = "🏆🧢 Отец";
+      winnerClass = "father";
+    } else if(m && !f){
+      winner = "🏆🎀 Мать";
+      winnerClass = "mother";
+    } else if(f && m){
+      if(f > m){
+        winner = "🏆🧢 Отец";
+        winnerClass = "father";
+      } else if(m > f){
+        winner = "🏆🎀 Мать";
+        winnerClass = "mother";
+      } else {
+        winner = "❓ Совпадение — уточните часами";
+        winnerClass = "none";
+      }
+    }
+
+    html += `<tr>
+      <td>${y}</td>
+      <td class="${f?'father':'none'}">${f?f.toLocaleDateString()+" 🏆🧢":"–"}</td>
+      <td class="${m?'mother':'none'}">${m?m.toLocaleDateString()+" 🏆🎀":"–"}</td>
+      <td class="${winnerClass}">${winner}</td>
+    </tr>`;
+  });
+  html += "</table>";
+  return html;
+}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  const fdStr=document.getElementById('fatherDate').value,
+        mdStr=document.getElementById('motherDate').value;
+  if(!fdStr||!mdStr){
+    document.getElementById('summary').textContent='Укажите даты рождения обоих родителей.';
+    return;
+  }
+
+  const fd=new Date(fdStr), md=new Date(mdStr), today=new Date();
+
+  const fatherLast=lastRefreshBefore(fd,today,4),
+        motherLast=lastRefreshBefore(md,today,3);
+
+  const fatherAll=allRefreshes(fd,new Date(2040,0,1),4);
+  const motherAll=allRefreshes(md,new Date(2040,0,1),3);
+
+  let result="❓ Совпадение — уточните часами";
+  let isTie=false;
+  let showFullTable=true;
+
+  if(fd.getTime() === md.getTime() || fatherLast.getTime() === motherLast.getTime()){
+    isTie=true;
+    showFullTable=false;
+    document.getElementById('extraForm').style.display="block";
+
+    const fatherTime = document.getElementById('fatherTime').value;
+    const motherTime = document.getElementById('motherTime').value;
+
+    if(fatherTime && motherTime){
+      const [fh,fm]=fatherTime.split(':').map(Number);
+      const [mh,mm]=motherTime.split(':').map(Number);
+      const fMin=fh*60+fm, mMin=mh*60+mm;
+
+      if(fMin>mMin) result="🏆🧢Мальчик🧢🏆";
+      else if(mMin>fMin) result="🏆🎀Девочка🎀🏆";
+      else result="❓ Совпадение — уточните часами";
+
+      showFullTable=true; // если время введено → показываем полную таблицу
+    }
+  } else {
+    if(fatherLast > motherLast) result="🏆🧢Мальчик🧢🏆";
+    else result="🏆🎀Девочка🎀🏆";
+  }
+
+  // вывод
+  document.getElementById('summary').innerHTML=`
+    Результат: <div class="result-box ${result.includes("Мальчик")?"boy":result.includes("Девочка")?"girl":"unknown"}">${result}</div><br/>
+    ${showFullTable ? buildTable(fatherAll,motherAll) : buildTable(fatherAll,motherAll,true)}<br/>
+    <span class="moment">Момент расчёта (Сегодня - сейчас): ${today.toLocaleDateString()}</span><br/>
+    <em>В момент беременности победивший цикл определяет пол ребёнка: если впереди у отца — 🏆🧢мальчик🧢🏆, если у матери — 🏆🎀девочка🎀🏆.</em>
+  `;
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
