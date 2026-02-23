@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="icon" href="favicon.png" type="image/png">
+<link rel="icon" href="/static/favicon.png" type="image/png">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Свежесть крови — калькулятор</title>
@@ -72,7 +72,6 @@
   .girl { color: #e83e8c; font-weight: bold; }
   .unknown { color: #aaa; font-weight: bold; }
   
-    
 	/* ваша кнопка */
 .neon-theme-btn {
   height: 50px;
@@ -123,6 +122,7 @@
       text-align: center;
       padding: 50px;
     }
+
 
 
 /* Анимация свечения */
@@ -260,22 +260,19 @@ button:hover {
 <body>
 
 
- <div class="neon-hub">
-     <a href="index.html" class="neon-link">🏠 Главная</a>
-  <a href="blood.html" class="neon-link">🏆🧢 М. или 🎀 🏆д.</a>
-  <a href="lovemeet.html" class="neon-link">💖 LoveMeet (Разработка)</a>
-  <a href="discounts.html" class="neon-link">💰 Скидки</a>
-  <a href="ascii-mode.html" class="neon-link">📟 Гадание на игровых картах</a>
-  <a href="Games.html" class="neon-link">🎮 Games (Разработка)</a>
-  <a href="Exchange.html" class="neon-link">🌐 Exchange (Разработка)</a>
-  <a href="amazon.html" class="neon-link">🛍️ Amazon Витрина</a>
-  <a href="AliExpress.html" class="neon-link">🧧 AliExpress Витрина</a>
-  <a href="temu.html" class="neon-link">🛒 Temu Витрина</a>
-  <a href="beu.html" class="neon-link">✨ BEU</a>
-  <a href="tvindex.html" class="neon-link">📺 Телеканалы</a>
-  <a href="https://yandex.ru/games/category/for_two_persons" target="_blank" class="neon-link">🎮 Игры для двоих</a>
-  </div>
- 
+<div class="neon-hub">
+ <a href="/" class="neon-link">🏠 Главная</a>
+ <a href="ref" class="neon-link">🔗 Реф. ссылки</a>
+ <a href="blood" class="neon-link">🏆🧢 М. или 🎀🏆 д.</a>
+ <a href="https://yandex.ru/games/category/for_two_persons" target="_blank" class="neon-link">🎮 Игры для двоих</a>
+ <a href="ali" class="neon-link">🧧 AliExpress Витрина</a>
+ <a href="amazon" class="neon-link">🛍️ Amazon Витрина</a>
+ <a href="temu" class="neon-link">🛒 Temu Витрина</a> 
+ <a href="/beu" class="neon-link">✨ BEU</a>
+ <a href="karts" class="neon-link">📟 Гадание на игровых картах</a> 
+ <a href="discoud" class="neon-link">💰 Скидки</a> 
+ <a href="18+tv" class="neon-link">📺 18+zone</a>   
+</div>
 
 
 
@@ -298,14 +295,16 @@ button:hover {
 <p style="font-size:1.1rem;">
     🔑 Хотите пароль бесплатно? Вот задание! <br/><br/>
     ⚠️ Сделайте покупки со страницы: <br/><br/>
-    <a href="amazon.html" class="btn">🛍️ Amazon Витрина</a>
-    <a href="temu.html" class="btn">🛒 Temu Витрина</a>
-    <a href="beu" class="btn">✨ BEU</a>
-    <a href="AliExpress.html" class="btn">🧧 AliExpress Витрина</a> <br/><br/>
-    👉 Или зарегистрируйтесь через одну из ссылок на <a href="index.html" class="btn">🏠 Главной странице.</a> <br/><br/>
+    <a href="amazon" class="btn">🛍️ Amazon Витрина</a>
+    <a href="temu" class="btn">🛒 Temu Витрина</a>
+	<a href="beu" class="btn">✨ BEU</a>
+    <a href="ali" class="btn">🧧 AliExpress Витрина</a> <br/><br/>
+    👉 Или зарегистрируйтесь через одну из ссылок на 
+    <a href="ref" class="btn">🏠 Главной странице.</a> <br/><br/>
     После пришлите по контактам скриншот покупки или регистрации. 
     Администратор проверит и пришлет пароль.
 </p>
+
 
 <style>
 .btn {
@@ -324,18 +323,14 @@ button:hover {
 
 <!-- Блок входа -->
 
-<div id="login">
-  <h2 style="font-size:2.20rem;">Введите пароль</h2>
-  <p style="color:#FF0000; font-size:1.25rem; font-weight:bold;">
-    ⚠️ Важно! Пароль действует 15 дней.
-  </p>
+
   <p id="expireInfo" style="color:#0ff; font-size:1.1rem;"></p>
   <input type="password" id="pwd" placeholder="Пароль ">
   <p style="font-size:1.5rem;">
     📡 Чтобы узнать пароль свяжитесь по контактам 📡
   </p>
   <button onclick="checkPwd()">Войти</button>
-  <button onclick="location.href='index.html#contact-footer'">Назад к контактам</button>
+  <button onclick="location.href='ref#contact-footer'">Назад к контактам</button>
   <p id="msg"></p>
 </div>
 
@@ -377,57 +372,14 @@ button:hover {
   <div id="summary" class="note">Заполните даты и нажмите «Рассчитать».</div>
 </div>
 
+
+<footer>
+  <p>@samvosik kontent</p>
+</footer>
+
+
 <script>
 const encodedPwd = "bWVraWMyMTEwNzQ"; 
-const validDays = 15;
-let countdownInterval;
-
-function updateExpireInfo(){
-  let startDate = localStorage.getItem("startDate");
-  const expireInfo = document.getElementById('expireInfo');
-
-  if(startDate){
-    startDate = new Date(startDate);
-    const expireDate = new Date(startDate);
-    expireDate.setDate(expireDate.getDate() + validDays);
-
-    function updateCountdown(){
-      const now = new Date();
-      const diff = expireDate - now;
-
-      if(diff <= 0){
-        expireInfo.textContent = "⛔ Срок действия пароля истёк!";
-        expireInfo.style.color = "red";
-        clearInterval(countdownInterval);
-        return;
-      }
-
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
-
-      expireInfo.textContent = 
-        "Пароль активен до " + expireDate.toLocaleDateString() +
-        " ⏳ Осталось: " + days + " дн. " + hours + " ч. " + minutes + " мин.";
-
-      // подсветка красным если осталось <3 дней
-      if(days < 3){
-        expireInfo.style.color = "red";
-        expireInfo.style.fontWeight = "bold";
-      } else {
-        expireInfo.style.color = "#0ff";
-        expireInfo.style.fontWeight = "normal";
-      }
-    }
-
-    updateCountdown();
-    countdownInterval = setInterval(updateCountdown, 60000); // обновляем каждую минуту
-  } else {
-    expireInfo.textContent = 
-      "Пароль ещё не активирован (начнёт действовать при первом входе)";
-    expireInfo.style.color = "#0ff";
-  }
-}
 
 function checkPwd(){
   const passField = document.getElementById('pwd');
@@ -443,19 +395,11 @@ function checkPwd(){
     return;
   }
 
-  let startDate = localStorage.getItem("startDate");
-  if(!startDate){
-    startDate = new Date();
-    localStorage.setItem("startDate", startDate);
-  }
-
   document.getElementById('login').style.display="none";
   document.getElementById('protected').style.display="block";
-  updateExpireInfo();
 }
-
-window.onload = updateExpireInfo;
 </script>
+
 
 
 
